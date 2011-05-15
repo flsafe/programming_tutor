@@ -1,4 +1,7 @@
 class LessonsController < ApplicationController
+
+  before_filter :require_admin, :only=>[:new, :edit, :create, :update, :destroy]
+
   # GET /lessons
   # GET /lessons.xml
   def index

@@ -1,9 +1,9 @@
 Rasberry::Application.routes.draw do
   resources :lessons
   resources :users
+  resources :user_sessions
 
   resource :account, :controller => 'users'
-  resource :user_session
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

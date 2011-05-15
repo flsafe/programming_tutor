@@ -1,0 +1,24 @@
+<%= form_for @user_session do |f| %>
+
+  <div class="field">
+    <%= f.label :username %><br/>
+    <%= f.text_field :username, :class=>'field' %><br/>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br/>
+    <%= f.password_field :password, :class=>'field' %></br>
+  </div>
+  <%= f.submit "Login" %> <br/>
+
+  <% if @user_session.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @user_session.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+

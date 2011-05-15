@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
     # c.my_config_option = my_value 
   end 
 
-  attr_accessible :username, :email
+  attr_accessible :username, :email, :password, :password_confirmation
 end
