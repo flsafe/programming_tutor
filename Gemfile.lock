@@ -29,6 +29,9 @@ GEM
       activesupport (= 3.0.7)
     activesupport (3.0.7)
     arel (2.0.9)
+    authlogic (3.0.2)
+      activerecord (~> 3.0.7)
+      activerecord (~> 3.0.7)
     builder (2.1.2)
     capybara (0.4.1.2)
       celerity (>= 0.7.9)
@@ -123,6 +126,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authlogic
   capybara
   cucumber-rails (>= 0.3.2)
   database_cleaner

@@ -1,0 +1,34 @@
+<%= form_for @user do |form|%>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <%end %>
+
+  <div class="field">
+    <%= form.label :username %><br />
+    <%= form.text_field :username %><br />
+  </div>
+
+  <div class="field">
+    <%= form.label :email %><br/>
+    <%= form.text_field :email %><br/>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
+    <%= form.password_field :password %><br />
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %><br />
+    <%= form.password_field :password_confirmation %><br />
+  </div>
+
+  <%= form.submit @user.new_record? ? "Sign Up" : "Save" %>
+<% end %>
