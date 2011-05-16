@@ -1,27 +1,14 @@
-<h1>Listing lessons</h1>
+<ul id="lessons_list">
+  <% @lessons.each do |lesson| %>
+    <li class="lesson_list_item">
+      <%= link_to(lesson.title, lesson, :class=>"heading_link") %>
+      <p class="content_paragraph"><%= lesson.description%></p>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Text</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @lessons.each do |lesson| %>
-  <tr>
-    <td><%= lesson.title %></td>
-    <td><%= lesson.description %></td>
-    <td><%= lesson.text %></td>
-    <td><%= link_to 'Show', lesson %></td>
-    <td><%= link_to 'Edit', edit_lesson_path(lesson) %></td>
-    <td><%= link_to 'Destroy', lesson, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Lesson', new_lesson_path %>
+      <% if current_user and current_user.admin? %>
+        <%= link_to 'Edit', edit_lesson_path(lesson), :class=>"small_content_link" %>
+        <%= link_to 'Destroy', lesson, :confirm => 'Are you sure?', :method => :delete, :class=>"small_content_link" %>
+        <%= link_to 'New Lesson', new_lesson_path, :class=>'small_content_link' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -9,3 +9,7 @@ end
 Then /^I should be redirected to the login page$/ do
   page.should have_css("form.new_user_session")
 end
+
+Then /^I should be redirected to the home page$/ do
+  page.should have_css("ul#lessons_list")
+end

@@ -35,13 +35,13 @@ class ApplicationController < ActionController::Base
   def require_admin
     unless current_user
       store_location
-      redirect_to new_user_session_url
+      redirect_to home_url
       return false
     end
 
     unless current_user.admin?
       store_location
-      redirect_to new_user_session_url
+      redirect_to home_url 
       return false
     end
   end

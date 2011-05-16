@@ -11,4 +11,4 @@ Feature: Create a lesson
   Scenario: A regular user creates a new lesson
     Given I am a user
     When I create a new lesson
-    Then I should be redirected to the login page
+    Then I should be redirected to the home page 

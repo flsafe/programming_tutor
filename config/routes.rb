@@ -1,9 +1,13 @@
 Rasberry::Application.routes.draw do
+  resources :exercises
+
   resources :lessons
   resources :users
   resources :user_sessions
 
   resource :account, :controller => 'users'
+
+  match "login" => "user_sessions#new", :as=>:login
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -10,12 +10,45 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110515021841) do
+ActiveRecord::Schema.define(:version => 20110516194214) do
+
+  create_table "exercises", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "text"
+    t.text     "tutorial"
+    t.integer  "minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "hints", :force => true do |t|
+    t.text     "text"
+    t.integer  "exercise_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "lessons", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "solution_templates", :force => true do |t|
+    t.integer  "exercise_id"
+    t.string   "src_language"
+    t.string   "src_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "unit_tests", :force => true do |t|
+    t.integer  "exercise_id"
+    t.string   "src_language"
+    t.text     "src_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
