@@ -1,0 +1,14 @@
+<% grade = "" %>
+<% if defined? grades and grades %>
+  <% grade = grades[exercise_li.id] %>
+<% end %>
+
+<li class="exercise_li">
+  <%= link_to("#{exercise_li.title}", 
+              start_coding_path(exercise_li),
+              :method=>:post) %> 
+  <%= "(#{grade})" %>
+  <p>
+    <%= exercise_li.description %>
+  </p>
+</li>

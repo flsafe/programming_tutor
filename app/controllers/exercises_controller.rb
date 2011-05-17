@@ -48,20 +48,13 @@ class ExercisesController < ApplicationController
   def create
     @exercise = Exercise.new(params[:exercise])
 
-    # Empty file fields aren't sent in the params,
-    # so provide default values if they are missing.
-    unless params[:exercise][:uploaded_unit_test]
-      @exercise.unit_test = UnitTest.new
-    end
-    unless params[:exercise][:uploaded_solution_template]
-      @exercise.solution_template = SolutionTemplate.new
-    end
-
     respond_to do |format|
       if @exercise.save
         format.html { redirect_to(@exercise, :notice => 'Exercise was successfully created.') }
         format.xml  { render :xml => @exercise, :status => :created, :location => @exercise }
       else
+        @exercise.unit_test = UnitTest.new
+        @exercise.solution_template = SolutionTemplate.new
         format.html { render :action => "new" }
         format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
       end

@@ -3,7 +3,7 @@ class CreateSolutionTemplates < ActiveRecord::Migration
     create_table :solution_templates do |t|
       t.integer :exercise_id
       t.string :src_language
-      t.string :src_code
+      t.text :src_code
 
       t.timestamps
     end

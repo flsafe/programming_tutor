@@ -12,9 +12,15 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :lesson_id %>
+    <%= f.collection_select :lesson_id, Lesson.all, :id, :title %>
+  </div>
+
+  <div class="field">
     <%= f.label :title %><br />
     <%= f.text_field :title %>
   </div>
+
 
   <div class="field">
     <%= f.label :description %><br />
@@ -27,11 +33,11 @@
         <%= builder.label :uploaded_unit_test, "Upload Unit Test"%><br />
         <%= builder.file_field :uploaded_unit_test %>
       <% end %>
-  <% else %>
-    <%= f.fields_for :unit_test do |builder| %>
-        <%= builder.label :src_code, "Src Code" %><br/>
+    <% else %>
+      <%= f.fields_for :unit_test do |builder| %>
+        <%= builder.label :src_code, "Unit Test" %><br/>
         <%= builder.text_area :src_code, :cols=>80%>
-    <% end %>
+      <% end %>
   <% end%>
   </div>
 
@@ -41,11 +47,11 @@
         <%= builder.label :uploaded_solution_template, "Upload Solution Template"%><br />
         <%= builder.file_field :uploaded_solution_template %>
       <% end %>
-  <% else %>
-    <%= f.fields_for :solution_template do |builder| %>
-        <%= builder.label :src_code, "Src Code" %><br/>
+    <% else %>
+      <%= f.fields_for :solution_template do |builder| %>
+        <%= builder.label :src_code, "Solution Template" %><br/>
         <%= builder.text_area :src_code, :cols=>80%>
-    <% end %>
+      <% end %>
   <% end%>
   </div>
 

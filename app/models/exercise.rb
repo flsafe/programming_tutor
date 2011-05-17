@@ -1,14 +1,23 @@
 class Exercise < ActiveRecord::Base
+
+  include Statistics
+
   default_scope :order=>'title'
 
-  has_many :hints, :dependent=>:destroy
+  belongs_to :lesson
+
   has_one :unit_test, :dependent=>:destroy
   has_one :solution_template, :dependent=>:destroy
 
-  accepts_nested_attributes_for :hints
-  accepts_nested_attributes_for :unit_test
-  accepts_nested_attributes_for :solution_template
+  has_many :hints, :dependent=>:destroy
+  has_many :grade_sheets, :dependent=>:destroy
 
-  validates :title, :presence=>true
+  accepts_nested_attributes_for :hints, :unit_test, :solution_template
+
+  validates :title, :unit_test, :solution_template, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}
+
+  def prototype
+    return solution_template.prototype
+  end
 end

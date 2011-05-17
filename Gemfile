@@ -17,7 +17,7 @@ gem 'authlogic'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
-# gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'ruby-debug19', :require => 'ruby-debug'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -31,7 +31,9 @@ gem 'authlogic'
 group :development, :test do
    gem 'cucumber-rails', '>= 0.3.2'
    gem 'capybara'
+   gem 'launchy'
    gem 'rspec-rails', '>= 2.0.0'
    gem 'webrat'
+   gem 'autotest'
    gem 'database_cleaner'
  end

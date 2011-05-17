@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516194214) do
+ActiveRecord::Schema.define(:version => 20110517223057) do
 
   create_table "exercises", :force => true do |t|
     t.string   "title"
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(:version => 20110516194214) do
     t.text     "text"
     t.text     "tutorial"
     t.integer  "minutes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "lesson_id"
+  end
+
+  create_table "grade_sheets", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "exercise_id"
+    t.float    "grade"
+    t.text     "tests"
+    t.text     "src_code"
+    t.integer  "time_taken"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,7 +52,15 @@ ActiveRecord::Schema.define(:version => 20110516194214) do
   create_table "solution_templates", :force => true do |t|
     t.integer  "exercise_id"
     t.string   "src_language"
-    t.string   "src_code"
+    t.text     "src_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "statistics", :force => true do |t|
+    t.string   "model_table_name"
+    t.integer  "model_id"
+    t.string   "statistic_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

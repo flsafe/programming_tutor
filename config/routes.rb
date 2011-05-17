@@ -1,4 +1,6 @@
 Rasberry::Application.routes.draw do
+  resources :grade_sheets
+
   resources :exercises
 
   resources :lessons
@@ -8,6 +10,17 @@ Rasberry::Application.routes.draw do
   resource :account, :controller => 'users'
 
   match "login" => "user_sessions#new", :as=>:login
+
+  # Routes for the text editor used when coding an exercise
+  match "code/start/:id"=>"code#start", :as=>:start_coding
+  match "code/quit"=>"code#quit", :as=>:quit_coding, :via=>:post
+
+  match "code"=>"code#show", :as=>:code, :via=>:get
+  match "code/check"=>"code#check", :as=>:check_code, :via=>:post
+  match "code/check"=>"code#get_check", :as=>:get_check, :via=>:get
+
+  match "code/grade"=>"code#grade", :as=>:grade_code, :via=>:post
+  match "code/grade"=>"code#get_grade", :as=>:get_grade, :via=>:get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -24,7 +24,10 @@ describe ExercisesController do
   # Exercise. As you add validations to Exercise, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {:title=>'title', :minutes=>1}
+    {:title=>'title', 
+     :minutes=>1,
+     :unit_test_attributes=>{:src_code=>'code', :src_language=>"lang"},
+     :solution_template_attributes=>{:src_code=>'code', :src_language=>'lang'}}
   end
   
   context "when the user is not an admin" do
@@ -41,7 +44,7 @@ describe ExercisesController do
       end
 
       it "redirects when the show is requested" do
-        e = Exercise.create(:title=>"title", :minutes=>1)
+        e = Exercise.create!(valid_attributes)
         get :show, :id=>e.id.to_s 
         response.should redirect_to(home_path)
       end

@@ -1,20 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
+<ul id="lesson_exercises">
+  <%= render :partial=>'exercises/exercise_li', 
+    :collection=>@lesson.exercises,
+    :locals=>{:grades=>@grades}%>
+</ul>
+
+<h1>
   <%= @lesson.title %>
-</p>
+</h1>
 
 <p>
-  <b>Description:</b>
-  <%= @lesson.description %>
-</p>
-
-<p>
-  <b>Text:</b>
   <%= @lesson.text %>
 </p>
-
 
 <%= link_to 'Edit', edit_lesson_path(@lesson) %> |
 <%= link_to 'Back', lessons_path %>
