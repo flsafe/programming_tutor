@@ -1,6 +1,20 @@
+<%= stylesheet_link_tag 'codemirror' %>
+<%= javascript_include_tag 'codemirror' %>
+<%= javascript_include_tag 'mode/clike/clike' %>
+<%= stylesheet_link_tag 'mode/clike/clike' %>
+
 <textarea id="text_editor">
   <%= @exercise.prototype %>
 </textarea>
+
+<script type="text/javascript">
+  var textEditor = CodeMirror.fromTextArea($('text_editor'), 
+      {mode: "clike",
+       lineNumbers: true,
+       matchBrackets: true,
+       indentUnit: 2,
+       tabMode: "indent"});
+</script>
 
 <div id="exercise_problem_text">
   <%= @exercise.text %>
