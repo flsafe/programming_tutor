@@ -18,7 +18,7 @@ Given /^I am a user$/ do
               :password_confirmation=>'password',
               :email=>'job@mail.com')
 
-  visit new_user_session_path
+  visit login_path 
   fill_in "Username", :with=>'Joe Blow'
   fill_in "Password", :with=>'password'
   click_button "Login"

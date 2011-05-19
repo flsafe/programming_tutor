@@ -1,6 +1,6 @@
-<textarea id="text_editor">
-  <%= @exercise.prototype %>
-</textarea>
+<%= render :partial=>'timer', :locals=>{:seconds=>current_user.seconds_left_in_code_session} %>
+
+<%= render :partial => 'code_mirror', :locals=>{:value=>@exercise.prototype}%>
 
 <div id="exercise_problem_text">
   <%= @exercise.text %>

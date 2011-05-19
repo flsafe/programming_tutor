@@ -1,3 +1,7 @@
+<% if flash[:notice] %>
+  <p id="notice"> <%= flash[:notice] %> </p>
+<% end %>
+
 <ul id="lessons_list">
   <% @lessons.each do |lesson| %>
     <li class="lesson_list_item">
