@@ -62,14 +62,16 @@ describe User do
   end
 
   describe "#seconds_left_in_code_session" do
+    before(:each) do
+      @user = User.create!(valid_attributes)
+      @exercise = stub_model(Exercise, :minutes=>30)
+    end
+
     it "returns the number of seconds left in the code session" do 
-      pending
-      user = User.create!(valid_attributes)
-      exercise = stub_model(Exercise, :minutes=>30)
-      user.start_coding exercise
-      user.code_session.stub(:created_at=>Time.new("1:00"))
-      Time.stub(:now).and_return(Time.new("1:25"))
-      user.seconds_left_in_code_session.should == 5 * 60 # 5 mins * 60 sec/min
+      @user.start_coding @exercise
+      @user.code_session.stub(:created_at=>Time.new())
+      Time.stub(:now).and_return(Time.new() + 25 * 60)    #25 mins * 60 sec/min
+      @user.seconds_left_in_code_session.should == 5 * 60 # 5 mins * 60 sec/min
     end
   end
 end

@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
     if code_session 
       start_time = code_session.created_at 
       end_time = start_time + current_exercise.minutes * 60#secs/min
-      elapsed_seconds = end_time - Time.now
+      elapsed_seconds = (end_time - Time.now).ceil
       elapsed_seconds >= 0 ? elapsed_seconds : 0
     end
   end
