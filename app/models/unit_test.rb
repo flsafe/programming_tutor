@@ -3,6 +3,7 @@ class UnitTest < ActiveRecord::Base
 
   validates :src_code, :src_language, :presence=>true
 
+  # Load unit test from a file upload
   def uploaded_unit_test=(unit_test_field)
      self.src_code = unit_test_field.read
      self.src_language = "ruby"

@@ -10,6 +10,9 @@ class SolutionTemplate < ActiveRecord::Base
     self.src_language = 'c'
   end
 
+  # Returns the code between the
+  # start_prototye and end_prototype markers
+  # in the src code for this template.
   def prototype 
     m = src_code.match(@@PROTOTYPE_REGEX)
     if m and m[1]

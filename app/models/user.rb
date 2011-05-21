@@ -10,13 +10,16 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation
 
   # The user is going to start coding this exercise.
+  # Creates a new code session.
   def start_coding(exercise)
     unless code_session
       self.code_session = CodeSession.new(:exercise=>exercise)
     end
   end
 
-  # The user is no longer doing this exercise.
+  # The user is no longer doing an exercise.
+  # Destroys the current code session. Does
+  # nothing if the user doesn't have a code session.
   def end_code_session
     if code_session
       code_session.destroy
@@ -31,8 +34,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Returns the number of seconds left in the coding session.
-  # Calculated as 
+  # Returns the number of seconds left in the coding session
+  # or nill of the user isn't doing an exercise.
   def seconds_left_in_code_session
     if code_session 
       start_time = code_session.created_at 

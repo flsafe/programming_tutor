@@ -44,15 +44,14 @@ class CodeController < ApplicationController
 
   # POST code/check
   # Run the code throught unit tests
-  # without submitting a grade and give
-  # feedback.
+  # without submitting a grade.
   def check
 
   end
 
   # GET code/check
   # Get the results of running
-  # the code through the unit tests
+  # the code through the unit tests.
   def get_check
     
   end

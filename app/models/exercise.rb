@@ -19,6 +19,9 @@ class Exercise < ActiveRecord::Base
   validates :title, :unit_test, :solution_template, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}
 
+  # Returns an initial template for the
+  # user to type thier own code in. Can be
+  # used to display in a text editor.
   def prototype
     return solution_template.prototype
   end

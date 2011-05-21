@@ -17,12 +17,13 @@ class GradeSheet < ActiveRecord::Base
     end
   end
   
-  # Add a hash describing the results of a unit test
-  # to the gradesheet. The keys are:
+  # Add a hash describing the results of a unit test.
+  # The keys are:
   #
   #     {:test_name=>{:input, :got, :expected, :points}}
   #
-  # The points key is optional
+  # The points key is optional and will be calculated
+  # automatically if left out.
   def add_unit_test(unit_test_hash)
     unit_test_hash.each_pair do |test_name, info|
       info[:points] ||= default_points_per_test
@@ -37,6 +38,13 @@ class GradeSheet < ActiveRecord::Base
     @tests_hash = @tests_hash || {}
   end
 
+  # Returns the points per test
+  def default_points_per_test
+    100.0 / unit_tests.count
+  end
+
+  private 
+
   # Validates each unit test result hash.
   def unit_tests_format
     expected_keys = [:input, :got, :expected, :points]
@@ -47,7 +55,4 @@ class GradeSheet < ActiveRecord::Base
     end
   end
 
-  def default_points_per_test
-    100.0 / unit_tests.count
-  end
 end
