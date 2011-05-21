@@ -41,4 +41,6 @@ Then /^I should see the exercise text$/ do
   page.should have_css("div#exercise_problem_text", :content=>@an_exercise.text)
 end
 
-
+Then /^I should see the time remaining for the exercise$/ do
+  page.should have_css("#timer", :content=>"59")
+end

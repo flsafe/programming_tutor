@@ -10,6 +10,7 @@ Rasberry::Application.routes.draw do
   resource :account, :controller => 'users'
 
   match "login" => "user_sessions#new", :as=>:login
+  match "logout"=>"user_sessions#destroy", :as=>:logout
 
   # Routes for the text editor used when coding an exercise
   match "code/start/:id"=>"code#start", :as=>:start_coding
@@ -21,6 +22,8 @@ Rasberry::Application.routes.draw do
 
   match "code/grade"=>"code#grade", :as=>:grade_code, :via=>:post
   match "code/grade"=>"code#get_grade", :as=>:get_grade, :via=>:get
+
+  match "code/already_doing_exercise"=>"code#already_doing_exercise", :as=>:choose_code, :via=>:get
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
