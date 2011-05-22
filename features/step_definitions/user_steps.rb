@@ -1,10 +1,10 @@
 Given /^I am an admin user$/ do
-  user = User.create(:username=>'Admin',
-                     :password=>"password",
-                     :password_confirmation=>'password',
-                     :email=>'mail@mail.com')
-  user.admin = true 
-  user.save!
+  @I = User.create(:username=>'Admin',
+                   :password=>"password",
+                   :password_confirmation=>'password',
+                   :email=>'mail@mail.com')
+  @I.admin = true 
+  @I.save!
 
   visit new_user_session_path
   fill_in "Username", :with=>'Admin'
@@ -13,7 +13,7 @@ Given /^I am an admin user$/ do
 end
 
 Given /^I am a user$/ do
-  User.create(:username=>'Joe Blow',
+  @I = User.create(:username=>'Joe Blow',
               :password=>'password',
               :password_confirmation=>'password',
               :email=>'job@mail.com')

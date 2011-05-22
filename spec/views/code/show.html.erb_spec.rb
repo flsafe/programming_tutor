@@ -9,6 +9,7 @@ describe "code/show.html.erb" do
       :prototype=>"int main()"))
     view.stub(:current_user).and_return(stub_model(User,
                                                   :seconds_left_in_code_session=>117))
+    assign(:code, Code.new(:src_code=>@exercise.prototype))
   end
 
   it "renders the exercise prototype in the text editor" do
@@ -25,5 +26,15 @@ describe "code/show.html.erb" do
   it "renders the time remainng" do
     render
     rendered.should have_selector("#timer", :content=>"01:57")
+  end
+
+  it "renders a message div" do
+    render
+    rendered.should have_selector("#message")
+  end
+
+  it "renders a 'Check Syntax' button" do
+    render
+    rendered.should have_selector("input[value='Check Syntax']")
   end
 end

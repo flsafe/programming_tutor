@@ -67,6 +67,31 @@ describe CodeController do
       assigns(:exercise).should eq(@exercise)
     end
 
-    it "assigns the time remaining to complete the exercise"
+    it "assigns the message" do
+      get :show
+      assigns(:message).should_not == nil
+    end
+  end
+
+  describe "post do_action" do
+    it "saves the users code to the current session (to redisplay with non ajax clients)"do
+      post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}
+      session[:code].should == {'src_code'=>"int main(){return 0;}"}
+    end
+
+    context "when the user pressed the 'Check Syntax' button" do
+      it "runs a syntax check on the code" do
+        Code.stub(:new).and_return(@code = mock_model(Code)) 
+        @code.should_receive :get_syntax_message
+        post :do_action
+      end
+
+      it  "assigns the syntax check message to session[:message]"do
+        @code = stub_model(Code, :get_syntax_message=>"None")
+        Code.stub(:new).and_return(@code)
+        post :do_action, :code=>"not used"
+        session[:message].should == "None"
+      end
+    end
   end
 end

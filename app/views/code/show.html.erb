@@ -1,7 +1,11 @@
 <%= render :partial=>'timer', :locals=>{:seconds=>current_user.seconds_left_in_code_session} %>
 
-<%= render :partial => 'code_mirror', :locals=>{:value=>@exercise.prototype}%>
+<%= render :partial => 'code_mirror', :locals=>{:code=>@code}%>
 
 <div id="exercise_problem_text">
   <%= @exercise.text %>
+</div>
+
+<div id="message">
+  <%= @message %>
 </div>

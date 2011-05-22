@@ -3,9 +3,11 @@
 <%= javascript_include_tag 'codemirror' %>
 <%= javascript_include_tag 'mode/clike/clike' %>
 
-<textarea id="text_editor">
-  <%= value %>
-</textarea>
+<%= form_for @code, :url=>do_action_path  do |f|%>
+  <%= f.text_area :src_code, :id=>'text_editor' do %>
+  <% end %>
+  <%= f.submit "Check Syntax" %>
+<% end %>
 
 <script type="text/javascript">
   var textEditor = CodeMirror.fromTextArea($('text_editor'), 

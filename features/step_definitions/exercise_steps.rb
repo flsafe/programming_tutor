@@ -1,7 +1,7 @@
 Given /^there exists an exercise in the database$/ do
   @an_exercise = Exercise.new do |e|
     e.title = "title"
-    e.minutes = 1
+    e.minutes = 15
     e.unit_test = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.rb"),
                                :src_language=>"ruby")
     e.solution_template = SolutionTemplate.new(:src_code=>IO.read("#{Rails.root}/content/solution_template.c"),
@@ -9,6 +9,11 @@ Given /^there exists an exercise in the database$/ do
     e.lesson = Lesson.create!(:title=>"a lesson")
   end
   @an_exercise.save!
+end
+
+Given /^I am doing an exercise$/ do
+   Given "there exists an exercise in the database"
+   visit start_coding_path(@an_exercise, :id=>@an_exercise.id)
 end
 
 When /^I create a new exercise$/ do
@@ -33,6 +38,22 @@ When /^I am viewing the code page for the exercise$/ do
   click_link(@an_exercise.title)
 end
 
+When /^I type a program with a syntax error$/ do
+  src =<<-END
+  int main(){
+    int i
+    int count = 1;
+    for (i = 1 ; i <= 100 ; i++)
+      ++count;
+  }
+  END
+  fill_in "text_editor", :with=>src
+end
+
+When /^I press the check solution button$/ do
+  click_button "Check Syntax" 
+end
+
 Then /^I should see the exercise prototype$/ do
   page.should have_css("textarea#text_editor")
 end
@@ -42,5 +63,9 @@ Then /^I should see the exercise text$/ do
 end
 
 Then /^I should see the time remaining for the exercise$/ do
-  page.should have_css("#timer", :content=>"59")
+  page.should have_css("#timer", :text=>"15")
+end
+
+Then /^I should see a syntax error message$/ do
+  page.should have_css("#message", :text=>"syntax error")
 end

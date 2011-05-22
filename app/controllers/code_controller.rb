@@ -28,17 +28,27 @@ class CodeController < ApplicationController
 
   end
 
+  # POST code/do_action
+  # Distpatch to the the approriate action
+  # depending which submit button the user
+  # clicked.
+  def do_action
+    session[:code] = params[:code]
+    session[:message] = Code.new(params[:code]).get_syntax_message
+    respond_to do |format|
+      format.html {redirect_to(:action=>:show)}
+    end
+  end
+
   # GET code (code url)
   # Show the text editor and problem text
   def show
-    begin
-      @exercise = current_user.current_exercise
-    rescue ActiveRecord::RecordNotFound
-      redirect_to home_url, :notice=>"Exercise doesn't exist."
-    else
-      respond_to do |format|
-        format.html
-      end
+    @exercise = current_user.current_exercise
+    @code = Code.new(session[:code] || {:src_code=>@exercise.prototype})
+    @message = session[:message] || ""
+
+    respond_to do |format|
+      format.html
     end
   end
 

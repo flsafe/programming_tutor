@@ -12,17 +12,19 @@ Rasberry::Application.routes.draw do
   match "login" => "user_sessions#new", :as=>:login
   match "logout"=>"user_sessions#destroy", :as=>:logout
 
-  # Routes for the text editor used when coding an exercise
+  # Routes for the text editor used when coding an exercise.
   match "code/start/:id"=>"code#start", :as=>:start_coding
   match "code/quit"=>"code#quit", :as=>:quit_coding, :via=>:post
-
+  match "code/action"=>"code#do_action", :as=>:do_action, :via=>:post
+ 
+  # Show the exercise text and text editor.
   match "code"=>"code#show", :as=>:code, :via=>:get
-  match "code/check"=>"code#check", :as=>:check_code, :via=>:post
+
+  # Polling functions used when an asynchronous request for
+  # syntax or unit tests are made.
+  match "code/syntax"=>"code#get_syntax", :as=>:get_syntax, :via=>:get
   match "code/check"=>"code#get_check", :as=>:get_check, :via=>:get
-
-  match "code/grade"=>"code#grade", :as=>:grade_code, :via=>:post
   match "code/grade"=>"code#get_grade", :as=>:get_grade, :via=>:get
-
   match "code/already_doing_exercise"=>"code#already_doing_exercise", :as=>:choose_code, :via=>:get
 
   # The priority is based upon order of creation:

@@ -10,3 +10,10 @@ Feature: A user does an exercise
     Then I should see the exercise prototype
     And I should see the exercise text
     And I should see the time remaining for the exercise
+
+  Scenario: The user checks runs thier code through unit tests
+    Given I am a user
+    And I am doing an exercise
+    When I type a program with a syntax error
+    And I press the check solution button
+    Then I should see a syntax error message
