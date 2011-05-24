@@ -50,8 +50,28 @@ When /^I type a program with a syntax error$/ do
   fill_in "text_editor", :with=>src
 end
 
-When /^I press the check solution button$/ do
+When /^I type a program without a syntax error$/ do
+  src =<<-END
+  int main(){
+    int i;
+    int count = 1;
+    for (i = 1 ; i <= 100 ; i++)
+      ++count;
+  }
+  END
+  fill_in "text_editor", :with=>src
+end
+
+When /^I type a correct solution$/ do
+  fill_in "text_editor", :with=>"test"
+end
+
+When /^I press the check syntax button$/ do
   click_button "Check Syntax" 
+end
+
+When /^I press the check solution button$/ do
+  click_button "Check Solution"
 end
 
 Then /^I should see the exercise prototype$/ do
@@ -63,9 +83,17 @@ Then /^I should see the exercise text$/ do
 end
 
 Then /^I should see the time remaining for the exercise$/ do
-  page.should have_css("#timer", :text=>"15")
+  page.should have_css("#timer", :text=>@an_exercise.minutes.to_s)
 end
 
 Then /^I should see a syntax error message$/ do
   page.should have_css("#message", :text=>"syntax error")
+end
+
+Then /^I should not see a syntax error message$/ do
+  page.should have_css("#message", :text=>"No syntax error detected!") 
+end
+
+Then /^I should see an 'ok' message$/ do
+  page.should have_css("#message", :text=>"This looks like it could work!")
 end

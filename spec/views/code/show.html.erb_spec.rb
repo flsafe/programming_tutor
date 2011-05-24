@@ -37,4 +37,9 @@ describe "code/show.html.erb" do
     render
     rendered.should have_selector("input[value='Check Syntax']")
   end
+
+  it "renders a 'Check Solution' button" do
+    render
+    rendered.should have_selector("input[value='Check Solution']")
+  end
 end

@@ -9,6 +9,9 @@ gem 'sqlite3'
 
 gem 'authlogic'
 
+# A soap client YUCK
+gem 'savon'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

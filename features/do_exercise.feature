@@ -11,9 +11,23 @@ Feature: A user does an exercise
     And I should see the exercise text
     And I should see the time remaining for the exercise
 
-  Scenario: The user checks runs thier code through unit tests
+  Scenario: The user has a syntax error
     Given I am a user
     And I am doing an exercise
     When I type a program with a syntax error
-    And I press the check solution button
+    And I press the check syntax button
     Then I should see a syntax error message
+
+  Scenario: The user doesn't have a syntax error
+    Given I am a user
+    And I am doing an exercise
+    When I type a program without a syntax error 
+    And I press the check syntax button
+    Then I should not see a syntax error message
+
+  Scenario: The user wants to run unit tests without submitting 
+    Given I am a user
+    And I am doing an exercise
+    When I type a correct solution 
+    And I press the check solution button 
+    Then I should see an 'ok' message 

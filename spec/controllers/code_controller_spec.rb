@@ -1,6 +1,22 @@
 require 'spec_helper'
 
 describe CodeController do
+  before(:each) do
+    @user = User.create!(:username=>"frank",
+                         :password=>'password',
+                         :password_confirmation=>'password',
+                         :email=>'frank@mail.com').as_null_object
+    @exercise = Exercise.create!(:title=>"exercise",
+                                 :minutes=>1,
+                                 :unit_test=>stub_model(UnitTest, 
+                                                        :src_code=>"c", 
+                                                        :src_language=>'c'),
+                                 :solution_template=>stub_model(SolutionTemplate, 
+                                                                :src_code=>'c', 
+                                                                :src_language=>'c',
+                                                                :prototype=>'c')).as_null_object
+    controller.stub(:current_user).and_return(@user)
+  end
 
   def valid_attributes
     {:title=>"Title1",
@@ -10,66 +26,35 @@ describe CodeController do
 
   describe "#start" do
     before(:each) do
-      @user = mock_model(User, :code_session=>nil).as_null_object
-      controller.stub(:current_user).and_return(@user)
       Exercise.stub(:find).and_return(stub_model(Exercise))
     end
 
-    context "when the user has no current session" do
+    context "when the user has no current code session for an exercise" do
       it "starts a new code session" do
         @user.should_receive(:start_coding)
         get 'start', :id=>0
       end
 
-      it "redirects to #code" do
+      it "redirects to #show" do
         get 'start', :id=>0
         response.should redirect_to(:action=>:show)
       end
     end
 
-    context "when the user already has a session" do
+    context "when the user already has code session for an exercise" do
       before(:each) do
         @user.stub(:code_session).and_return stub_model(CodeSession)
       end
 
-      it "redirects to 'already_doing_exercise" do
+      it "redirects to #already_doing_exercise" do
         get 'start', :id=>0 
         response.should redirect_to choose_code_path 
       end
 
-      it "does not start a new session" do
+      it "does not start a new code session" do
         @user.should_not_receive(:start_code_session)
+        get 'start', :id=>0
       end
-    end
-  end
-
-  describe "get #show" do
-    before(:each) do
-      @user = User.create!(:username=>"frank",
-                         :password=>'password',
-                         :password_confirmation=>'password',
-                         :email=>'frank@mail.com')
-      @exercise = Exercise.create!(:title=>"exercise",
-                                 :minutes=>1,
-                                 :unit_test=>stub_model(UnitTest, 
-                                                        :src_code=>"c", 
-                                                        :src_language=>'c'),
-                                 :solution_template=>stub_model(SolutionTemplate, 
-                                                                :src_code=>'c', 
-                                                                :src_language=>'c',
-                                                                :prototype=>'c'))
-      controller.stub(:current_user).and_return(@user)
-      @user.start_coding @exercise
-    end
-
-    it "assigns the exercise for this code session" do
-      get :show
-      assigns(:exercise).should eq(@exercise)
-    end
-
-    it "assigns the message" do
-      get :show
-      assigns(:message).should_not == nil
     end
   end
 
@@ -83,15 +68,50 @@ describe CodeController do
       it "runs a syntax check on the code" do
         Code.stub(:new).and_return(@code = mock_model(Code)) 
         @code.should_receive :get_syntax_message
-        post :do_action
+        post :do_action, :commit=>"Check Syntax"
       end
 
       it  "assigns the syntax check message to session[:message]"do
         @code = stub_model(Code, :get_syntax_message=>"None")
         Code.stub(:new).and_return(@code)
-        post :do_action, :code=>"not used"
+        post :do_action, :commit=>"Check Syntax"
         session[:message].should == "None"
       end
+    end
+
+    context "when the user pressed the 'Check Solution' button" do
+      before(:each) do
+        @user.start_coding @exercise
+      end
+
+      it "runs the code through the unit tests" do
+        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
+        @code.should_receive :check_against
+        post :do_action, :commit=>"Check Solution"
+      end
+
+      it  "assigns the syntax check message to session[:message]"do
+        @code = stub_model(Code, :check_against=>"unit test results")
+        Code.stub(:new).and_return(@code)
+        post :do_action, :commit=>"Check Solution"
+        session[:message].should == "unit test results"
+      end
+    end
+  end
+
+  describe "get #show" do
+    before(:each) do
+      @user.start_coding @exercise
+    end
+
+    it "assigns the exercise for this code session" do
+      get :show
+      assigns(:exercise).should eq(@exercise)
+    end
+
+    it "assigns the message" do
+      get :show
+      assigns(:message).should_not == nil
     end
   end
 end

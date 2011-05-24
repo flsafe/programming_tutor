@@ -7,11 +7,11 @@ class CodeController < ApplicationController
       exercise = Exercise.find params[:id]
       respond_to do |format|
         format.html do
-          if current_user.code_session
-            url = choose_code_url
-          else
+          if current_user.code_session == nil
             current_user.start_coding exercise 
             url = code_url
+          else
+            url = choose_code_url
           end
           redirect_to url
         end
@@ -34,7 +34,11 @@ class CodeController < ApplicationController
   # clicked.
   def do_action
     session[:code] = params[:code]
-    session[:message] = Code.new(params[:code]).get_syntax_message
+    @code = Code.new(params[:code])
+    session[:message] = case params[:commit]
+                        when "Check Syntax"   then do_syntax_check
+                        when "Check Solution" then do_solution_check
+                        end
     respond_to do |format|
       format.html {redirect_to(:action=>:show)}
     end
@@ -83,5 +87,17 @@ class CodeController < ApplicationController
   # or starting a new one
   def already_doing_exercise
 
+  end
+
+  private
+
+  def do_syntax_check
+    @code.get_syntax_message
+  end
+
+  def do_solution_check
+    curr_exercise = current_user.current_exercise
+    @code.check_against(curr_exercise.unit_test, 
+                        curr_exercise.solution_template)
   end
 end

@@ -21,4 +21,10 @@ class SolutionTemplate < ActiveRecord::Base
       ""
     end
   end
+
+  # Fill in the solution tempalte with the user's solution
+  # code. 
+  def fill_in(solution_snippet)
+    src_code.gsub(@@PROTOTYPE_REGEX, solution_snippet).strip.chomp
+  end
 end

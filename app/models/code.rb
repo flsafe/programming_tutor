@@ -3,22 +3,19 @@
 # solving an exercise.
 class Code < ActiveRecord::Base
 
-  COMPILE_CMD = "gcc -Wall -x c -fsyntax-only - 2>&1"
-
+  # Run the code through a syntax check.
+  # Returns the compiler's syntax check output
+  # message.
   def get_syntax_message
-    return "Syntax error" if src_code == nil
+    Compiler.get_syntax_message(src_code)
+  end
 
-    msg = IO.popen(COMPILE_CMD, 'w+') do |io|
-      io.write src_code
-      io.close_write
-      io.read
-    end
-
-    if $? == 0
-      return "No syntax error detected!"
-    else
-      return msg
-    end
+  # Runs the code against the given unit test
+  # using the provided solution template. 
+  def check_against(unit_test, solution_template)
+    solution = solution_template.fill_in(src_code)  
+    grade_sheet = unit_test.run_with(solution)
+    Feedback.on(grade_sheet)
   end
 
   # Tableless model
