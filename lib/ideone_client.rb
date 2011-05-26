@@ -76,20 +76,10 @@ class IdeoneClient
 
   def create_detailed_result(link, result_code)
     response = get_submission_details(link)
-    if program_completed_successfully?(result_code) 
-      output = parse(response, :get_submission_details_response, :output)
-    else
-      output = "Shucks, An Error Occurred :("
-    end
-    {:output => output,
+    {:output => parse(response, :get_submission_details_response, :output),
      :memory => parse(response, :get_submission_details_response, :memory).to_i,
      :time   => parse(response, :get_submission_details_response, :time).to_f,
-     :compile_error? => compile_error?(result_code),
-     :runtime_error? => runtime_error?(result_code),
-     :timeout_error? => timeout_error?(result_code),
-     :memeory_error? => memory_error?(result_code),
-     :syscall_error?  => syscall_error?(result_code)}
-
+     :error  => get_error_message(result_code)}
   end
 
   def get_submission_details(link)
@@ -125,7 +115,26 @@ class IdeoneClient
   # 19 illegal system call – the program tried to call #illegal system function
   # 20 internal error – some problem occurred on #ideone.com; try to submit the paste again #and if that fails too, then please contact us
   #
-  
+ 
+  # Returns a symbol describing the error
+  #     :compile_error - The program didn't compile.
+  #     :runtime_error - A runtime error occured (e.g. Seg Fault).
+  #     :timeout_error - The program ran for too long
+  #     :memory_error  - The program used too much memory 
+  #     :syscall_error - The program mad an illegal system call
+  #
+  #
+  def get_error_message(result_code)
+    error = case result_code
+      when compile_error?(result_code) then :compile_error
+      when runtime_error?(result_code) then :runtime_error
+      when timeout_error?(result_code) then :timeout_error
+      when memory_error?(result_code)  then :memory_error
+      when syscall_error?(result_code) then :syscall_error
+    end
+    error
+  end
+
   def program_completed_successfully?(result_code)
     result_code.to_i == 15 
   end

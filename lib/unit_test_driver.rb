@@ -24,8 +24,9 @@ module UnitTestDriver
   # and 'expected' match.
   def run_with_and_expect(input, expected, points = nil)
    results = execute(@grade_sheet.src_code, input)
-   unit_test_results = {test_name => {:expected=> expected, 
-                                      :points  => points}.merge!(results)}
+   unit_test_results = {test_name => {:input    => input,
+                                      :expected => expected, 
+                                      :points   => points}.merge!(results)}
    @mutex.lock
      @grade_sheet.add_unit_test(unit_test_results)
    @mutex.unlock

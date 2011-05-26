@@ -63,7 +63,7 @@ When /^I type a program without a syntax error$/ do
 end
 
 When /^I type a correct solution$/ do
-  fill_in "text_editor", :with=>"test"
+  fill_in "text_editor", :with=>IO.read(File.join(Rails.root, "content", "solution.c"))
 end
 
 When /^I press the check syntax button$/ do

@@ -68,6 +68,7 @@ describe Code do
 
   describe "check against" do
     before(:each) do
+      Feedback.stub(:on).and_return("Nice!")
       @src_code = "int main(){return 0;}"
       @solution_template = mock_model(SolutionTemplate).as_null_object
       @unit_test = mock_model(UnitTest).as_null_object
@@ -88,7 +89,7 @@ describe Code do
     end
 
     it "gets feedback on the resulting unit test gradesheet" do
-      Feedback.should_receive(:on).and_return("Nice!")
+      Feedback.should_receive(:on)
       @code.check_against(@unit_test, @solution_template).should == "Nice!"
     end
   end
