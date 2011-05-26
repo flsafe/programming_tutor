@@ -125,14 +125,13 @@ class IdeoneClient
   #
   #
   def get_error_message(result_code)
-    error = case result_code
+    case 
       when compile_error?(result_code) then :compile_error
       when runtime_error?(result_code) then :runtime_error
       when timeout_error?(result_code) then :timeout_error
       when memory_error?(result_code)  then :memory_error
       when syscall_error?(result_code) then :syscall_error
     end
-    error
   end
 
   def program_completed_successfully?(result_code)
