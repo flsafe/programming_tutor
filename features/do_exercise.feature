@@ -31,3 +31,10 @@ Feature: A user does an exercise
     When I type a correct solution 
     And I press the check solution button 
     Then I should see an 'ok' message 
+
+  Scenario: Submits thier solution for a grade 
+    Given I am a user
+    And I am doing an exercise
+    When I type a correct solution 
+    And I press the submit solution button 
+    Then I should see a grade sheet with a perfect grade

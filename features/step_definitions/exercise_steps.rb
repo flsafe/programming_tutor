@@ -74,6 +74,10 @@ When /^I press the check solution button$/ do
   click_button "Check Solution"
 end
 
+When /^I press the submit solution button$/ do
+  click_button "Submit Solution"
+end
+
 Then /^I should see the exercise prototype$/ do
   page.should have_css("textarea#text_editor")
 end
@@ -96,4 +100,8 @@ end
 
 Then /^I should see an 'ok' message$/ do
   page.should have_css("#message", :text=>"This looks like it could work!")
+end
+
+Then /^I should see a grade sheet with a perfect grade$/ do
+  page.should have_css("#grade_sheet", :text => "100")
 end

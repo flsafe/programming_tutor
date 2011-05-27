@@ -18,6 +18,22 @@ class Code < ActiveRecord::Base
     Feedback.on(grade_sheet)
   end
 
+  # Grades the code against the unit test using
+  # the provided solution template.
+  def grade_against(unit_test, solution_template, user)
+    solution = solution_template.fill_in(src_code)  
+    grade_sheet = unit_test.run_with(solution)
+    grade_sheet.src_code = src_code
+    grade_sheet.user = user
+    grade_sheet.exercise = user.current_exercise
+    begin
+      grade_sheet.save!
+    rescue
+      Rails.logger.error "Invalid grade sheet could not be saved:\n #{pp grade_sheet}"
+      raise "Internal error, invalid grade sheet"
+    end
+  end
+
   # Tableless model
   def self.columns() @columns ||= []; end  
    

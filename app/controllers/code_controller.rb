@@ -1,5 +1,13 @@
 class CodeController < ApplicationController
 
+  CHECK_SYNTAX    = "Check Syntax"
+  CHECK_SOLUTION  = "Check Solution"
+  SUBMIT_SOLUTION = "Submit Solution"
+
+  ACTION_FOR = {CHECK_SYNTAX     => :show,
+                CHECK_SOLUTION   => :show,
+                SUBMIT_SOLUTION  => :grade}
+
   # POST code/start/:id
   # Create a new exercise session
   def start
@@ -36,11 +44,13 @@ class CodeController < ApplicationController
     session[:code] = params[:code]
     @code = Code.new(params[:code])
     session[:message] = case params[:commit]
-                        when "Check Syntax"   then do_syntax_check
-                        when "Check Solution" then do_solution_check
+                          when CHECK_SYNTAX    then do_syntax_check
+                          when CHECK_SOLUTION  then do_solution_check
+                          when SUBMIT_SOLUTION then do_solution_grading
                         end
+    action = ACTION_FOR[params[:commit]] || :show
     respond_to do |format|
-      format.html {redirect_to(:action=>:show)}
+      format.html {redirect_to(:action=>action)}
     end
   end
 
@@ -56,37 +66,24 @@ class CodeController < ApplicationController
     end
   end
 
-  # POST code/check
-  # Run the code throught unit tests
-  # without submitting a grade.
-  def check
-
-  end
-
-  # GET code/check
+  # GET check
   # Get the results of running
   # the code through the unit tests.
-  def get_check
+  def check
     
   end
 
-  # POST code/grade
-  # Submit code to be graded.
-  def grade
-
-  end
-
   # GET code/grade
-  # Get grade 
-  def get_grade
-
+  # Get grade for the current exercise
+  def grade 
+    @grade_sheet = GradeSheet.for(current_user)
   end
 
   # GET code/already_doing_exercise
   # Give option of redirecting to the current exercise
   # or starting a new one
   def already_doing_exercise
-
+    
   end
 
   private
@@ -99,5 +96,12 @@ class CodeController < ApplicationController
     curr_exercise = current_user.current_exercise
     @code.check_against(curr_exercise.unit_test, 
                         curr_exercise.solution_template)
+  end
+
+  def do_solution_grading
+    curr_exercise = current_user.current_exercise
+    @code.grade_against(curr_exercise.unit_test, 
+                        curr_exercise.solution_template,
+                        current_user)
   end
 end

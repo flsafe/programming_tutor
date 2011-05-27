@@ -42,4 +42,9 @@ describe "code/show.html.erb" do
     render
     rendered.should have_selector("input[value='Check Solution']")
   end
+
+  it "renders a 'Submit Solution' button" do
+    render
+    rendered.should have_selector("input[value='Submit Solution']")
+  end
 end

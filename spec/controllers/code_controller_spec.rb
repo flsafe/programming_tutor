@@ -59,7 +59,7 @@ describe CodeController do
   end
 
   describe "post do_action" do
-    it "saves the users code to the current session (to redisplay with non ajax clients)"do
+    it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
       post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
     end
@@ -97,6 +97,24 @@ describe CodeController do
         session[:message].should == "unit test results"
       end
     end
+
+    context "when the user pressed the 'Submit Solution' button" do
+      before(:each) do
+        @user.start_coding @exercise
+      end
+
+      it "grades the user's code" do
+        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
+        @code.should_receive(:grade_against)
+        post :do_action, :commit=>"Submit Solution"
+      end
+
+      it "redirects to the grade action" do
+        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
+        post :do_action, :commit=>"Submit Solution"
+        response.should redirect_to(:action=>:grade)
+      end
+    end
   end
 
   describe "get #show" do
@@ -112,6 +130,24 @@ describe CodeController do
     it "assigns the message" do
       get :show
       assigns(:message).should_not == nil
+    end
+  end
+
+  describe "get grade" do
+    it "retrieves the latest grade sheet for the current exercise" do
+      GradeSheet.should_receive(:for).with(@user)
+      get "grade"
+    end
+
+    it "assigns the grade sheet" do
+      GradeSheet.stub(:for).and_return(@gs = stub_model(GradeSheet))
+      get :grade
+      assigns(:grade_sheet).should == @gs
+    end
+
+    it "renders the grade template" do
+      get :grade
+      response.should render_template("grade") 
     end
   end
 end

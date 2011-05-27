@@ -7,6 +7,16 @@ class GradeSheet < ActiveRecord::Base
   validates :user, :exercise, :src_code, :tests, :presence=>true
   validate :unit_tests_format
 
+  before_validation :serialize_unit_tests
+
+  # Returns the latest grade sheet
+  # for the user's current exercise.
+  def self.for(user)
+    curr_exercise = user.current_exercise
+    GradeSheet.where(:user_id => user.id, 
+                     :exercise_id => curr_exercise.id).order("created_at DESC").first
+  end
+
   # Calculate the grade based on the 
   # unit test hashes that have been added
   # to this grade sheet.
@@ -30,13 +40,12 @@ class GradeSheet < ActiveRecord::Base
   # automatically if left out.
   def add_unit_test(unit_test_hash)
     unit_tests.merge!(unit_test_hash)
-    tests = YAML.dump(unit_tests)
   end
 
   # Returns the unit test hashes that have been
   # added to this unit test.
   def unit_tests 
-    @tests_hash = @tests_hash || {}
+    @tests_hash = @tests_hash || YAML.load(tests || "") || {}
   end
 
   # Returns the points per test
@@ -51,7 +60,7 @@ class GradeSheet < ActiveRecord::Base
   # expected keys.
   #     :input, :output, :expected, :points
   def unit_tests_format
-    expected_keys = [:input, :output, :expected, :points]
+    expected_keys = [:input, :output, :expected]
     unit_tests.each_pair do |test_name, info|
       expected_keys.each do |expected_key|
         errors.add(:base, "'#{test_name}' is missing #{expected_key}") unless info[expected_key]
@@ -59,4 +68,7 @@ class GradeSheet < ActiveRecord::Base
     end
   end
 
+  def serialize_unit_tests
+    self.tests = YAML.dump(unit_tests)
+  end
 end

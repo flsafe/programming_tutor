@@ -22,9 +22,9 @@ Rasberry::Application.routes.draw do
 
   # Polling functions used when an asynchronous request for
   # syntax or unit tests are made.
-  match "code/syntax"=>"code#get_syntax", :as=>:get_syntax, :via=>:get
-  match "code/check"=>"code#get_check", :as=>:get_check, :via=>:get
-  match "code/grade"=>"code#get_grade", :as=>:get_grade, :via=>:get
+  match "code/syntax"=>"code#syntax", :as=>:get_syntax, :via=>:get
+  match "code/check"=>"code#check", :as=>:get_check, :via=>:get
+  match "code/grade"=>"code#grade", :as=>:get_grade, :via=>:get
   match "code/already_doing_exercise"=>"code#already_doing_exercise", :as=>:choose_code, :via=>:get
 
   # The priority is based upon order of creation:
