@@ -5,3 +5,26 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+#
+
+user = User.new(:username=>'user',
+                :password=>'password',
+                :password_confirmation=>'password',
+                :email=>'user@mail.com')
+user.admin = true;
+user.save!
+
+an_exercise = Exercise.new do |e|
+  e.title       = "Remove A Letter From A String"
+  e.description = "Write a function that removes a specific character from a string"
+  e.text        = "Write a function that takes as arguments a character and a string. The function ..."
+  e.minutes     = 15
+  e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.rb"),
+                             :src_language=>"ruby")
+  e.solution_template = SolutionTemplate.new(:src_code=>IO.read("#{Rails.root}/content/solution_template.c"),
+                                             :src_language=>'c')
+  e.lesson            = Lesson.create!(:title=>"Manipulating Strings",
+                                       :description=>"Learn basic operations on strings",
+                                       :text=>"There two ways to remove characters from a string...")
+end
+an_exercise.save!
