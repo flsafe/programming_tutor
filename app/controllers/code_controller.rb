@@ -1,14 +1,9 @@
 class CodeController < ApplicationController
 
-  CHECK_SYNTAX    = "Check Syntax"
-  CHECK_SOLUTION  = "Check Solution"
-  SUBMIT_SOLUTION = "Submit Solution"
-  QUIT            = "Quit"
-
-  ACTION_FOR = {CHECK_SYNTAX     => {:controller=>:code, :action=>:show},
-                CHECK_SOLUTION   => {:controller=>:code, :action=>:show},
-                SUBMIT_SOLUTION  => {:controller=>:code, :action=>:grade},
-                QUIT             => {:controller=>:lessons, :action=>:index}}
+  DISPATCH_TABLE = {"Check Syntax"    => :do_syntax_check,
+                    "Check Solution"  => :do_solution_check,
+                    "Submit Solution" => :do_solution_grading,
+                    "Quit"            => :do_quit}
 
   # POST code/start/:id
   # Create a new exercise session
@@ -36,12 +31,6 @@ class CodeController < ApplicationController
     end
   end
 
-  # POST code/quit
-  # End the current exercise session
-  def quit
-    current_user.end_code_session
-  end
-
   # POST code/do_action
   # Distpatch to the the approriate action
   # depending which submit button the user
@@ -49,16 +38,15 @@ class CodeController < ApplicationController
   def do_action
     session[:code] = params[:code]
     @code = Code.new(params[:code])
-    session[:message] = case params[:commit]
-                          when CHECK_SYNTAX    then do_syntax_check
-                          when CHECK_SOLUTION  then do_solution_check
-                          when SUBMIT_SOLUTION then do_solution_grading
-                          when QUIT
-                            current_user.end_code_session
-                          end
-    action = ACTION_FOR[params[:commit]] || {:controller=>:code, :action=>:show} 
     respond_to do |format|
-      format.html {redirect_to(action)}
+      format.html do 
+        action = send(DISPATCH_TABLE[params[:commit]])
+        redirect_to action
+      end
+      format.js do 
+        template = send(DISPATCH_TABLE[params[:commit]])
+        render :template=>template, :layout=>false
+      end
     end
   end
 
@@ -96,19 +84,43 @@ class CodeController < ApplicationController
   private
 
   def do_syntax_check
-    @code.get_syntax_message
+    case 
+      when request.xhr?
+      else
+        session[:message] = @code.get_syntax_message
+        return {:action=>:show}
+    end
   end
 
   def do_solution_check
-    curr_exercise = current_user.current_exercise
-    @code.check_against(curr_exercise.unit_test, 
-                        curr_exercise.solution_template)
+    case 
+      when request.xhr?
+      else
+        curr_exercise = current_user.current_exercise
+        session[:message] = @code.check_against(curr_exercise.unit_test, 
+                              curr_exercise.solution_template)
+        return {:action=>:show}
+    end
   end
 
   def do_solution_grading
-    curr_exercise = current_user.current_exercise
-    @code.grade_against(curr_exercise.unit_test, 
-                        curr_exercise.solution_template,
-                        current_user)
+    case 
+      when request.xhr?
+      else
+        curr_exercise = current_user.current_exercise
+        @code.grade_against(curr_exercise.unit_test, 
+                            curr_exercise.solution_template,
+                            current_user)
+        return {:action=>:grade}
+    end
+  end
+
+  def do_quit
+    current_user.end_code_session
+    case 
+      when request.xhr?
+      else
+        return {:controller=>:lessons}
+    end
   end
 end

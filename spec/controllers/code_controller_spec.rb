@@ -68,7 +68,7 @@ describe CodeController do
 
   describe "post do_action" do
     it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
-      post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}
+      post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}, :commit=>"Check Syntax"
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
     end
     context "when the user pressed the 'Check Syntax' button" do
