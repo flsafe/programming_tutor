@@ -6,10 +6,10 @@ describe "grade_sheets/show.html.erb" do
   def tests
     {:test_string_length_one=>
       {:input=>'abc',
-       :got=>'abc',
+       :output=>'abc',
        :expected=>'abc',
        :points=>10,
-       :error_message=>nil}}
+       :error=>nil}}
   end
 
   before(:each) do

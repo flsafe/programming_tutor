@@ -1,0 +1,15 @@
+<table class="exercise-statistics">
+        <caption>Exercise Stats</caption>
+        <tr>
+          <td>Average Grade:</td>
+          <td><%= "%.2f" % @grade_sheet.exercise.get_stat('average_grade') %></td>
+        </tr>
+        <tr>
+          <td>Completion Time:</td>
+          <td><%= "%.2f" % (@grade_sheet.time_taken / 60.0) %> mins</td>
+        </tr>
+        <tr>
+          <td>Average Completion Time:</td>
+          <td><%= "%.2f" % (@grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
+        </tr>
+</table>

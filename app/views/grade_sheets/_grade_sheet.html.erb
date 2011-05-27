@@ -1,8 +1,8 @@
-<% tests = @grade_sheet.unit_tests %>
+<% tests = grade_sheet.unit_tests %>
 
-<div class="gradesheet">
+<div class="grade_sheet">
 			<table class="tests">
-        <caption><%=h @grade_sheet.exercise.title %></caption>
+        <caption><%=h grade_sheet.exercise.title %></caption>
 				<tr>
 					<th>Test</th>
           <th>Input</th>
@@ -12,8 +12,8 @@
 				</tr> 
 					<% tests.each_pair do |test_title, info| %>
 						<tr>
-							<td> <%= test_title %>       </td> 
-              <td> <%= info[:input]%>    </td>
+							<td> <%= test_title %>      </td> 
+              <td> <%= info[:input]%>     </td>
               <td> <%= info[:output] %>   </td>
               <td> <%= info[:expected] %> </td>
               <td> <%= info[:points] %>   </td>
@@ -21,27 +21,13 @@
 					<% end %>
 					<tr>
             <td colspan="4"></td>
-						<th align="left">Grade: <%= @grade_sheet.grade %></th>
+						<th align="left">Grade: <%= grade_sheet.grade %></th>
 					</tr>
 			</table>
 
-     <table class="exercise-statistics">
-             <caption>Exercise Stats</caption>
-             <tr>
-               <td>Average Grade:</td>
-               <td><%= "%.2f" % @grade_sheet.exercise.get_stat('average_grade') %></td>
-             </tr>
-             <tr>
-               <td>Completion Time:</td>
-               <td><%= "%.2f" % (@grade_sheet.time_taken / 60.0) %> mins</td>
-             </tr>
-             <tr>
-               <td>Average Completion Time:</td>
-               <td><%= "%.2f" % (@grade_sheet.exercise.get_stat('average_time_taken') / 60.0)%> mins</td>
-             </tr>
-     </table>
-			
-			<pre class="solution-code">
-				<%= @grade_sheet.src_code %>
+			<pre class="solution_code">
+       <code>
+				<%= grade_sheet.src_code %>
+      </code>
 			</pre>
 </div>

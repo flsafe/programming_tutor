@@ -26,7 +26,9 @@ class GradeSheet < ActiveRecord::Base
     end
     @sum = 0
     unit_tests.each_pair do |test_name, info|
-      @sum += info[:points] 
+      if info[:output].strip.chomp == info[:expected].strip.chomp
+        @sum += info[:points] 
+      end
     end
     @sum
   end

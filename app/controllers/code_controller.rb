@@ -83,7 +83,6 @@ class CodeController < ApplicationController
   # Give option of redirecting to the current exercise
   # or starting a new one
   def already_doing_exercise
-    
   end
 
   private
