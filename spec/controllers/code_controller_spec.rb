@@ -65,19 +65,18 @@ describe CodeController do
     end
   end
 
+
   describe "post do_action" do
     it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
       post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
     end
-
     context "when the user pressed the 'Check Syntax' button" do
       it "runs a syntax check on the code" do
         Code.stub(:new).and_return(@code = mock_model(Code)) 
         @code.should_receive :get_syntax_message
         post :do_action, :commit=>"Check Syntax"
       end
-
       it  "assigns the syntax check message to session[:message]"do
         @code = stub_model(Code, :get_syntax_message=>"None")
         Code.stub(:new).and_return(@code)
@@ -90,13 +89,11 @@ describe CodeController do
       before(:each) do
         @user.start_coding @exercise
       end
-
       it "runs the code through the unit tests" do
         Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         @code.should_receive :check_against
         post :do_action, :commit=>"Check Solution"
       end
-
       it  "assigns the syntax check message to session[:message]"do
         @code = stub_model(Code, :check_against=>"unit test results")
         Code.stub(:new).and_return(@code)
@@ -109,17 +106,33 @@ describe CodeController do
       before(:each) do
         @user.start_coding @exercise
       end
-
       it "grades the user's code" do
         Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         @code.should_receive(:grade_against)
         post :do_action, :commit=>"Submit Solution"
       end
-
       it "redirects to the grade action" do
         Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         post :do_action, :commit=>"Submit Solution"
         response.should redirect_to(:action=>:grade)
+      end
+    end
+
+    context "When the user pressed 'Quit'" do
+      it "destroys the users' current code session" do
+        @user.code_session = mock_model(CodeSession).as_null_object
+        @user.code_session.should_receive(:destroy)
+        post :do_action, :commit=>"Quit"
+      end
+      it "assigns nil to the user's code session" do
+        @user.code_session = mock_model(CodeSession).as_null_object
+        post :do_action, :commit=>"Quit"
+        @user.code_session.should == nil
+      end
+      it "redirects to the home page" do
+        @user.code_session = mock_model(CodeSession).as_null_object
+        post :do_action, :commit=>"Quit"
+        response.should redirect_to lessons_path
       end
     end
   end

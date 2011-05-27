@@ -3,10 +3,12 @@ class CodeController < ApplicationController
   CHECK_SYNTAX    = "Check Syntax"
   CHECK_SOLUTION  = "Check Solution"
   SUBMIT_SOLUTION = "Submit Solution"
+  QUIT            = "Quit"
 
-  ACTION_FOR = {CHECK_SYNTAX     => :show,
-                CHECK_SOLUTION   => :show,
-                SUBMIT_SOLUTION  => :grade}
+  ACTION_FOR = {CHECK_SYNTAX     => {:controller=>:code, :action=>:show},
+                CHECK_SOLUTION   => {:controller=>:code, :action=>:show},
+                SUBMIT_SOLUTION  => {:controller=>:code, :action=>:grade},
+                QUIT             => {:controller=>:lessons, :action=>:index}}
 
   # POST code/start/:id
   # Create a new exercise session
@@ -37,7 +39,7 @@ class CodeController < ApplicationController
   # POST code/quit
   # End the current exercise session
   def quit
-
+    current_user.end_code_session
   end
 
   # POST code/do_action
@@ -51,10 +53,12 @@ class CodeController < ApplicationController
                           when CHECK_SYNTAX    then do_syntax_check
                           when CHECK_SOLUTION  then do_solution_check
                           when SUBMIT_SOLUTION then do_solution_grading
-                        end
-    action = ACTION_FOR[params[:commit]] || :show
+                          when QUIT
+                            current_user.end_code_session
+                          end
+    action = ACTION_FOR[params[:commit]] || {:controller=>:code, :action=>:show} 
     respond_to do |format|
-      format.html {redirect_to(:action=>action)}
+      format.html {redirect_to(action)}
     end
   end
 
