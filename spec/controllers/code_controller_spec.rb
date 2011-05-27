@@ -144,10 +144,5 @@ describe CodeController do
       get :grade
       assigns(:grade_sheet).should == @gs
     end
-
-    it "renders the grade template" do
-      get :grade
-      response.should render_template("grade") 
-    end
   end
 end
