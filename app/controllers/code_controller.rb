@@ -19,7 +19,11 @@ class CodeController < ApplicationController
             current_user.start_coding exercise 
             url = code_url
           else
-            url = choose_code_url
+            if exercise == current_user.current_exercise
+              url = code_path
+            else
+              url = choose_code_url
+            end
           end
           redirect_to url
         end

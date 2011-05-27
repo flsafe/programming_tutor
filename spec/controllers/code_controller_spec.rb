@@ -26,17 +26,16 @@ describe CodeController do
 
   describe "#start" do
     before(:each) do
-      Exercise.stub(:find).and_return(stub_model(Exercise))
     end
 
     context "when the user has no current code session for an exercise" do
       it "starts a new code session" do
         @user.should_receive(:start_coding)
-        get 'start', :id=>0
+        get 'start', :id=>@exercise.id
       end
 
       it "redirects to #show" do
-        get 'start', :id=>0
+        get 'start', :id=>@exercise.id
         response.should redirect_to(:action=>:show)
       end
     end
@@ -47,13 +46,21 @@ describe CodeController do
       end
 
       it "redirects to #already_doing_exercise" do
-        get 'start', :id=>0 
+        get 'start', :id=>@exercise.id
         response.should redirect_to choose_code_path 
       end
 
       it "does not start a new code session" do
         @user.should_not_receive(:start_code_session)
-        get 'start', :id=>0
+        get 'start', :id=>@exercise.id
+      end
+
+      context "when the the user's current exercise is requested" do
+        it "redirects to #show" do
+          @user.stub(:current_exercise).and_return(@exercise)
+          get 'start', :id=>@exercise.id
+          response.should redirect_to code_path
+        end
       end
     end
   end
