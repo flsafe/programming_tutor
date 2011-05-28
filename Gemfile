@@ -12,6 +12,8 @@ gem 'authlogic'
 # A soap client YUCK
 gem 'savon'
 
+gem 'jquery-rails'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

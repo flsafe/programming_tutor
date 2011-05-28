@@ -83,11 +83,19 @@ class CodeController < ApplicationController
 
   private
 
+  # These do_xxxx functions handle both AJAX and HTML requests.
+  # There is no real difference between the two except that
+  # the AJAX requests render a .js.erb file to update the page
+  # and the HTML requests to redirect to update the page.
+  # The session message is used to share the results of an action
+  # after a redirect. 
+
   def do_syntax_check
+    @message = session[:message] = @code.get_syntax_message
     case 
       when request.xhr?
+        return 'code/syntax'
       else
-        session[:message] = @code.get_syntax_message
         return {:action=>:show}
     end
   end
