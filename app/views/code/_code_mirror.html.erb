@@ -22,8 +22,8 @@
        tabMode: "indent"});
 
   /* Hide/show the spinner gif */
-  $('#text_editor_form').bind('ajax:beforeSend', function(){
-    $('#message').html("<p>Checking...</p>");
+  $('#text_editor_form').bind('ajax:beforeSend', function(evt, xhr, settings){
+    $('#message').html("");
     $('#spinner').show();
   })
   .bind('ajax:complete', function(){

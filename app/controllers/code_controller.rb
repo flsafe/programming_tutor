@@ -128,6 +128,7 @@ class CodeController < ApplicationController
     current_user.end_code_session
     case 
       when request.xhr?
+        'code/quit'
       else
         return {:controller=>:lessons}
     end
