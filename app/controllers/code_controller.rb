@@ -101,12 +101,13 @@ class CodeController < ApplicationController
   end
 
   def do_solution_check
+    curr_exercise = current_user.current_exercise
+    @message = session[:message] = @code.check_against(curr_exercise.unit_test, 
+                                      curr_exercise.solution_template)
     case 
       when request.xhr?
+        return "code/syntax"
       else
-        curr_exercise = current_user.current_exercise
-        session[:message] = @code.check_against(curr_exercise.unit_test, 
-                              curr_exercise.solution_template)
         return {:action=>:show}
     end
   end
