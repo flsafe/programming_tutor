@@ -113,13 +113,14 @@ class CodeController < ApplicationController
   end
 
   def do_solution_grading
+    curr_exercise = current_user.current_exercise
+    @grade_sheet = @code.grade_against(curr_exercise.unit_test, 
+                        curr_exercise.solution_template,
+                        current_user)
     case 
       when request.xhr?
+        return 'code/grade_sheet'
       else
-        curr_exercise = current_user.current_exercise
-        @code.grade_against(curr_exercise.unit_test, 
-                            curr_exercise.solution_template,
-                            current_user)
         return {:action=>:grade}
     end
   end

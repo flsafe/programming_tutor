@@ -21,7 +21,15 @@
        indentUnit: 2,
        tabMode: "indent"});
 
-  /* Hide/show the spinner gif */
+  /* When grading a solution, hide everything*/
+  $('input[value="Submit Solution"]').click(function(){
+    $('#text_editor_form').hide();
+    $('#timer').hide();
+    $('#exercise_problem_text').hide();
+    $('#grade_sheet_wrapper').html("Gradding...");
+  });
+
+  /* Hide/show the spinner gif when checking syntax or checking solution*/
   $('#text_editor_form').bind('ajax:beforeSend', function(evt, xhr, settings){
     $('#message').html("");
     $('#spinner').show();
