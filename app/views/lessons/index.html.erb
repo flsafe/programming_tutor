@@ -9,9 +9,9 @@
       <p class="content_paragraph"><%= lesson.description%></p>
 
       <% if current_user and current_user.admin? %>
-        <%= link_to 'Edit', edit_lesson_path(lesson), :class=>"small_content_link" %>
-        <%= link_to 'Destroy', lesson, :confirm => 'Are you sure?', :method => :delete, :class=>"small_content_link" %>
-        <%= link_to 'New Lesson', new_lesson_path, :class=>'small_content_link' %>
+        <%= link_to 'Edit', edit_lesson_path(lesson), :class=>"button" %>
+        <%= link_to 'Destroy', lesson, :confirm => 'Are you sure?', :method => :delete, :class=>"button" %>
+        <%= link_to 'New Lesson', new_lesson_path, :class=>'button' %>
       <% end %>
     </li>
   <% end %>

@@ -25,7 +25,7 @@ describe "lessons/index.html.erb" do
 
     it "does not show the admin links (edit, destroy or 'new lesson' link)" do
       render
-      rendered.should_not have_selector("#lessons_list li a.small_content_link")
+      rendered.should_not have_selector("#lessons_list li a.button")
     end
   end
 
@@ -33,7 +33,7 @@ describe "lessons/index.html.erb" do
     it "shows the admin links (edit, destroy, 'new lesson')" do
       view.stub(:current_user).and_return stub_model(User, :admin? => true)
       render
-      rendered.should have_selector("#lessons_list li a.small_content_link")
+      rendered.should have_selector("#lessons_list li a.button")
     end
   end
 end

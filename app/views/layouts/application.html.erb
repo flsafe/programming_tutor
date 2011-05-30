@@ -1,14 +1,59 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
-  <title>Rasberry</title>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8" />
+	<title>Rasberry</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+	
+	<!-- CSS
+  ================================================== -->
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
+	
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="/images/favicon.ico">
+	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png" />
+	
+  <!-- CSRF
+	================================================== -->
+   <%= csrf_meta_tag %>
 </head>
 <body>
 
-<%= yield %>
 
+	<div class="container">	
+		<div class="sixteen columns">
+			<h2 style="margin-top: 40px"><a href="/">Rasberry</a></h1>
+			<h5>&raquo; <%= link_to 'Login', new_user_session_path %></h5>
+			<hr />
+		</div>
+    
+		<div class="sixteen columns">
+      <%= yield %>
+    </div>
+
+	</div><!-- container -->
+
+		
+	<!-- JS
+	================================================== -->
+  <%= javascript_include_tag :defaults %>
+	
 </body>
 </html>
