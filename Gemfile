@@ -6,7 +6,7 @@ gem 'rails', '3.0.7'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'nokogiri', '1.4.4.1'
+gem 'nokogiri', '~> 1.4.4'
 gem 'rake', '~> 0.8.7'
 gem 'authlogic'
 
