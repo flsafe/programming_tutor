@@ -7,34 +7,7 @@
   <%= f.text_area :src_code, :id=>'text_editor' do %>
   <% end %>
   <%= f.submit "Check Syntax", :disable_with=>"Check Syntax"%>
-  <%= f.submit "Check Solution", :disable_with=>"Checking Solution" %>
+  <%= f.submit "Check Solution", :disable_with=>"Check Solution" %>
   <%= f.submit "Submit Solution", :disable_with=>"Submit Solution" %>
   <%= f.submit "Quit", :disable_with=>"Quit" %>
 <% end %>
-
-<script type="text/javascript">
-  /* Initialize the CodeMirror text editor */
-  var textEditor = CodeMirror.fromTextArea(document.getElementById('text_editor'),
-      {mode: "clike",
-       lineNumbers: true,
-       matchBrackets: true,
-       indentUnit: 2,
-       tabMode: "indent"});
-
-  /* When grading a solution, hide everything*/
-  $('input[value="Submit Solution"]').click(function(){
-    $('#text_editor_form').hide();
-    $('#timer').hide();
-    $('#exercise_problem_text').hide();
-    $('#grade_sheet_wrapper').html("Gradding...");
-  });
-
-  /* Hide/show the spinner gif when checking syntax or checking solution*/
-  $('#text_editor_form').bind('ajax:beforeSend', function(evt, xhr, settings){
-    $('#message').html("");
-    $('#spinner').show();
-  })
-  .bind('ajax:complete', function(){
-    $('#spinner').hide();
-  });
-</script>
