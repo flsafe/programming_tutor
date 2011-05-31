@@ -10,6 +10,7 @@ describe "code/show.html.erb" do
     view.stub(:current_user).and_return(stub_model(User,
                                                   :seconds_left_in_code_session=>117))
     assign(:code, Code.new(:src_code=>@exercise.prototype))
+    assign(:message, "message")
   end
 
   it "renders the exercise prototype in the text editor" do

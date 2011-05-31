@@ -33,7 +33,6 @@ describe CodeController do
         @user.should_receive(:start_coding)
         get 'start', :id=>@exercise.id
       end
-
       it "redirects to #show" do
         get 'start', :id=>@exercise.id
         response.should redirect_to(:action=>:show)
@@ -128,6 +127,18 @@ describe CodeController do
         @user.code_session = mock_model(CodeSession).as_null_object
         post :do_action, :commit=>"Quit"
         @user.code_session.should == nil
+      end
+      it "assigns nil to the session code variable" do
+        @user.code_session = mock_model(CodeSession).as_null_object
+        session[:code] = 'Test Code'
+        post :do_action, :commit=>"Quit", :code=>"Test Code"
+        session[:code].should == nil
+      end
+      it "assigns nil to the session message variable" do
+        @user.code_session = mock_model(CodeSession).as_null_object
+        session[:message] = 'Test Code'
+        post :do_action, :commit=>"Quit", :code=>"Test Code"
+        session[:message].should == nil
       end
       it "redirects to the home page" do
         @user.code_session = mock_model(CodeSession).as_null_object

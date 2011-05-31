@@ -127,6 +127,8 @@ class CodeController < ApplicationController
 
   def do_quit
     current_user.end_code_session
+    session[:code] = nil
+    session[:message] = nil
     case 
       when request.xhr?
         'code/quit'
