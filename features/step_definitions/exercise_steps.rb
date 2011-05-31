@@ -35,7 +35,7 @@ end
 
 When /^I am viewing the code page for the exercise$/ do
   visit lesson_path(@an_exercise.lesson)
-  click_link(@an_exercise.title)
+  click_button("Start Exercise")
 end
 
 When /^I type a program with a syntax error$/ do

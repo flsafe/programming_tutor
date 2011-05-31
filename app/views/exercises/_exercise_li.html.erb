@@ -4,7 +4,7 @@
 <% end %>
 
 <li class="exercise_li">
-  <span><%= exercise_li.title %></span> (<%= grade %>)
+  <span class="exercise_li_title"><%= exercise_li.title %></span> (<%= grade %>)
   <%= button_to("Start Exercise",
                 start_coding_path(exercise_li)) %>
   <p>
