@@ -4,10 +4,9 @@
 <% end %>
 
 <li class="exercise_li">
-  <%= link_to("#{exercise_li.title}", 
-              start_coding_path(exercise_li),
-              :method=>:post) %> 
-  <%= "(#{grade})" %>
+  <span><%= exercise_li.title %></span> (<%= grade %>)
+  <%= button_to("Start Exercise",
+                start_coding_path(exercise_li)) %>
   <p>
     <%= exercise_li.description %>
   </p>
