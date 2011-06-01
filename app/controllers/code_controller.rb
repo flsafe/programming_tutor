@@ -126,6 +126,7 @@ class CodeController < ApplicationController
   end
 
   def do_quit
+    @current_lesson = current_user.current_exercise.lesson
     current_user.end_code_session
     session[:code] = nil
     session[:message] = nil
@@ -133,7 +134,7 @@ class CodeController < ApplicationController
       when request.xhr?
         'code/quit'
       else
-        return {:controller=>:lessons}
+        return lesson_url(@current_lesson)
     end
   end
 end

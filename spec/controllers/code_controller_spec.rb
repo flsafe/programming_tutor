@@ -6,6 +6,9 @@ describe CodeController do
                          :password=>'password',
                          :password_confirmation=>'password',
                          :email=>'frank@mail.com').as_null_object
+    controller.stub(:current_user).and_return(@user)
+
+    @lesson = Lesson.create!(:title=>"Lesson1")
     @exercise = Exercise.create!(:title=>"exercise",
                                  :minutes=>1,
                                  :unit_test=>stub_model(UnitTest, 
@@ -15,7 +18,7 @@ describe CodeController do
                                                                 :src_code=>'c', 
                                                                 :src_language=>'c',
                                                                 :prototype=>'c')).as_null_object
-    controller.stub(:current_user).and_return(@user)
+    @lesson.exercises << @exercise
   end
 
   def valid_attributes
@@ -70,6 +73,7 @@ describe CodeController do
       post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}, :commit=>"Check Syntax"
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
     end
+
     context "when the user pressed the 'Check Syntax' button" do
       it "runs a syntax check on the code" do
         Code.stub(:new).and_return(@code = mock_model(Code)) 
@@ -118,32 +122,31 @@ describe CodeController do
     end
 
     context "When the user pressed 'Quit'" do
+      before(:each) do
+        @user.start_coding @exercise
+      end
       it "destroys the users' current code session" do
         @user.code_session = mock_model(CodeSession).as_null_object
         @user.code_session.should_receive(:destroy)
         post :do_action, :commit=>"Quit"
       end
       it "assigns nil to the user's code session" do
-        @user.code_session = mock_model(CodeSession).as_null_object
         post :do_action, :commit=>"Quit"
         @user.code_session.should == nil
       end
       it "assigns nil to the session code variable" do
-        @user.code_session = mock_model(CodeSession).as_null_object
         session[:code] = 'Test Code'
         post :do_action, :commit=>"Quit", :code=>"Test Code"
         session[:code].should == nil
       end
       it "assigns nil to the session message variable" do
-        @user.code_session = mock_model(CodeSession).as_null_object
         session[:message] = 'Test Code'
         post :do_action, :commit=>"Quit", :code=>"Test Code"
         session[:message].should == nil
       end
-      it "redirects to the home page" do
-        @user.code_session = mock_model(CodeSession).as_null_object
+      it "redirects to the exercise's lesson page" do
         post :do_action, :commit=>"Quit"
-        response.should redirect_to lessons_path
+        response.should redirect_to lesson_path(@lesson) 
       end
     end
   end
