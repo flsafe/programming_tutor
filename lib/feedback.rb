@@ -3,8 +3,9 @@ class Feedback
   # Return a friendly feedback message
   # based on the grade sheet.
   def self.on(grade_sheet)
-    if grade_sheet.errors.any?
-      Rails.logger.error "An invalid grade sheet was produced:\n #{pp grade_sheet}"
+    if grade_sheet.unit_tests_failed?
+      Rails.logger.error "An invalid grade sheet was produced:"
+      grade_sheet.errors.full_messages.each {|msg| Rails.logger.error(msg)}
       return "I'm embarrased! An internal error occurred, sorry about that. Try again a bit later."
     end
 

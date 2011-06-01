@@ -28,11 +28,11 @@ class Code < ActiveRecord::Base
     grade_sheet.exercise = user.current_exercise
     begin
       grade_sheet.save!
-      return grade_sheet
     rescue
-      Rails.logger.error "Invalid grade sheet could not be saved:\n #{pp grade_sheet}"
-      raise "Internal error, invalid grade sheet"
+      Rails.logger.error "Invalid grade sheet could not be saved:\n "
+      grade_sheet.errors.full_messages.each {|msg| Rails.logger.error msg}
     end
+    grade_sheet
   end
 
   # Tableless model

@@ -26,7 +26,7 @@ class GradeSheet < ActiveRecord::Base
     end
     @sum = 0
     unit_tests.each_pair do |test_name, info|
-      if info[:output].strip.chomp == info[:expected].strip.chomp
+      if info[:output] and (info[:output].strip.chomp == info[:expected].strip.chomp)
         @sum += info[:points] 
       end
     end
@@ -55,6 +55,15 @@ class GradeSheet < ActiveRecord::Base
     100.0 / unit_tests.count
   end
 
+  def unit_tests_failed?
+    not unit_tests_ok?
+  end
+
+  def unit_tests_ok?
+    unit_tests_format
+    not errors.any?
+  end
+
   private 
 
   # Validates each unit test result hash.
@@ -63,9 +72,13 @@ class GradeSheet < ActiveRecord::Base
   #     :input, :output, :expected, :points
   def unit_tests_format
     expected_keys = [:input, :output, :expected]
-    unit_tests.each_pair do |test_name, info|
-      expected_keys.each do |expected_key|
-        errors.add(:base, "'#{test_name}' is missing #{expected_key}") unless info[expected_key]
+    if unit_tests.empty?
+      errors.add(:base, "There was an error when trying to execute the unit tests")
+    else
+      unit_tests.each_pair do |test_name, info|
+        expected_keys.each do |expected_key|
+          errors.add(:base, "'#{test_name}' is missing #{expected_key}") unless info[expected_key]
+        end
       end
     end
   end

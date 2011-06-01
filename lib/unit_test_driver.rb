@@ -52,7 +52,12 @@ module UnitTestDriver
   # Execute the given src code.
   def execute(src_code, input)
     client = IdeoneClient.new(APP_CONFIG['ideone']['user'], APP_CONFIG['ideone']['password'])
-    link = client.run_code(src_code, input)
-    results = client.get_code_results(link)
+    begin
+      link = client.run_code(src_code, input)
+      results = client.get_code_results(link)
+    rescue
+      Rails.logger.error("Couldn't reach the IDEClient to perform a unit test. Returning {} as the result.")
+      {}
+    end
   end
 end
