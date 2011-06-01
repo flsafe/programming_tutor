@@ -13,3 +13,7 @@ end
 Then /^I should be redirected to the home page$/ do
   page.should have_css("ul#lessons_list")
 end
+
+Then /^I should be redirected to the account page$/ do
+  current_url =~ /account$/
+end

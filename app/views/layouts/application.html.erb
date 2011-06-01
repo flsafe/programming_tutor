@@ -40,7 +40,16 @@
 	<div class="container">	
 		<div class="sixteen columns">
 			<h2 style="margin-top: 40px"><a href="/">Rasberry</a></h1>
-			<h5>&raquo; <%= link_to 'Login', new_user_session_path %></h5>
+			<h5>&raquo; 
+      <% if current_user %>  
+        Logged in as <%= current_user.username %>
+        <%= link_to "Account", account_url %>  
+        <%= link_to "Logout", logout_path %>  
+      <% else %>  
+        <%= link_to "Register", new_user_path %>  
+        <%= link_to "Log in", login_path %>  
+      <% end %>  
+      </h5>
 			<hr />
 		</div>
     
