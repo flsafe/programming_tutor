@@ -32,6 +32,11 @@ class GradeSheet < ActiveRecord::Base
     end
     @sum
   end
+
+  # Return the lesson that this grade sheet is associated with
+  def lesson
+    exercise.lesson
+  end
   
   # Add a hash describing the results of a unit test.
   # The keys are:

@@ -11,7 +11,8 @@ class Code < ActiveRecord::Base
   end
 
   # Runs the code against the given unit test
-  # using the provided solution template. 
+  # using the provided solution template. Returns
+  # a string containing a short feedback message.
   def check_against(unit_test, solution_template)
     solution = solution_template.fill_in(src_code)  
     grade_sheet = unit_test.run_with(solution)
@@ -19,7 +20,11 @@ class Code < ActiveRecord::Base
   end
 
   # Grades the code against the unit test using
-  # the provided solution template.
+  # the provided solution template. Returns
+  # a valid grade sheet if no errors occured while
+  # grading the solution. If an error occured then
+  # it returns an invalid grade sheet with the errors array
+  # explaining why.
   def grade_against(unit_test, solution_template, user)
     solution = solution_template.fill_in(src_code)  
     grade_sheet = unit_test.run_with(solution)

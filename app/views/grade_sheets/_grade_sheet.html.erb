@@ -1,4 +1,6 @@
-<% tests = grade_sheet.unit_tests %>
+<div>
+  <%= link_to "Back To Lesson", lesson_path(grade_sheet.lesson) %> 
+</div>
 
 <div class="grade_sheet">
 			<table class="tests">
@@ -10,6 +12,7 @@
           <th>Expected</th>
 					<th>Points</th>
 				</tr> 
+          <% tests = grade_sheet.unit_tests %>
 					<% tests.each_pair do |test_title, info| %>
 						<tr>
 							<td> <%= test_title %>      </td> 
