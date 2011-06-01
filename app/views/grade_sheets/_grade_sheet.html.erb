@@ -3,34 +3,41 @@
 </div>
 
 <div class="grade_sheet">
-			<table class="tests">
-        <caption><%=h grade_sheet.exercise.title %></caption>
-				<tr>
-					<th>Test</th>
-          <th>Input</th>
-					<th>Output</th>
-          <th>Expected</th>
-					<th>Points</th>
-				</tr> 
-          <% tests = grade_sheet.unit_tests %>
-					<% tests.each_pair do |test_title, info| %>
-						<tr>
-							<td> <%= test_title %>      </td> 
-              <td> <%= info[:input]%>     </td>
-              <td> <%= info[:output] %>   </td>
-              <td> <%= info[:expected] %> </td>
-              <td> <%= info[:points] %>   </td>
-						</tr>
-					<% end %>
-					<tr>
-            <td colspan="4"></td>
-						<th align="left">Grade: <%= grade_sheet.grade %></th>
-					</tr>
-			</table>
+<% if grade_sheet.unit_tests_failed? %>
+ <p>
+   Aww, Shoot! An internal error occured and we couldn't grade your exercise.
+   Please try again a little later while we figure out what happened. 
+ </p>
+ <% else %>
+  <table class="tests">
+    <caption><%=h grade_sheet.exercise.title %></caption>
+    <tr>
+      <th>Test</th>
+      <th>Input</th>
+      <th>Output</th>
+      <th>Expected</th>
+      <th>Points</th>
+    </tr> 
+      <% tests = grade_sheet.unit_tests %>
+      <% tests.each_pair do |test_title, info| %>
+        <tr>
+          <td> <%= test_title %>      </td> 
+          <td> <%= info[:input]%>     </td>
+          <td> <%= info[:output] %>   </td>
+          <td> <%= info[:expected] %> </td>
+          <td> <%= info[:points] %>   </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="4"></td>
+        <th align="left">Grade: <%= grade_sheet.grade %></th>
+      </tr>
+  </table>
 
-			<pre class="solution_code">
-       <code>
-				<%= grade_sheet.src_code %>
-      </code>
-			</pre>
+  <pre class="solution_code">
+   <code>
+    <%= grade_sheet.src_code %>
+  </code>
+  </pre>
+  <% end %>
 </div>
