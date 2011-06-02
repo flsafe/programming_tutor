@@ -9,7 +9,6 @@ Feature: A user does an exercise
     When I am viewing the code page for the exercise
     Then I should see the exercise prototype
     And I should see the exercise text
-    And I should see the time remaining for the exercise
 
   Scenario: The user has a syntax error
     Given I am a user
