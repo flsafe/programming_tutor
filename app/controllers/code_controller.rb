@@ -5,6 +5,8 @@ class CodeController < ApplicationController
                     "Submit Solution" => :do_solution_grading,
                     "Quit"            => :do_quit}
 
+  before_filter :ensure_exercise_session, :except=>[:start, :grade]
+
   # POST code/start/:id
   # Create a new exercise session
   def start
@@ -70,7 +72,7 @@ class CodeController < ApplicationController
   end
 
   # GET code/grade
-  # Get grade for the current exercise
+  # Get grade for the current exercise.
   def grade 
     @grade_sheet = GradeSheet.new(session[:grade_sheet])
   end
@@ -137,6 +139,13 @@ class CodeController < ApplicationController
         return 'code/quit'
       else
         return lesson_url(@current_lesson)
+    end
+  end
+
+  def ensure_exercise_session
+    if current_user.code_session.nil?
+      redirect_to lessons_url, :notice=>"The coding session has expired"
+      return false
     end
   end
 end
