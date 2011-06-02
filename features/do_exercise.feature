@@ -38,3 +38,4 @@ Feature: A user does an exercise
     When I type a correct solution 
     And I press the submit solution button 
     Then I should see a grade sheet with a perfect grade
+    And I should see my src code

@@ -46,17 +46,14 @@ describe CodeController do
       before(:each) do
         @user.stub(:code_session).and_return stub_model(CodeSession)
       end
-
       it "redirects to #already_doing_exercise" do
         get 'start', :id=>@exercise.id
         response.should redirect_to choose_code_path 
       end
-
       it "does not start a new code session" do
         @user.should_not_receive(:start_code_session)
         get 'start', :id=>@exercise.id
       end
-
       context "when the the user's current exercise is requested" do
         it "redirects to #show" do
           @user.stub(:current_exercise).and_return(@exercise)
@@ -66,7 +63,6 @@ describe CodeController do
       end
     end
   end
-
 
   describe "post do_action" do
     it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
@@ -91,15 +87,14 @@ describe CodeController do
     context "when the user pressed the 'Check Solution' button" do
       before(:each) do
         @user.start_coding @exercise
+        @code = stub_model(Code, :check_against=>"unit test results")
+        Code.stub(:new).and_return(@code)
       end
       it "runs the code through the unit tests" do
-        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         @code.should_receive :check_against
         post :do_action, :commit=>"Check Solution"
       end
       it  "assigns the syntax check message to session[:message]"do
-        @code = stub_model(Code, :check_against=>"unit test results")
-        Code.stub(:new).and_return(@code)
         post :do_action, :commit=>"Check Solution"
         session[:message].should == "unit test results"
       end
@@ -108,14 +103,18 @@ describe CodeController do
     context "when the user pressed the 'Submit Solution' button" do
       before(:each) do
         @user.start_coding @exercise
+        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
+        @code.stub(:grade_against).and_return(@gs = stub_model(GradeSheet))
       end
       it "grades the user's code" do
-        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         @code.should_receive(:grade_against)
         post :do_action, :commit=>"Submit Solution"
       end
+      it "saves the resultant grade sheet in the session" do
+        post :do_action, :commit=>"Submit Solution"
+        session[:grade_sheet].should_not == nil 
+      end
       it "redirects to the grade action" do
-        Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         post :do_action, :commit=>"Submit Solution"
         response.should redirect_to(:action=>:grade)
       end
@@ -168,15 +167,10 @@ describe CodeController do
   end
 
   describe "get grade" do
-    it "retrieves the latest grade sheet for the current exercise" do
-      GradeSheet.should_receive(:for).with(@user)
-      get "grade"
-    end
-
     it "assigns the grade sheet" do
-      GradeSheet.stub(:for).and_return(@gs = stub_model(GradeSheet))
+      session[:grade_sheet] = (@gs = stub_model(GradeSheet))
       get :grade
-      assigns(:grade_sheet).should == @gs
+      assigns(:grade_sheet).should_not == nil
     end
   end
 end

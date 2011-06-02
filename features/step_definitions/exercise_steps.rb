@@ -105,3 +105,8 @@ end
 Then /^I should see a grade sheet with a perfect grade$/ do
   page.should have_css("#grade_sheet", :text => "100")
 end
+
+Then /^I should see my src code$/ do
+  page.should have_css("#grade_sheet", :text=>IO.read(File.join(Rails.root, "content", "solution.c")))
+end
+

@@ -4,33 +4,16 @@ class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise 
 
-  validates :user, :exercise, :src_code, :tests, :presence=>true
+  validates :user, :exercise, :src_code, :tests, :grade, :presence=>true
   validate :unit_tests_format
 
-  before_validation :serialize_unit_tests
+  before_validation :grade, :serialize_unit_tests
 
-  # Returns the latest grade sheet
-  # for the user's current exercise.
-  def self.for(user)
-    curr_exercise = user.current_exercise
-    GradeSheet.where(:user_id => user.id, 
-                     :exercise_id => curr_exercise.id).order("created_at DESC").first
-  end
-
-  # Calculate the grade based on the 
-  # unit test hashes that have been added
-  # to this grade sheet.
-  def grade
-    unit_tests.each_pair do |test_name, info|
-      info[:points] ||= default_points_per_test
-    end
-    @sum = 0
-    unit_tests.each_pair do |test_name, info|
-      if info[:output] and (info[:output].strip.chomp == info[:expected].strip.chomp)
-        @sum += info[:points] 
-      end
-    end
-    @sum
+  # Returns all the grades for the
+  # given user.
+  def self.grades_for(user)
+    grade_sheets = GradeSheet.where(:user_id => user).order('grade')
+    grade_sheets.inject({}) {|accum, gs| accum.merge!(gs.exercise.id => gs.grade)}
   end
 
   # Return the lesson that this grade sheet is associated with
@@ -47,6 +30,11 @@ class GradeSheet < ActiveRecord::Base
   # automatically if left out.
   def add_unit_test(unit_test_hash)
     unit_tests.merge!(unit_test_hash)
+  end
+
+  # Return the grade
+  def grade
+    self[:grade] ||= calc_grade
   end
 
   # Returns the unit test hashes that have been
@@ -70,6 +58,22 @@ class GradeSheet < ActiveRecord::Base
   end
 
   private 
+
+  # Calculate the grade based on the 
+  # unit test hashes that have been added
+  # to this grade sheet.
+  def calc_grade
+    @sum = 0
+    unit_tests.each_pair do |test_name, info|
+      if info[:output] and (info[:output].strip.chomp == info[:expected].strip.chomp)
+        info[:points] = default_points_per_test unless info[:points]
+        @sum += info[:points] 
+      else
+        @sum += (info[:points] = 0)
+      end
+    end
+    @sum 
+  end
 
   # Validates each unit test result hash.
   # Each unit test result hash must have the 

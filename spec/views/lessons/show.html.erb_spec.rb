@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "lessons/show.html.erb" do
   before(:each) do
+    view.stub(:current_user).and_return(stub_model(User))
     @lesson = assign(:lesson, stub_model(Lesson,
       :title => "Title",
       :description => "MyText",
@@ -9,7 +10,7 @@ describe "lessons/show.html.erb" do
       :exercises=>[stub_model(Exercise, :id=>1, :title=>"ex1", :minutes=>1), 
                    stub_model(Exercise, :id=>2, :title=>"ex2", :minutes=>1)]))
 
-    assign(:grades, {1=>100, 2=>50})
+    GradeSheet.stub(:grades_for).and_return({1=>100, 2=>50})
   end
 
   it "renders the exercises in the lesson" do

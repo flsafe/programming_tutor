@@ -55,8 +55,9 @@ module UnitTestDriver
     begin
       link = client.run_code(src_code, input)
       results = client.get_code_results(link)
-    rescue
+    rescue => e 
       Rails.logger.error("Couldn't reach the IDEClient to perform a unit test. Returning {} as the result.")
+      Rails.logger.error(e.message)
       {}
     end
   end

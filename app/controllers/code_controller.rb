@@ -72,7 +72,7 @@ class CodeController < ApplicationController
   # GET code/grade
   # Get grade for the current exercise
   def grade 
-    @grade_sheet = GradeSheet.for(current_user)
+    @grade_sheet = GradeSheet.new(session[:grade_sheet])
   end
 
   # GET code/already_doing_exercise
@@ -117,6 +117,7 @@ class CodeController < ApplicationController
     @grade_sheet = @code.grade_against(curr_exercise.unit_test, 
                         curr_exercise.solution_template,
                         current_user)
+    session[:grade_sheet] = @grade_sheet.attributes
     case 
       when request.xhr?
         return 'code/grade_sheet'
@@ -132,7 +133,7 @@ class CodeController < ApplicationController
     session[:message] = nil
     case 
       when request.xhr?
-        'code/quit'
+        return 'code/quit'
       else
         return lesson_url(@current_lesson)
     end
