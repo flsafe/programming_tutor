@@ -41,13 +41,13 @@
 		<div class="sixteen columns">
 			<h2 style="margin-top: 40px"><a href="/">Rasberry</a></h1>
 			<h5>&raquo; 
-      <% if current_user %>  
-        Logged in as <%= current_user.username %>
-        <%= link_to "Account", account_url %>  
-        <%= link_to "Logout", logout_path %>  
-      <% else %>  
+      Logged in as <%= current_user.username %>
+      <% if current_user.anonymous %>  
         <%= link_to "Register", new_user_path %>  
         <%= link_to "Log in", login_path %>  
+      <% else %>  
+        <%= link_to "Account", account_url %>  
+        <%= link_to "Logout", logout_path %>  
       <% end %>  
       </h5>
 			<hr />

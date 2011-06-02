@@ -38,3 +38,10 @@ Feature: A user does an exercise
     And I press the submit solution button 
     Then I should see a grade sheet with a perfect grade
     And I should see my src code
+
+  Scenario: An non logged in user submits thier solution for a grade 
+    Given I am doing an exercise
+    When I type a correct solution 
+    And I press the submit solution button 
+    Then I should see a grade sheet with a perfect grade
+    And I should see my src code
