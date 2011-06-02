@@ -114,6 +114,10 @@ describe CodeController do
         post :do_action, :commit=>"Submit Solution"
         session[:grade_sheet].should_not == nil 
       end
+      it "ends the current exercise session" do
+        controller.should_receive :do_quit
+        post :do_action, :commit=>"Submit Solution"
+      end
       it "redirects to the grade action" do
         post :do_action, :commit=>"Submit Solution"
         response.should redirect_to(:action=>:grade)

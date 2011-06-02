@@ -118,6 +118,7 @@ class CodeController < ApplicationController
                         curr_exercise.solution_template,
                         current_user)
     session[:grade_sheet] = @grade_sheet.attributes
+    do_quit
     case 
       when request.xhr?
         return 'code/grade_sheet'
