@@ -1,0 +1,45 @@
+<h1>Listing stats_sheets</h1>
+
+<table>
+  <tr>
+    <th>Syntax checks</th>
+    <th>Solution checks</th>
+    <th>Total practice seconds</th>
+    <th>Total xp</th>
+    <th>Sorting xp</th>
+    <th>Searching xp</th>
+    <th>Numeric xp</th>
+    <th>Hash xp</th>
+    <th>Linked list xp</th>
+    <th>Array xp</th>
+    <th>Level</th>
+    <th>Xp to next level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stats_sheets.each do |stats_sheet| %>
+  <tr>
+    <td><%= stats_sheet.syntax_checks %></td>
+    <td><%= stats_sheet.solution_checks %></td>
+    <td><%= stats_sheet.total_practice_seconds %></td>
+    <td><%= stats_sheet.total_xp %></td>
+    <td><%= stats_sheet.sorting_xp %></td>
+    <td><%= stats_sheet.searching_xp %></td>
+    <td><%= stats_sheet.numeric_xp %></td>
+    <td><%= stats_sheet.hash_xp %></td>
+    <td><%= stats_sheet.linked_list_xp %></td>
+    <td><%= stats_sheet.array_xp %></td>
+    <td><%= stats_sheet.level %></td>
+    <td><%= stats_sheet.xp_to_next_level %></td>
+    <td><%= link_to 'Show', stats_sheet %></td>
+    <td><%= link_to 'Edit', edit_stats_sheet_path(stats_sheet) %></td>
+    <td><%= link_to 'Destroy', stats_sheet, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stats sheet', new_stats_sheet_path %>

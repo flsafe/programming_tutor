@@ -1,3 +1,5 @@
+POINTS_PER_XP_FIELD = 100
+
 Given /^there exists an exercise in the database$/ do
   @an_exercise = Exercise.new do |e|
     e.title = "title"
@@ -7,6 +9,9 @@ Given /^there exists an exercise in the database$/ do
     e.solution_template = SolutionTemplate.new(:src_code=>IO.read("#{Rails.root}/content/solution_template.c"),
                                                :src_language=>'c')
     e.lesson = Lesson.create!(:title=>"a lesson")
+  end
+  @an_exercise.stats_sheet.get_shared_xp_fields.each do |m|
+    @an_exercise.stats_sheet.send(m.to_s+'=', POINTS_PER_XP_FIELD)
   end
   @an_exercise.save!
 end
@@ -36,6 +41,19 @@ end
 When /^I am viewing the code page for the exercise$/ do
   visit lesson_path(@an_exercise.lesson)
   click_button("Start Exercise")
+end
+
+When /^I complete the exercise$/ do 
+  gs = GradeSheet.new
+  gs.user = @I
+  gs.exercise = @an_exercise
+  gs.src_code = "Src code"
+  gs.add_unit_test( {"Test all letters removed"=>
+                      {:input=>"c",
+                      :output=>"c",
+                      :expected=>"c",
+                      :points=>100}})
+  gs.save!
 end
 
 When /^I type a program with a syntax error$/ do

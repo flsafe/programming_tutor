@@ -20,6 +20,16 @@ class GradeSheet < ActiveRecord::Base
   def lesson
     exercise.lesson
   end
+
+  # Returns the users XP stats sheet
+  def user_stats_sheet
+    user.stats_sheet
+  end
+
+  # Returns the exercises XP stats sheet
+  def exercise_stats_sheet
+    exercise.stats_sheet 
+  end
   
   # Add a hash describing the results of a unit test.
   # The keys are:

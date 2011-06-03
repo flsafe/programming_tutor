@@ -1,0 +1,65 @@
+<%= form_for(@stats_sheet) do |f| %>
+  <% if @stats_sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stats_sheet.errors.count, "error") %> prohibited this stats_sheet from being saved:</h2>
+
+      <ul>
+      <% @stats_sheet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :syntax_checks %><br />
+    <%= f.text_field :syntax_checks %>
+  </div>
+  <div class="field">
+    <%= f.label :solution_checks %><br />
+    <%= f.text_field :solution_checks %>
+  </div>
+  <div class="field">
+    <%= f.label :total_practice_seconds %><br />
+    <%= f.text_field :total_practice_seconds %>
+  </div>
+  <div class="field">
+    <%= f.label :total_xp %><br />
+    <%= f.text_field :total_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :sorting_xp %><br />
+    <%= f.text_field :sorting_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :searching_xp %><br />
+    <%= f.text_field :searching_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :numeric_xp %><br />
+    <%= f.text_field :numeric_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :hash_xp %><br />
+    <%= f.text_field :hash_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :linked_list_xp %><br />
+    <%= f.text_field :linked_list_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :array_xp %><br />
+    <%= f.text_field :array_xp %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </div>
+  <div class="field">
+    <%= f.label :xp_to_next_level %><br />
+    <%= f.text_field :xp_to_next_level %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
