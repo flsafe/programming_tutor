@@ -65,6 +65,9 @@ describe CodeController do
   end
 
   describe "post do_action" do
+    before(:each) do
+      @user.start_coding @exercise
+    end
     it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
       post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}, :commit=>"Check Syntax"
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
