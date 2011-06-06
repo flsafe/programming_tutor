@@ -8,3 +8,11 @@ Feature: A user does an exercise and gains experience
     And there exists an exercise in the database
     When I complete the exercise
     Then I should have the exercise experience points assigned to me
+
+  @wip
+  Scenario: User gains a badge 
+    Given I am a user
+    And there exists an exercise in the database
+    And there exists a first exercise badge in the database
+    When I complete the exercise
+    Then I should have the first exercise badge 

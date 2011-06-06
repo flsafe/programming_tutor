@@ -9,7 +9,7 @@ class Exercise < ActiveRecord::Base
   has_one :unit_test, :dependent=>:destroy
   has_one :solution_template, :dependent=>:destroy
   has_one :stats_sheet, :as=>:xp, :dependent=>:destroy
-  after_initialize lambda {|e|e.stats_sheet = StatsSheet.new}
+  after_initialize lambda {|e|e.stats_sheet = StatsSheet.new unless e.stats_sheet}
 
   has_many :hints, :dependent=>:destroy
   has_many :grade_sheets, :dependent=>:destroy

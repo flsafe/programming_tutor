@@ -10,7 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110603165911) do
+ActiveRecord::Schema.define(:version => 20110606172937) do
+
+  create_table "badges", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.string   "earn_conditions"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "badges_users", :id => false, :force => true do |t|
+    t.integer "badge_id"
+    t.integer "user_id"
+  end
 
   create_table "code_sessions", :force => true do |t|
     t.integer  "exercise_id"

@@ -1,13 +1,12 @@
-# Represents a user's XP stats sheet.
-# Includes things like the total xp and the xp for
-# certain lessons like searching_xp, sorting_xp, linked_list_xp
-# and others.
-#
-# Each completed exercise will contain xp information
-# and it is also available in the grade sheet that results 
-# when a user does an exercise.
+# A user's stats sheet keeps track of
+# their progress when completing exercises.
+# 
+# An exercise's stats sheet describes what
+# kind of xp completing the exercise will give to
+# the user.
 
 class StatsSheet < ActiveRecord::Base
+
   belongs_to :xp, :polymorphic=>true
 
   def update_with(grade_sheet)

@@ -1,4 +1,6 @@
 Rasberry::Application.routes.draw do
+  resources :badges
+
   resources :stats_sheets
 
   resources :grade_sheets

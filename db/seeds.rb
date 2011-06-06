@@ -28,3 +28,10 @@ an_exercise = Exercise.new do |e|
                                        :text=>"There two ways to remove characters from a string...")
 end
 an_exercise.save!
+
+first_exercise_badge = Badge.new do |b|
+  b.title = "The Rookie"
+  b.description = "Complete your first exercise"
+  b.earn_conditions = "def has_earned?(stats) stats.total_xp > 1;end"
+end
+first_exercise_badge.save!

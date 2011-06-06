@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   has_one :stats_sheet, :as=>:xp, :dependent=>:destroy
   after_initialize lambda {|u| u.stats_sheet = StatsSheet.new unless stats_sheet} 
 
-  validates :stats_sheet, :presence=>true
+  has_and_belongs_to_many :earned_badges, :class_name=>"Badge", :order=>"created_at DESC"
 
+  validates :stats_sheet, :presence=>true
 
   # Used to make random strings
   @@CHAR_TAB =  %w{ 1 2 3 4 6 7 9 A B C D E F G H I J K L M N P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z _ -}
