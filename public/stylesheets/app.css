@@ -21,7 +21,7 @@
 		padding-top: 10px;
 	}
 	
-	#login a, #account a {
+	#login a, #account a, #menu a {
 		display:inline-block; 
 		background: #367bc7; 
 		text-align: center; 
@@ -30,6 +30,34 @@
 		font-weight: bold; 
 		text-decoration: none; 
 		height: 30px; 
-		width: 100%; 
 		padding-top: 10px;
+	}
+	
+	#login a, #account a {
+		width: 100%;
+	}
+	
+	#login a:hover, #account a:hover {
+		background: #5691d1;
+	}
+	
+	#menu a {
+		padding: 9px 20px 2px 20px;
+		background: #777; 
+		margin: 1em 1em 2em 0;
+	}
+	
+	#menu a:hover  {
+		background: #367bc7 !important;
+	}
+	 
+	/* Active links */
+	body.lessons #lessons, body.exercises #exercises, body.code #exercises, body.badges #badges {
+		background: #5691d1;
+	}
+	
+/* #Header
+================================================== */
+	#header {
+		border-bottom: solid 1px #ccc;
 	}

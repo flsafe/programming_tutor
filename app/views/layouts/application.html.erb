@@ -34,8 +34,7 @@
 	================================================== -->
    <%= csrf_meta_tag %>
 </head>
-<body>
-
+<body class="<%= controller.controller_name %>">
 
 	<div class="container">	
 
@@ -64,16 +63,21 @@
 			</div>
 		
 			<div id="account" class="two columns">
-        <%= link_to "Account", account_url %>  
+        <%= link_to "Account", account_path %>  
 			</div>
 			
 		<% end %>  
 		
-		<div class="sixteen columns">
+		<div id="header" class="sixteen columns">
 			<h2 style="margin-top: 40px"><a href="/">Rasberry</a></h1>
-			<hr />
 		</div>
     
+		<div id="menu" class="sixteen columns">
+			<%= link_to "Lessons", lessons_path, :id => "lessons" %>  
+		  <%= link_to "Exercises", exercises_path, :id => "exercises" %>  
+			<%= link_to "Badges", badges_path, :id => "badges" %>
+		</div>
+				
 		<div class="sixteen columns">
       <%= yield %>
     </div>
