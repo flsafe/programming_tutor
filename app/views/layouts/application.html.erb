@@ -41,7 +41,7 @@
 		<% if current_user.anonymous %>  
 		
 			<div id="login-status" class="offset-by-four eight columns">
-				Not logged in. Temporary user id: <%= current_user.username %> 
+				Not logged in. Temporary username: <%= current_user.username %> 
 			</div>
 			
 			<div id="register" class="two columns" style="text-align: right; height: 30px; padding-top: 10px; font-size: 14px;">
@@ -74,8 +74,13 @@
     
 		<div id="menu" class="sixteen columns">
 			<%= link_to "Lessons", lessons_path, :id => "lessons" %>  
-		  <%= link_to "Exercises", exercises_path, :id => "exercises" %>  
-			<%= link_to "Badges", badges_path, :id => "badges" %>
+		  <%= link_to "Exercises", exercises_path, :id => "exercises" %>
+			<% unless current_user.anonymous %>  			
+				<%= link_to "Badges [#{badge_progress(current_user)}]", badges_path, :id => "badges" %>
+				<%= link_to "Stats", stats_sheet_path, :id => "stats" %>
+			<% else %>
+				<%= link_to "Badges", badges_path, :id => "badges" %>
+			<% end %>
 		</div>
 				
 		<div class="sixteen columns">

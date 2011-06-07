@@ -1,8 +1,12 @@
 <p>
-  <b>Login:</b>
+  <b>Username:</b>
   <%= @user.username %>
 </p>
 
+<p><%= link_to "Badges (#{badge_progress(current_user)})", badges_path, :id => "badges" %></p>
+
+<p><%= link_to "Stats sheet", stats_sheet_path, :id => "stats" %></p>
+	
 <p>
   <b>Login count:</b>
   <%= @user.login_count %>

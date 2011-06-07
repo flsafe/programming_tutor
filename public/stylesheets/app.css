@@ -52,7 +52,7 @@
 	}
 	 
 	/* Active links */
-	body.lessons #lessons, body.exercises #exercises, body.code #exercises, body.badges #badges {
+	body.lessons #lessons, body.exercises #exercises, body.code #exercises, body.badges #badges, body.stats_sheets #stats {
 		background: #5691d1;
 	}
 	

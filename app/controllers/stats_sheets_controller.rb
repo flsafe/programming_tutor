@@ -1,4 +1,7 @@
 class StatsSheetsController < ApplicationController
+
+  before_filter :require_non_anonymous_user
+  
   # GET /stats_sheets
   # GET /stats_sheets.xml
   def index
@@ -13,7 +16,7 @@ class StatsSheetsController < ApplicationController
   # GET /stats_sheets/1
   # GET /stats_sheets/1.xml
   def show
-    @stats_sheet = StatsSheet.find(params[:id])
+    @stats_sheet = params[:id] == "me" ? current_user.stats_sheet : StatsSheet.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

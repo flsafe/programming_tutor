@@ -15,7 +15,8 @@ Rasberry::Application.routes.draw do
 
   match "login" => "user_sessions#new", :as=>:login
   match "logout"=>"user_sessions#destroy", :as=>:logout
-
+  match "stats_sheet"=>"stats_sheets#show", :id=>"me", :as=>:stats_sheet
+    
   # Routes for the text editor used when coding an exercise.
   match "code/start/:id"=>"code#start", :as=>:start_coding
   match "code/quit"=>"code#quit", :as=>:quit_coding, :via=>:post
