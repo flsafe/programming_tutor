@@ -2,29 +2,12 @@ require 'spec_helper'
 
 describe CodeController do
   before(:each) do
-    @user = User.create!(:username=>"frank",
-                         :password=>'password',
-                         :password_confirmation=>'password',
-                         :email=>'frank@mail.com').as_null_object
+    @user = Factory.create(:user) 
     controller.stub(:current_user).and_return(@user)
 
     @lesson = Lesson.create!(:title=>"Lesson1")
-    @exercise = Exercise.create!(:title=>"exercise",
-                                 :minutes=>1,
-                                 :unit_test=>stub_model(UnitTest, 
-                                                        :src_code=>"c", 
-                                                        :src_language=>'c'),
-                                 :solution_template=>stub_model(SolutionTemplate, 
-                                                                :src_code=>'c', 
-                                                                :src_language=>'c',
-                                                                :prototype=>'c')).as_null_object
+    @exercise = Factory.create(:exercise) 
     @lesson.exercises << @exercise
-  end
-
-  def valid_attributes
-    {:title=>"Title1",
-    :description=>"Description1",
-    :text=>"Text1"}
   end
 
   describe "#start" do
@@ -74,6 +57,11 @@ describe CodeController do
     end
 
     context "when the user pressed the 'Check Syntax' button" do
+      it "increases the syntax check counter by 1" do
+        expect {
+          post :do_action, :commit=>"Check Syntax"
+        }.to change{@user.stats_sheet(true).syntax_checks_count}.by(1)
+      end
       it "runs a syntax check on the code" do
         Code.stub(:new).and_return(@code = mock_model(Code)) 
         @code.should_receive :get_syntax_message
@@ -93,6 +81,11 @@ describe CodeController do
         @code = stub_model(Code, :check_against=>"unit test results")
         Code.stub(:new).and_return(@code)
       end
+      it "increases the check solution counter by 1" do
+        expect {
+          post :do_action, :commit=>"Check Solution"
+        }.to change{@user.stats_sheet(true).solution_checks_count}.by(1)
+      end
       it "runs the code through the unit tests" do
         @code.should_receive :check_against
         post :do_action, :commit=>"Check Solution"
@@ -108,6 +101,10 @@ describe CodeController do
         @user.start_coding @exercise
         Code.stub(:new).and_return(@code = mock_model(Code).as_null_object) 
         @code.stub(:grade_against).and_return(@gs = stub_model(GradeSheet))
+      end
+      it "increments the user's practice time" do
+        post :do_action, :commit=>"Submit Solution"
+        @user.stats_sheet(true).practice_seconds_count.should >= 1
       end
       it "grades the user's code" do
         @code.should_receive(:grade_against)

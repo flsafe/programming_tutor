@@ -21,9 +21,9 @@
 
 <% @stats_sheets.each do |stats_sheet| %>
   <tr>
-    <td><%= stats_sheet.syntax_checks %></td>
-    <td><%= stats_sheet.solution_checks %></td>
-    <td><%= stats_sheet.total_practice_seconds %></td>
+    <td><%= stats_sheet.syntax_checks_count%></td>
+    <td><%= stats_sheet.solution_checks_count%></td>
+    <td><%= stats_sheet.practice_seconds_count%></td>
     <td><%= stats_sheet.total_xp %></td>
     <td><%= stats_sheet.sorting_xp %></td>
     <td><%= stats_sheet.searching_xp %></td>

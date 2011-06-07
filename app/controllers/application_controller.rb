@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :create_anonymous_if_no_user
   
-  private
+  protected 
 
   def current_user_session
     return @current_user_session if defined?(@current_user_session) && !@current_user_session.nil?

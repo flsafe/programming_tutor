@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110606172937) do
+ActiveRecord::Schema.define(:version => 20110607155955) do
 
   create_table "badges", :force => true do |t|
     t.string   "title"
@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(:version => 20110606172937) do
   create_table "stats_sheets", :force => true do |t|
     t.integer  "xp_id"
     t.string   "xp_type"
-    t.integer  "syntax_checks",          :default => 0
-    t.integer  "solution_checks",        :default => 0
-    t.integer  "total_practice_seconds", :default => 0
+    t.integer  "syntax_checks_count",    :default => 0
+    t.integer  "solution_checks_count",  :default => 0
+    t.integer  "practice_seconds_count", :default => 0
     t.integer  "total_xp",               :default => 0
     t.integer  "sorting_xp",             :default => 0
     t.integer  "searching_xp",           :default => 0

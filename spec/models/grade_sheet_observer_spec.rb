@@ -14,10 +14,17 @@ describe GradeSheetObserver do
       @exercise.save!
     end
 
-    it "saves updates the experience points in the user's stats sheet" do
+    it "saves updates the experience points in the user's stats sheet if the grade is a 100" do
       gs = create_grade_sheet
       gs.save!
       @user.stats_sheet.total_xp.should == StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
+    end
+
+    it "it does not update experience points if the grade is not a 100" do
+      gs = create_grade_sheet
+      gs.add_unit_test("Test two"=>{:input=>'a', :output=>'b', :expected=>'a'})
+      gs.save!
+      @user.stats_sheet.total_xp.should == 0 
     end
 
     def create_grade_sheet

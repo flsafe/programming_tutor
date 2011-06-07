@@ -6,6 +6,7 @@ class CodeController < ApplicationController
                     "Quit"            => :do_quit}
 
   before_filter :ensure_exercise_session, :except=>[:start, :grade]
+  before_filter UserActionObserver
 
   # POST code/start/:id
   # Create a new exercise session

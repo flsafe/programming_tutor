@@ -14,6 +14,13 @@ Then /^I should have the exercise experience points assigned to me$/ do
   @I.stats_sheet.total_xp.should == total
 end
 
+Then /^I should have my usage statistics updated$/ do
+  # These stats were specified when the grade sheet was created.
+  @I.stats_sheet(true).syntax_checks_count.should == 1
+  @I.stats_sheet(true).solution_checks_count.should == 1
+  @I.stats_sheet.practice_seconds_count.should >= 1
+end
+
 Then /^I should have the first exercise badge$/ do
   @I.earned_badges.find(:first, 
                         :conditions=>{:title=>"The Rookie"}).should_not == nil 
