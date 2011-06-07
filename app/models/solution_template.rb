@@ -1,3 +1,8 @@
+# Represents a template that the user's solution
+# is inserted into. Filling in this template with the 
+# user's solution results in an program that can be compiled
+# and executed against unit tests.
+
 class SolutionTemplate < ActiveRecord::Base
   belongs_to :exercise
 
@@ -12,7 +17,7 @@ class SolutionTemplate < ActiveRecord::Base
 
   # Returns the code between the
   # start_prototye and end_prototype markers
-  # in the src code for this template.
+  # in the template src_code. 
   def prototype 
     m = src_code.match(@@PROTOTYPE_REGEX)
     if m and m[1]
@@ -22,8 +27,7 @@ class SolutionTemplate < ActiveRecord::Base
     end
   end
 
-  # Fill in the solution tempalte with the user's solution
-  # code. 
+  # Fill in the solution tempalte with the user's solution.
   def fill_in(solution_snippet)
     src_code.gsub(@@PROTOTYPE_REGEX, solution_snippet).strip.chomp
   end

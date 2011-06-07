@@ -1,18 +1,19 @@
 # Tableless model representing the code
 # the user types into the text editor when
 # solving an exercise.
+
 class Code < ActiveRecord::Base
 
   # Run the code through a syntax check.
-  # Returns the compiler's syntax check output
-  # message.
+  # Returns the compiler's output message.
   def get_syntax_message
     Compiler.get_syntax_message(src_code)
   end
 
   # Runs the code against the given unit test
-  # using the provided solution template. Returns
-  # a string containing a short feedback message.
+  # and solution template. Returns
+  # a string containing a short feedback message. Does
+  # not record a grade.
   def check_against(unit_test, solution_template)
     solution = solution_template.fill_in(src_code)  
     grade_sheet = unit_test.run_with(solution)
@@ -20,7 +21,7 @@ class Code < ActiveRecord::Base
   end
 
   # Grades the code against the unit test using
-  # the provided solution template. Returns
+  # and solution template. Returns
   # a valid grade sheet if no errors occured while
   # grading the solution. If an error occured then
   # it returns an invalid grade sheet with the errors array

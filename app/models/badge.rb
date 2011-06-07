@@ -1,3 +1,8 @@
+# User's can earn badges. The field earn_conditions
+# is expected to be the definition (in string form) of a function named
+# `has_earned?(stats_sheet)` that returns true if the badge should
+# be awared.
+
 class Badge < ActiveRecord::Base
 
   has_and_belongs_to_many :users

@@ -1,12 +1,12 @@
-# Observes the user stats sheets and awards badges
-# to users when the badge criteria is met.
+# Observes the user stats_sheet and awards badges
+# when the badge's award critiria are met. 
 
 class BadgeAwarder < ActiveRecord::Observer
 
   observe StatsSheet
 
-  # Award unearned badges to the user if
-  # the badge criteria is met.
+  # Award unearned badges to the user associated with
+  # the stats sheet if the badge criteria is met.
   def after_save(stats_sheet)
     if stats_sheet.xp.instance_of? User 
       user = stats_sheet.xp

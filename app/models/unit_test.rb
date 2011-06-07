@@ -1,3 +1,6 @@
+# Represents the unit tests used to grade a user's
+# solution.
+
 class UnitTest < ActiveRecord::Base
   belongs_to :exercise
 
@@ -9,14 +12,13 @@ class UnitTest < ActiveRecord::Base
     :invalid_unit_test => "Aww, shoot! An internal error occured. Specifically, the unit test for your exercise crashed. Sorry! Try again a bit later."
   }
 
-  # Fill out attributes using an uploaded code file field.
+  # Fill out attributes using an uploaded file field.
   def uploaded_unit_test=(unit_test_field)
      self.src_code = unit_test_field.read
      self.src_language = "ruby"
   end
 
-  # Call each method unit test method with
-  # the given solution code.
+  # Execute the unit tests on the solution code.
   def run_with(solution_code)
     @grade_sheet = GradeSheet.new(:src_code=>solution_code)
     begin

@@ -1,5 +1,8 @@
 require 'yaml'
 
+# Represents the grade and other info
+# about the user's solution.
+
 class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise 
@@ -10,23 +13,26 @@ class GradeSheet < ActiveRecord::Base
   before_validation :grade, :serialize_unit_tests
 
   # Returns all the grades for the
-  # given user.
+  # given user in a hash with exercise_ids as keys
+  # and the grade for the exercise as values.
   def self.grades_for(user)
     grade_sheets = GradeSheet.where(:user_id => user).order('grade')
     grade_sheets.inject({}) {|accum, gs| accum.merge!(gs.exercise.id => gs.grade)}
   end
 
-  # Return the lesson that this grade sheet is associated with
+  # Return the lesson that this grade sheet is associated with.
   def lesson
     exercise.lesson
   end
 
-  # Returns the users XP stats sheet
+  # Returns the users XP stats sheet.
   def user_stats_sheet
     user.stats_sheet
   end
 
-  # Returns the exercises XP stats sheet
+  # Returns the exercise's XP stats sheet.
+  # This sheet describes how much XP completing the 
+  # exercise is worth.
   def exercise_stats_sheet
     exercise.stats_sheet 
   end
@@ -34,7 +40,7 @@ class GradeSheet < ActiveRecord::Base
   # Add a hash describing the results of a unit test.
   # The keys are:
   #
-  #     {:test_name=>{:input, :output, :expected, :points}}
+  #     {"Test Name"=>{:input=>'a', :output=>'a', :expected=>'a', :points=>'100'}}
   #
   # The points key is optional and will be calculated
   # automatically if left out.
@@ -42,18 +48,19 @@ class GradeSheet < ActiveRecord::Base
     unit_tests.merge!(unit_test_hash)
   end
 
-  # Return the grade
+  # Returns the grade the user got based on the
+  # results of the unit tests.
   def grade
     self[:grade] ||= calc_grade
   end
 
   # Returns the unit test hashes that have been
-  # added to this unit test.
+  # added to this unit test merged into one.
   def unit_tests 
     @tests_hash = @tests_hash || YAML.load(tests || "") || {}
   end
 
-  # Returns the points per test
+  # Returns the points per test.
   def default_points_per_test
     100.0 / unit_tests.count
   end
@@ -87,8 +94,8 @@ class GradeSheet < ActiveRecord::Base
 
   # Validates each unit test result hash.
   # Each unit test result hash must have the 
-  # expected keys.
-  #     :input, :output, :expected, :points
+  # these keys.
+  #     :input, :output, :expected
   def unit_tests_format
     expected_keys = [:input, :output, :expected]
     if unit_tests.empty?

@@ -41,9 +41,9 @@ class ApplicationController < ActionController::Base
 
       # Couldn't find an unused user name.
       # How likely is it that this would happen?
-      # The random username suffix has 5^64 possibilities until
+      # The random username suffix has 5^64 possibilities. Until
       # we start getting millions of users I don't think this will 
-      # happen.
+      # happen?
       Rails.logger.error "The anonymous user couldn't be saved!"
       anonymous_user.errors.full_messages.each {|msg| Rails.logger.error msg}
       raise "Can't create anonymous account!"

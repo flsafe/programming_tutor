@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  # The user is no longer doing an exercise.
+  # The has finished the exercise. 
   # Destroys the current code session. Does
   # nothing if the user doesn't have a code session.
   def end_code_session
@@ -43,8 +43,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Returns the number of seconds left in the coding session
-  # or nill of the user isn't doing an exercise.
+  # Returns the number of seconds the user has
+  # left to complete the exercise.
   def seconds_left_in_code_session
     if code_session 
       start_time = code_session.created_at 
@@ -55,8 +55,7 @@ class User < ActiveRecord::Base
   end
 
   # Create an anonymous user with a random user name
-  # and a random password. It is supposed to be a one time use
-  # to try the app out without registering.
+  # and a random password.
   def self.new_anonymous
     size = @@CHAR_TAB.size 
     rand_password = (0..32).map { @@CHAR_TAB[rand(size)] }.join

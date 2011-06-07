@@ -35,7 +35,7 @@ class CodeController < ApplicationController
 
   # POST code/do_action
   # Distpatch to the the approriate action
-  # depending which submit button the user
+  # depending which button the user
   # clicked.
   def do_action
     session[:code] = params[:code]

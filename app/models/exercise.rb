@@ -1,3 +1,6 @@
+# Represents an exercise the user can
+# practice with.
+
 class Exercise < ActiveRecord::Base
 
   include Statistics
@@ -13,7 +16,6 @@ class Exercise < ActiveRecord::Base
 
   has_many :hints, :dependent=>:destroy
   has_many :grade_sheets, :dependent=>:destroy
-
   has_many :code_sessions
 
   accepts_nested_attributes_for :hints, :unit_test, :solution_template
@@ -21,9 +23,9 @@ class Exercise < ActiveRecord::Base
   validates :title, :unit_test, :solution_template, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}
 
-  # Returns an initial template for the
-  # user to type thier own code in. Can be
-  # used to display in a text editor.
+  # Returns a template for the
+  # user's solution. Usually displayed in
+  # a text editor.
   def prototype
     return solution_template.prototype
   end

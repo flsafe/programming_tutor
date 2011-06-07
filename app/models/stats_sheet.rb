@@ -1,9 +1,11 @@
-# A user's stats sheet keeps track of
-# their progress when completing exercises.
+# Two models make use of the stats sheet. The user model
+# and the exercise model.
+#
+# A user's stats sheet keeps track of the experience
+# points they've earned for completing exercises.
 # 
-# An exercise's stats sheet describes what
-# kind of xp completing the exercise will give to
-# the user.
+# An exercise's stats sheet describes what xp
+# the user will earn after completing the exercise. 
 
 class StatsSheet < ActiveRecord::Base
 
@@ -15,19 +17,14 @@ class StatsSheet < ActiveRecord::Base
     self.save!
   end
 
-  # Returns the ...._xp feilds on the stats sheet that
-  # are shared by exercises. For example each exercise has
-  # xp fields like. Theses experience points are tracked
-  # in the users's stats sheet.
+  # Returns the fields ending in _xp. For example:
   #
   #     searching_xp
   #     sorting_xp
   #     numeric_xp
   #     ...
   #
-  # This function returns those fields. It does not return
-  # the total_xp field since exercises don't use that field.
-  #
+  # It does not return the total_xp field.
   def get_shared_xp_fields
     StatsSheet.shared_xp_fields
   end
@@ -38,11 +35,10 @@ class StatsSheet < ActiveRecord::Base
 
   private 
 
-  # The exercise that the user completed is worth
-  # xp points. Update this stats sheet with these
-  # xp points.
+  # Update this stats sheet with the xp points
+  # the user earned on the grade sheet.
   def update_shared_xp_fields(grade_sheet)
-    get_shared_xp_fields.each do |m|
+    StatsSheet.shared_xp_fields.each do |m|
       current_xp = self.send(m)
       updated_xp = current_xp + grade_sheet.exercise_stats_sheet.send(m)
       self[m] += updated_xp
