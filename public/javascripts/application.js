@@ -1,8 +1,15 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+/* Login modal window */
+	$(document).ready(function() {
+		$("#login a").click(function(e){
+			e.preventDefault(); 
+			TINY.box.show({url:"/login.js", width: 400});
+		});
+	});
+	
 /* Initialize the CodeMirror text editor */
-
 if ($('#text_editor_form').length){
   var textEditor = CodeMirror.fromTextArea(document.getElementById('text_editor'),
       {mode: "clike",

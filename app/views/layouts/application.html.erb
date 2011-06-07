@@ -38,18 +38,39 @@
 
 
 	<div class="container">	
+
+		<% if current_user.anonymous %>  
+		
+			<div id="login-status" class="offset-by-four eight columns">
+				Not logged in. Temporary user id: <%= current_user.username %> 
+			</div>
+			
+			<div id="register" class="two columns" style="text-align: right; height: 30px; padding-top: 10px; font-size: 14px;">
+				<%= link_to "Register", new_user_path %>  
+			</div>
+		
+			<div id="login" class="two columns">
+        <%= link_to "Log in", login_path %>  
+			</div>
+			
+		<% else %>  
+		
+			<div id="login-status" class="offset-by-four eight columns">
+				Logged in as  <%= current_user.username %>
+			</div>
+			
+			<div id="logout" class="two columns" style="text-align: right; height: 30px; padding-top: 10px; font-size: 14px;">
+        <%= link_to "Logout", logout_path %>  
+			</div>
+		
+			<div id="account" class="two columns">
+        <%= link_to "Account", account_url %>  
+			</div>
+			
+		<% end %>  
+		
 		<div class="sixteen columns">
 			<h2 style="margin-top: 40px"><a href="/">Rasberry</a></h1>
-			<h5>&raquo; 
-      Logged in as <%= current_user.username %>
-      <% if current_user.anonymous %>  
-        <%= link_to "Register", new_user_path %>  
-        <%= link_to "Log in", login_path %>  
-      <% else %>  
-        <%= link_to "Account", account_url %>  
-        <%= link_to "Logout", logout_path %>  
-      <% end %>  
-      </h5>
 			<hr />
 		</div>
     
@@ -63,6 +84,6 @@
 	<!-- JS
 	================================================== -->
   <%= javascript_include_tag :defaults %>
-	
+
 </body>
 </html>

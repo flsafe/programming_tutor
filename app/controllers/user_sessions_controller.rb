@@ -1,11 +1,15 @@
 class UserSessionsController < ApplicationController
   
   before_filter :require_no_user, :only => [:new, :create]
-  
+    
   def new
     @user_session = UserSession.new
+    respond_to do |format|
+      format.html
+      format.js { render :layout => nil }
+    end
   end
-  
+
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save

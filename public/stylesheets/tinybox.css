@@ -1,0 +1,10 @@
+.tbox {position:absolute; display:none; padding:14px 17px; z-index:900;}
+.tinner {padding:35px; -moz-border-radius:5px; border-radius:5px; background:#fff url(/images/spinner.gif) no-repeat 50% 50%; border-right:1px solid #333; border-bottom:1px solid #333}
+.tmask {position:absolute; display:none; top:0px; left:0px; height:100%; width:100%; background:#000; z-index:800}
+.tclose {position:absolute; top:0px; right:0px; width:30px; height:30px; cursor:pointer; background:url(/images/tinybox/close.png) no-repeat}
+.tclose:hover {background-position:0 -30px}
+.tbox p {line-height:130%;font-family:Arial,sans-serif;}
+.tbox h4{margin-bottom:1em;}
+.tbox input{width: 250px;}
+.tbox textarea{width: 300px;}
+.tbox br { margin:1em 0; }
