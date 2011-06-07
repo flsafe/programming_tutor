@@ -5,6 +5,10 @@ gem 'rails', '3.0.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'factory_girl', "~> 1.3.3"
+gem 'factory_girl_rails'
+
+
 gem 'sqlite3'
 gem 'nokogiri', '~> 1.4.4'
 gem 'rake', '~> 0.8.7'

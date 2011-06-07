@@ -29,9 +29,11 @@ class StatsSheet < ActiveRecord::Base
   # the total_xp field since exercises don't use that field.
   #
   def get_shared_xp_fields
-    self.public_methods.select{|m| m=~ /_xp$/}.reject do |m| 
-      m=~/^autosave/ or m =~ /total_xp/ or m=~/^_/
-    end
+    StatsSheet.shared_xp_fields
+  end
+
+  def self.shared_xp_fields
+    StatsSheet.column_names.select{|m| m=~ /_xp$/}.reject{|m| m=~/total_xp/}
   end
 
   private 
