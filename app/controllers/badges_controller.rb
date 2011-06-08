@@ -1,4 +1,7 @@
 class BadgesController < ApplicationController
+
+  before_filter :require_admin, :except=>[:index, :show]
+
   # GET /badges
   # GET /badges.xml
   def index

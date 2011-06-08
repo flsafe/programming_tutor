@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin
-    if current_user == nil || current_user.admin? == false
+    if current_user == nil || current_user.admin? == false || current_user.anonymous?
       store_location
       redirect_to home_url
       return false

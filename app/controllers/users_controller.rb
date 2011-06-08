@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :require_non_anonymous_user, :only => [:show, :edit, :update]
+  before_filter :require_non_anonymous_user, :except=> [:new, :create]
   
   def new
     @user = User.new

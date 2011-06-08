@@ -1,6 +1,6 @@
 class LessonsController < ApplicationController
 
-  before_filter :require_admin, :only=>[:new, :edit, :create, :update, :destroy]
+  before_filter :require_admin, :except=>[:index, :show]
 
   # GET /lessons
   # GET /lessons.xml

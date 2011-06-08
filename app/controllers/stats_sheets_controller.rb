@@ -1,6 +1,7 @@
 class StatsSheetsController < ApplicationController
 
   before_filter :require_non_anonymous_user
+  before_filter :require_admin, :except=>[:index, :show]
   
   # GET /stats_sheets
   # GET /stats_sheets.xml
