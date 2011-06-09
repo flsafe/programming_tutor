@@ -25,6 +25,7 @@
   <%= @exercise.minutes %>
 </p>
 
-
-<%= link_to 'Edit', edit_exercise_path(@exercise) %> |
-<%= link_to 'Back', exercises_path %>
+<% if current_user.admin? %>
+	<%= link_to 'Edit', edit_exercise_path(@exercise), :class => "button" %>
+<% end %>
+<%= link_to 'Back', exercises_path, :class => "button" %>

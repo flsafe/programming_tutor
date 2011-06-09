@@ -1,6 +1,6 @@
 class ExercisesController < ApplicationController
 
-  before_filter :require_admin 
+  before_filter :require_admin, :except => [:index, :show]
 
   # GET /exercises
   # GET /exercises.xml
