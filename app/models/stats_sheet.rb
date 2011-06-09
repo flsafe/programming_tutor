@@ -33,6 +33,10 @@ class StatsSheet < ActiveRecord::Base
     StatsSheet.column_names.select{|m| m=~ /_xp$/}.reject{|m| m=~/total_xp/}
   end
 
+  def self.usage_count_fields
+    StatsSheet.column_names.select{|m| m=~/_count$/}
+  end
+
   private 
 
   # Update this stats sheet with the xp points

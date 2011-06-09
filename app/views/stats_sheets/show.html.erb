@@ -1,65 +1,70 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Syntax checks:</b>
-  <%= @stats_sheet.syntax_checks %>
-</p>
+<div id="stats-sheet">
 
-<p>
-  <b>Solution checks:</b>
-  <%= @stats_sheet.solution_checks %>
-</p>
+  <p class="usage-statistic">
+    <b>Syntax checks:</b>
+    <%= @stats_sheet.syntax_checks_count%>
+  </p>
 
-<p>
-  <b>Total practice seconds:</b>
-  <%= @stats_sheet.total_practice_seconds %>
-</p>
+  <p class="usage-statistic">
+    <b>Solution checks:</b>
+    <%= @stats_sheet.solution_checks_count %>
+  </p>
 
-<p>
-  <b>Total xp:</b>
-  <%= @stats_sheet.total_xp %>
-</p>
+  <p class="usage-statistic">
+    <b>Total practice seconds:</b>
+    <%= @stats_sheet.practice_seconds_count%>
+  </p>
 
-<p>
-  <b>Sorting xp:</b>
-  <%= @stats_sheet.sorting_xp %>
-</p>
+  <p class="xp-statistic"> 
+    <b>Total xp:</b>
+    <%= @stats_sheet.total_xp %>
+  </p>
 
-<p>
-  <b>Searching xp:</b>
-  <%= @stats_sheet.searching_xp %>
-</p>
+  <p class="xp-statistic">
+    <b>Sorting xp:</b>
+    <%= @stats_sheet.sorting_xp %>
+  </p>
 
-<p>
-  <b>Numeric xp:</b>
-  <%= @stats_sheet.numeric_xp %>
-</p>
+  <p class="xp-statistic">
+    <b>Searching xp:</b>
+    <%= @stats_sheet.searching_xp %>
+  </p>
 
-<p>
-  <b>Hash xp:</b>
-  <%= @stats_sheet.hash_xp %>
-</p>
+  <p class="xp-statistic">
+    <b>Numeric xp:</b>
+    <%= @stats_sheet.numeric_xp %>
+  </p>
 
-<p>
-  <b>Linked list xp:</b>
-  <%= @stats_sheet.linked_list_xp %>
-</p>
+  <p class="xp-statistic">
+    <b>Hash xp:</b>
+    <%= @stats_sheet.hash_xp %>
+  </p>
 
-<p>
-  <b>Array xp:</b>
-  <%= @stats_sheet.array_xp %>
-</p>
+  <p class="xp-statistic">
+    <b>Linked list xp:</b>
+    <%= @stats_sheet.linked_list_xp %>
+  </p>
 
-<p>
-  <b>Level:</b>
-  <%= @stats_sheet.level %>
-</p>
+  <p class="xp-statistic">
+    <b>Array xp:</b>
+    <%= @stats_sheet.array_xp %>
+  </p>
 
-<p>
-  <b>Xp to next level:</b>
-  <%= @stats_sheet.xp_to_next_level %>
-</p>
+  <p class="xp-statistic">
+    <b>Level:</b>
+    <%= @stats_sheet.level %>
+  </p>
 
+  <p class="xp-statistic">
+    <b>Xp to next level:</b>
+    <%= @stats_sheet.xp_to_next_level %>
+  </p>
 
-<%= link_to 'Edit', edit_stats_sheet_path(@stats_sheet) %> |
-<%= link_to 'Back', stats_sheets_path %>
+</div>
+
+<% if current_user.admin? %>
+  <%= link_to 'Edit', edit_stats_sheet_path(@stats_sheet) %> |
+  <%= link_to 'Back', stats_sheets_path %>
+<% end %>

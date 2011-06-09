@@ -8,17 +8,20 @@ Given /^there exists a first exercise badge in the database$/ do
 end
 
 Then /^I should have the exercise experience points assigned to me$/ do
-  # These stats were specified when the grade sheet was created.
   @I.stats_sheet(true)
   total = @I.stats_sheet.get_shared_xp_fields.count * POINTS_PER_XP_FIELD
   @I.stats_sheet.total_xp.should == total
 end
 
 Then /^I should have my usage statistics updated$/ do
-  # These stats were specified when the grade sheet was created.
   @I.stats_sheet(true).syntax_checks_count.should == 1
   @I.stats_sheet(true).solution_checks_count.should == 1
   @I.stats_sheet.practice_seconds_count.should >= 1
+  
+  visit stats_sheet_path
+  
+  save_and_open_page
+  page.should have_css(".usage-statistic", :count=>StatsSheet.usage_count_fields.count)
 end
 
 Then /^I should have the first exercise badge$/ do
