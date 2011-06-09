@@ -1,27 +1,28 @@
 <h1>Listing badges</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Earn conditions</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @badges.each do |badge| %>
-  <tr>
-    <td><%= badge.title %></td>
-    <td><%= badge.description %></td>
-    <td><%= badge.earn_conditions %></td>
-    <td><%= link_to 'Show', badge %></td>
-    <td><%= link_to 'Edit', edit_badge_path(badge) %></td>
-    <td><%= link_to 'Destroy', badge, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% @badges.each_with_index do |badge,i| %>
+	<div class="badge two columns">
+		<!-- Placeholder images -->
+		<img src="http://lorempixum.com/100/100/abstract/<%= i %>">
+	</div>
+	<div class="badge three columns">
+		<h3><%= badge.title %></h3>
+		<p>
+			<%= badge.description %>
+			<% if current_user.earned_badges.include? badge %>
+				<img src="/images/tick.png">
+			<% end %>
+		</p>
+		<% if current_user.admin? %>
+			<%= link_to 'Show', badge, :class => "button" %></td>
+			<%= link_to 'Edit', edit_badge_path(badge), :class => "button" %></td>
+			<%= link_to 'Destroy', badge, :confirm => 'Are you sure?', :method => :delete, :class => "button" %>
+		<% end %>
+	</div>
+	<%= cycle("", "", "<div class='clear'></div>".html_safe) %>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Badge', new_badge_path %>
+<% if current_user.admin? %>
+	<div class='clear'></div>
+	<%= link_to 'New Badge', new_badge_path, :class => "button" %>
+<% end %>
