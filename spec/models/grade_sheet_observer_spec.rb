@@ -27,6 +27,18 @@ describe GradeSheetObserver do
       @user.stats_sheet.total_xp.should == 0 
     end
 
+    it "It sets the current level" do
+      gs = create_grade_sheet
+      gs.save!
+      @user.stats_sheet.level.should_not == 0
+    end
+
+    it "It sets the xp to the next level" do
+      gs = create_grade_sheet
+      gs.save!
+      @user.stats_sheet.xp_to_next_level.should_not == 0
+    end
+
     def create_grade_sheet
       @grade_sheet = GradeSheet.new(:user=>@user,
                      :exercise=>@exercise,

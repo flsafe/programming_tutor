@@ -57,5 +57,8 @@ class StatsSheet < ActiveRecord::Base
       total += send(m) 
     end
     self.total_xp = total
+
+    self.level = XPModel.level(total_xp)
+    self.xp_to_next_level = XPModel.xp_to_next(total_xp)
   end
 end
