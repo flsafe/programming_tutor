@@ -20,7 +20,6 @@ Then /^I should have my usage statistics updated$/ do
   
   visit stats_sheet_path
   
-  save_and_open_page
   page.should have_css(".usage-statistic", :count=>StatsSheet.usage_count_fields.count)
 end
 
