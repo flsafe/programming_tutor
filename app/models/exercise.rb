@@ -18,7 +18,7 @@ class Exercise < ActiveRecord::Base
   has_many :grade_sheets, :dependent=>:destroy
   has_many :code_sessions
 
-  accepts_nested_attributes_for :hints, :unit_test, :solution_template
+  accepts_nested_attributes_for :hints, :unit_test, :solution_template, :stats_sheet
 
   validates :title, :unit_test, :solution_template, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}

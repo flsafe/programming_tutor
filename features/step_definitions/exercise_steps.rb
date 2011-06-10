@@ -25,15 +25,21 @@ When /^I create a new exercise$/ do
   lesson = Lesson.create!(:title=>"a temp lesson")
   visit new_exercise_path
   if has_css?("#new_exercise")
+    select lesson.title, :from=>"Lesson" 
     fill_in "Title", :with=>"Title"
     fill_in "Description", :with=>"Description"
+    fill_in "Sorting xp", :with=>'1'
+    fill_in "Searching xp", :with=>'1'
+    fill_in "Numeric xp", :with=>'1'
+    fill_in "Linked list xp", :with=>'1'
+    fill_in "Hash xp", :with=>'1'
+    fill_in "Array xp", :with=>'1'
+    attach_file "Upload Unit Test", "#{Rails.root}/content/unit_test.rb"
+    attach_file "Upload Solution Template", "#{Rails.root}/content/solution_template.c"
     fill_in "Minutes", :with=>"60"
     fill_in "Text", :with=>"Text"
     fill_in "Tutorial", :with=>"Tutorial"
     fill_in "Hint Text", :with=>"Hint1"
-    attach_file "Upload Unit Test", "#{Rails.root}/content/unit_test.rb"
-    attach_file "Upload Solution Template", "#{Rails.root}/content/solution_template.c"
-    select lesson.title, :from=>"Lesson" 
     click_button "Create"
   end
 end

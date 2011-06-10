@@ -21,11 +21,12 @@
     <%= f.text_field :title %>
   </div>
 
-
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description, :rows=>8, :cols=>80 %>
   </div>
+
+  <%= render 'stats_sheet', :f => f%>
 
   <div class="field">
     <% if @exercise.unit_test.new_record? %>
