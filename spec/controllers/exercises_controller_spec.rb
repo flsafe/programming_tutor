@@ -10,25 +10,7 @@ describe ExercisesController do
   end
   
   context "when the user is not an admin" do
-
     it_behaves_like "admin resource controller"
-
-    describe "GET index" do
-      before(:each) do
-        controller.stub(:current_user).and_return(stub_model(User, :admin? => false))
-      end
-
-      it "redirects when the index is requested" do
-        get :index
-        response.should redirect_to(home_path)
-      end
-
-      it "redirects when the show is requested" do
-        e = Exercise.create!(valid_attributes)
-        get :show, :id=>e.id.to_s 
-        response.should redirect_to(home_path)
-      end
-    end
   end
 
   context "when user is an admin" do
