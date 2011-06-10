@@ -28,33 +28,9 @@
 
   <%= render 'stats_sheet', :f => f%>
 
-  <div class="field">
-    <% if @exercise.unit_test.new_record? %>
-      <%= f.fields_for :unit_test do |builder| %>
-        <%= builder.label :uploaded_unit_test, "Upload Unit Test"%><br />
-        <%= builder.file_field :uploaded_unit_test %>
-      <% end %>
-    <% else %>
-      <%= f.fields_for :unit_test do |builder| %>
-        <%= builder.label :src_code, "Unit Test" %><br/>
-        <%= builder.text_area :src_code, :cols=>80%>
-      <% end %>
-  <% end%>
-  </div>
+  <%= render 'unit_test', :f => f %>
 
-  <div class="field">
-    <% if @exercise.solution_template.new_record? %>
-      <%= f.fields_for :solution_template do |builder| %>
-        <%= builder.label :uploaded_solution_template, "Upload Solution Template"%><br />
-        <%= builder.file_field :uploaded_solution_template %>
-      <% end %>
-    <% else %>
-      <%= f.fields_for :solution_template do |builder| %>
-        <%= builder.label :src_code, "Solution Template" %><br/>
-        <%= builder.text_area :src_code, :cols=>80%>
-      <% end %>
-  <% end%>
-  </div>
+  <%= render 'solution_template', :f => f %>
 
   <div class="field">
     <%= f.label :minutes %><br />
@@ -71,10 +47,7 @@
     <%= f.text_area :tutorial, :cols=>80%>
   </div>
 
-  <%= f.fields_for :hints do |builder| %>
-    <%= builder.label :text, "Hint Text" %><br/>
-    <%= builder.text_area :text, :cols=>80 %>
-  <% end %> 
+  <%= render 'hint', :f => f %> 
 
   <div class="actions">
     <%= f.submit %>

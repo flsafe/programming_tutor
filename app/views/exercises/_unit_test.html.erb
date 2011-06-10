@@ -1,0 +1,13 @@
+<div class="field">
+  <% if @exercise.unit_test.new_record? %>
+    <%= f.fields_for :unit_test do |builder| %>
+      <%= builder.label :uploaded_unit_test, "Upload Unit Test"%><br />
+      <%= builder.file_field :uploaded_unit_test %>
+    <% end %>
+  <% else %>
+    <%= f.fields_for :unit_test do |builder| %>
+      <%= builder.label :src_code, "Unit Test" %><br/>
+      <%= builder.text_area :src_code, :cols=>80%>
+    <% end %>
+<% end%>
+</div>

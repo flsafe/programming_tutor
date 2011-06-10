@@ -1,0 +1,33 @@
+<%= f.fields_for :stats_sheet do |builder|%>
+
+  <div class="field">
+    <%= builder.label :searching_xp %>
+    <%= builder.text_field :searching_xp %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :sorting_xp %>
+    <%= builder.text_field :sorting_xp %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :numeric_xp %>
+    <%= builder.text_field :numeric_xp %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :linked_list_xp%>
+    <%= builder.text_field :linked_list_xp %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :hash_xp%>
+    <%= builder.text_field :hash_xp %>
+  </div>
+
+  <div class="field">
+    <%= builder.label :array_xp %>
+    <%= builder.text_field :array_xp %>
+  </div>
+<% end %>
+

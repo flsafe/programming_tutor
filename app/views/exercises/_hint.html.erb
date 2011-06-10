@@ -1,0 +1,4 @@
+<%= f.fields_for :hints do |builder| %>
+  <%= builder.label :text, "Hint Text" %><br/>
+  <%= builder.text_area :text, :cols=>80 %>
+<% end %> 

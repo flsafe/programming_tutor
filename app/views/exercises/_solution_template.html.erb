@@ -1,0 +1,13 @@
+<div class="field">
+  <% if @exercise.solution_template.new_record? %>
+    <%= f.fields_for :solution_template do |builder| %>
+      <%= builder.label :uploaded_solution_template, "Upload Solution Template"%><br />
+      <%= builder.file_field :uploaded_solution_template %>
+    <% end %>
+  <% else %>
+    <%= f.fields_for :solution_template do |builder| %>
+      <%= builder.label :src_code, "Solution Template" %><br/>
+      <%= builder.text_area :src_code, :cols=>80%>
+    <% end %>
+<% end%>
+</div>
