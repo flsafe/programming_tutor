@@ -16,8 +16,8 @@ user.save!
 
 an_exercise = Exercise.new do |e|
   e.title       = "Remove A Letter From A String"
-  e.description = "Write a function that removes a specific character from a string"
-  e.text        = "Write a function that takes as arguments a character and a string. The function ..."
+  e.description = "Write a function that removes a specific character from a string."
+  e.text        = "Write a function that takes a character and a string as aruguments. The function removes the character from the string."
   e.minutes     = 15
   e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.rb"),
                              :src_language=>"ruby")
@@ -28,6 +28,10 @@ an_exercise = Exercise.new do |e|
                                        :text=>"There two ways to remove characters from a string...")
 end
 an_exercise.save!
+
+an_exercise.stats_sheet.sorting_xp = 100
+an_exercise.stats_sheet.array_xp = 100
+an_exercise.stats_sheet.save!
 
 first_exercise_badge = Badge.new do |b|
   b.title = "The Rookie"
