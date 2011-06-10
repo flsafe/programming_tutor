@@ -15,8 +15,7 @@ describe GradeSheetObserver do
     end
 
     it "saves updates the experience points in the user's stats sheet if the grade is a 100" do
-      gs = create_grade_sheet
-      gs.save!
+      create_grade_sheet.save!
       @user.stats_sheet.total_xp.should == StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
     end
 
@@ -27,15 +26,19 @@ describe GradeSheetObserver do
       @user.stats_sheet.total_xp.should == 0 
     end
 
+    it "does not update experience points if the user already has a 100 for that exercise" do
+      create_grade_sheet.save!
+      create_grade_sheet.save!
+      @user.stats_sheet.total_xp.should == StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
+    end
+
     it "It sets the current level" do
-      gs = create_grade_sheet
-      gs.save!
+      create_grade_sheet.save!
       @user.stats_sheet.level.should_not == 0
     end
 
     it "It sets the xp to the next level" do
-      gs = create_grade_sheet
-      gs.save!
+      create_grade_sheet.save!
       @user.stats_sheet.xp_to_next_level.should_not == 0
     end
 
