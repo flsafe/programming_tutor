@@ -55,6 +55,11 @@
 	body.lessons #lessons, body.exercises #exercises, body.code #exercises, body.badges #badges, body.stats_sheets #stats {
 		background: #5691d1;
 	}
+
+  /* Have the real buttons line up with the button styled links */
+  form.button_to, form.button_to div{
+    display: inline;
+  }
 	
 /* #Header
 ================================================== */

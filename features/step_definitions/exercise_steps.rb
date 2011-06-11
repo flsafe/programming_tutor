@@ -18,7 +18,8 @@ end
 
 Given /^I am doing an exercise$/ do
    Given "there exists an exercise in the database"
-   visit start_coding_path(@an_exercise, :id=>@an_exercise.id)
+   visit exercises_path
+   click_button "Start Exercise" 
 end
 
 When /^I create a new exercise$/ do

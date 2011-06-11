@@ -5,7 +5,9 @@
   <span class="exercise_li_title"><%= exercise_li.title %></span> 
   <span class="exercise_li_grade">(<%= grade %>)</span>
   <%= button_to("Start Exercise",
-                start_coding_path(exercise_li)) %>
+                start_coding_path(exercise_li),
+                :class=>"button",
+                :method=>:post) %>
   <p>
     <%= exercise_li.description %>
   </p>

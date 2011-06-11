@@ -1,34 +1,26 @@
 Rasberry::Application.routes.draw do
   resources :badges
-
   resources :stats_sheets
-
   resources :grade_sheets
-
   resources :exercises
-
   resources :lessons
   resources :users
   resources :user_sessions
 
   resource :account, :controller => 'users'
 
+  # User sessions
   match "login" => "user_sessions#new", :as=>:login
   match "logout"=>"user_sessions#destroy", :as=>:logout
+
+  # View my just my stats sheet
   match "stats_sheet"=>"stats_sheets#show", :id=>"me", :as=>:stats_sheet
     
-  # Routes for the text editor used when coding an exercise.
-  match "code/start/:id"=>"code#start", :as=>:start_coding
+  # Routes for when the user is coding an exercise
+  match "code/start/:id"=>"code#start", :as=>:start_coding, :via=>:post
+  match "code"=>"code#show", :as=>:code, :via=>:get
   match "code/quit"=>"code#quit", :as=>:quit_coding, :via=>:post
   match "code/action"=>"code#do_action", :as=>:do_action, :via=>:post
- 
-  # Show the exercise text and text editor.
-  match "code"=>"code#show", :as=>:code, :via=>:get
-
-  # Polling functions used when an asynchronous request for
-  # syntax or unit tests are made.
-  match "code/syntax"=>"code#syntax", :as=>:get_syntax, :via=>:get
-  match "code/check"=>"code#check", :as=>:get_check, :via=>:get
   match "code/grade"=>"code#grade", :as=>:get_grade, :via=>:get
   match "code/already_doing_exercise"=>"code#already_doing_exercise", :as=>:choose_code, :via=>:get
 

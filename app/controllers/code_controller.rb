@@ -65,13 +65,6 @@ class CodeController < ApplicationController
     end
   end
 
-  # GET check
-  # Get the results of running
-  # the code through the unit tests.
-  def check
-    
-  end
-
   # GET code/grade
   # Get grade for the current exercise.
   def grade 
