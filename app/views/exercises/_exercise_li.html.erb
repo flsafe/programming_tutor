@@ -1,9 +1,6 @@
-<% grades = GradeSheet.grades_for(current_user) %>
-<% grade = grades[exercise_li.id] || ""         %>
-
 <li class="exercise_li">
   <span class="exercise_li_title"><%= exercise_li.title %></span> 
-  <span class="exercise_li_grade">(<%= grade %>)</span>
+  <span class="exercise_li_grade"><%= grade_for(current_user, :on => exercise_li) %></span>
   <%= button_to("Start Exercise",
                 start_coding_path(exercise_li),
                 :class=>"button",
