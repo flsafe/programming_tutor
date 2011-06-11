@@ -1,0 +1,19 @@
+<div class="badge two columns">
+  <!-- Placeholder images -->
+  <img src="http://lorempixum.com/100/100/abstract/<%= badge_counter %>">
+</div>
+<div class="badge three columns">
+  <h3><%= badge.title %></h3>
+  <p>
+    <%= badge.description %>
+    <% if current_user.earned_badges.include? badge %>
+      <img src="/images/tick.png">
+    <% end %>
+  </p>
+  <% if current_user.admin? %>
+    <%= link_to 'Show', badge, :class => "button" %>
+    <%= link_to 'Edit', edit_badge_path(badge), :class => "button" %>
+    <%= link_to 'Destroy', badge, :confirm => 'Are you sure?', :method => :delete, :class => "button" %>
+  <% end %>
+</div>
+<%= cycle("", "", "<div class='clear'></div>".html_safe) %>
