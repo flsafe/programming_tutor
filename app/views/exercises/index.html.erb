@@ -1,20 +1,7 @@
 <h1>Exercises</h1>
 
 <div id="exercises">
-  <% @exercises.each do |exercise| %>
-    <div class="row sixteen columns">
-      <h3><%= exercise.title %></h3>
-      <p>
-        <%= exercise.description %>
-      </p>
-      <%= button_to 'Start Exercise', start_coding_path(exercise),  :class => "button", :method=>:post%></td>
-      <% if current_user.admin? %>
-        <%= link_to 'Show', exercise, :class => "button" %></td>
-        <%= link_to 'Edit', edit_exercise_path(exercise), :class => "button" %></td>
-        <%= link_to 'Destroy', exercise, :confirm => 'Are you sure?', :method => :delete, :class => "button" %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render :partial=>'exercise', :collection => @exercises %>
 </div>
 
 <% if current_user.admin? %>
