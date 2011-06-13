@@ -97,9 +97,8 @@ class CodeController < ApplicationController
   end
 
   def do_solution_check
-    curr_exercise = current_user.current_exercise
-    @message = session[:message] = @code.check_against(curr_exercise.unit_test, 
-                                      curr_exercise.solution_template)
+    unit_test = current_user.current_exercise.unit_test
+    @message = session[:message] = @code.check_against(unit_test)
     case 
       when request.xhr?
         return "code/syntax"
@@ -109,10 +108,8 @@ class CodeController < ApplicationController
   end
 
   def do_solution_grading
-    curr_exercise = current_user.current_exercise
-    @grade_sheet = @code.grade_against(curr_exercise.unit_test, 
-                        curr_exercise.solution_template,
-                        current_user)
+    unit_test = current_user.current_exercise.unit_test
+    @grade_sheet = @code.grade_against(unit_test, current_user)
     session[:grade_sheet] = @grade_sheet.attributes
     do_quit
     case 

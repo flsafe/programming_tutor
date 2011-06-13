@@ -14,7 +14,6 @@ Given /^there exists a lesson in the database$/ do
   2.times do |i|
     exercises << Exercise.new(:title=>"tile#{i}", 
                               :minutes=>1,
-                              :solution_template=>SolutionTemplate.new(:src_code=>"c", :src_language=>'c'),
                               :unit_test=>UnitTest.new(:src_code=>'c', :src_language=>'c'))
   end
   @a_lesson = Lesson.create!(:title=>"the lesson", 

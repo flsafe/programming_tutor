@@ -4,10 +4,8 @@ Given /^there exists an exercise in the database$/ do
   @an_exercise = Exercise.new do |e|
     e.title = "title"
     e.minutes = 15
-    e.unit_test = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.rb"),
-                               :src_language=>"ruby")
-    e.solution_template = SolutionTemplate.new(:src_code=>IO.read("#{Rails.root}/content/solution_template.c"),
-                                               :src_language=>'c')
+    e.unit_test = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
+                               :src_language=>"c")
     e.lesson = Lesson.create!(:title=>"a lesson")
   end
   @an_exercise.stats_sheet.get_shared_xp_fields.each do |m|
@@ -35,8 +33,7 @@ When /^I create a new exercise$/ do
     fill_in "Linked list xp", :with=>'1'
     fill_in "Hash xp", :with=>'1'
     fill_in "Array xp", :with=>'1'
-    attach_file "Upload Unit Test", "#{Rails.root}/content/unit_test.rb"
-    attach_file "Upload Solution Template", "#{Rails.root}/content/solution_template.c"
+    attach_file "Upload Unit Test", "#{Rails.root}/content/unit_test.c"
     fill_in "Minutes", :with=>"60"
     fill_in "Text", :with=>"Text"
     fill_in "Tutorial", :with=>"Tutorial"
@@ -128,6 +125,8 @@ Then /^I should see an 'ok' message$/ do
 end
 
 Then /^I should see a grade sheet with a perfect grade$/ do
+  save_and_open_page
+  page.should have_css("#grade_sheet td", :text => "20", :count => 5)
   page.should have_css("#grade_sheet", :text => "100")
 end
 

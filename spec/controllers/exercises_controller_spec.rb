@@ -5,8 +5,8 @@ describe ExercisesController do
   def valid_attributes
     {:title=>'title', 
      :minutes=>1,
-     :unit_test_attributes=>{:src_code=>'code', :src_language=>"lang"},
-     :solution_template_attributes=>{:src_code=>'code', :src_language=>'lang'}}
+     :unit_test_attributes=>{:src_code=>'code', :src_language=>"lang"}}
+
   end
   
   context "when the user is not an admin" do

@@ -7,10 +7,10 @@ class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise 
 
-  validates :user, :exercise, :src_code, :tests, :grade, :presence=>true
+  validates :user, :exercise, :tests, :grade, :presence=>true
   validate :unit_tests_format
 
-  before_validation :grade, :serialize_unit_tests
+  before_validation :grade
 
   # Returns all the grades for the
   # given user in a hash with exercise_ids as keys
@@ -44,8 +44,9 @@ class GradeSheet < ActiveRecord::Base
   #
   # The points key is optional and will be calculated
   # automatically if left out.
-  def add_unit_test(unit_test_hash)
-    unit_tests.merge!(unit_test_hash)
+  def add_unit_test(new_unit_test)
+    unit_tests.merge!(new_unit_test)
+    self.tests = YAML.dump(unit_tests)
   end
 
   # Returns the grade the user got based on the
@@ -57,7 +58,7 @@ class GradeSheet < ActiveRecord::Base
   # Returns the unit test hashes that have been
   # added to this unit test merged into one.
   def unit_tests 
-    @tests_hash = @tests_hash || YAML.load(tests || "") || {}
+    @tests_hash = @tests_hash || (YAML.load(tests || "") || {}).with_indifferent_access
   end
 
   # Returns the points per test.
@@ -84,9 +85,9 @@ class GradeSheet < ActiveRecord::Base
     unit_tests.each_pair do |test_name, info|
       if info[:output] and (info[:output].strip.chomp == info[:expected].strip.chomp)
         info[:points] = default_points_per_test unless info[:points]
-        @sum += info[:points] 
+        @sum += info[:points].to_f
       else
-        @sum += (info[:points] = 0)
+        @sum += (info[:points] = 0.0)
       end
     end
     @sum 
@@ -99,7 +100,7 @@ class GradeSheet < ActiveRecord::Base
   def unit_tests_format
     expected_keys = [:input, :output, :expected]
     if unit_tests.empty?
-      errors.add(:base, "There was an error when trying to execute the unit tests")
+      errors.add(:base, "The grade sheet can not be saved with empty unit tests")
     else
       unit_tests.each_pair do |test_name, info|
         expected_keys.each do |expected_key|
@@ -107,9 +108,5 @@ class GradeSheet < ActiveRecord::Base
         end
       end
     end
-  end
-
-  def serialize_unit_tests
-    self.tests = YAML.dump(unit_tests)
   end
 end

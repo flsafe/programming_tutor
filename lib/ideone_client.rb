@@ -17,7 +17,7 @@ class IdeoneClient
     @client = create_soap_client
   end
 
-  def run_code(src, input, lang = 'c')
+  def run_code(src, input = "", lang = 'c')
     response = create_submission(src, input, lang) 
     parse(response, :create_submission_response, :link)
   end

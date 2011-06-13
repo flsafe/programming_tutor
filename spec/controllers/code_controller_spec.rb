@@ -51,6 +51,7 @@ describe CodeController do
     before(:each) do
       @user.start_coding @exercise
     end
+
     it "saves the users code to the current rails session (to redisplay with non ajax clients)"do
       post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}, :commit=>"Check Syntax"
       session[:code].should == {'src_code'=>"int main(){return 0;}"}
@@ -59,13 +60,8 @@ describe CodeController do
     context "when the user pressed the 'Check Syntax' button" do
       it "increases the syntax check counter by 1" do
         expect {
-          post :do_action, :commit=>"Check Syntax"
+          post :do_action, :code=>{'src_code'=>"int main(){return 0;}"}, :commit=>"Check Syntax"
         }.to change{@user.stats_sheet(true).syntax_checks_count}.by(1)
-      end
-      it "runs a syntax check on the code" do
-        Code.stub(:new).and_return(@code = mock_model(Code)) 
-        @code.should_receive :get_syntax_message
-        post :do_action, :commit=>"Check Syntax"
       end
       it  "assigns the syntax check message to session[:message]"do
         @code = stub_model(Code, :get_syntax_message=>"None")

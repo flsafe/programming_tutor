@@ -14,9 +14,8 @@ class Code < ActiveRecord::Base
   # and solution template. Returns
   # a string containing a short feedback message. Does
   # not record a grade.
-  def check_against(unit_test, solution_template)
-    solution = solution_template.fill_in(src_code)  
-    grade_sheet = unit_test.run_with(solution)
+  def check_against(unit_test)
+    grade_sheet = unit_test.execute(src_code)  
     Feedback.on(grade_sheet)
   end
 
@@ -26,9 +25,8 @@ class Code < ActiveRecord::Base
   # grading the solution. If an error occured then
   # it returns an invalid grade sheet with the errors array
   # explaining why.
-  def grade_against(unit_test, solution_template, user)
-    solution = solution_template.fill_in(src_code)  
-    grade_sheet = unit_test.run_with(solution)
+  def grade_against(unit_test, user)
+    grade_sheet = unit_test.execute(src_code)
     grade_sheet.src_code = src_code
     grade_sheet.user = user
     grade_sheet.exercise = user.current_exercise

@@ -10,7 +10,6 @@ class Exercise < ActiveRecord::Base
   belongs_to :lesson
 
   has_one :unit_test, :dependent=>:destroy
-  has_one :solution_template, :dependent=>:destroy
   has_one :stats_sheet, :as=>:xp, :dependent=>:destroy
   after_initialize lambda {|e|e.stats_sheet = StatsSheet.new unless e.stats_sheet}
 
@@ -18,15 +17,15 @@ class Exercise < ActiveRecord::Base
   has_many :grade_sheets, :dependent=>:destroy
   has_many :code_sessions
 
-  accepts_nested_attributes_for :hints, :unit_test, :solution_template, :stats_sheet
+  accepts_nested_attributes_for :hints, :unit_test, :stats_sheet
 
-  validates :title, :unit_test, :solution_template, :presence=>true
+  validates :title, :unit_test, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}
 
   # Returns a template for the
   # user's solution. Usually displayed in
   # a text editor.
   def prototype
-    return solution_template.prototype
+    return unit_test.prototype
   end
 end

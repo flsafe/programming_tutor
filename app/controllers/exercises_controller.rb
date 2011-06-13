@@ -30,7 +30,6 @@ class ExercisesController < ApplicationController
     @exercise = Exercise.new
     @exercise.hints.build
     @exercise.unit_test = UnitTest.new
-    @exercise.solution_template = SolutionTemplate.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -54,7 +53,6 @@ class ExercisesController < ApplicationController
         format.xml  { render :xml => @exercise, :status => :created, :location => @exercise }
       else
         @exercise.unit_test = UnitTest.new
-        @exercise.solution_template = SolutionTemplate.new
         format.html { render :action => "new" }
         format.xml  { render :xml => @exercise.errors, :status => :unprocessable_entity }
       end
