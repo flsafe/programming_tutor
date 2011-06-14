@@ -125,7 +125,6 @@ Then /^I should see an 'ok' message$/ do
 end
 
 Then /^I should see a grade sheet with a perfect grade$/ do
-  save_and_open_page
   page.should have_css("#grade_sheet td", :text => "20", :count => 5)
   page.should have_css("#grade_sheet", :text => "100")
 end
