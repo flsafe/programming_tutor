@@ -1,3 +1,5 @@
+require 'vcr'
+
 POINTS_PER_XP_FIELD = 100
 
 Given /^there exists an exercise in the database$/ do
@@ -92,12 +94,14 @@ When /^I press the check syntax button$/ do
   click_button "Check Syntax" 
 end
 
+
 When /^I press the check solution button$/ do
-  click_button "Check Solution"
+    click_button "Check Solution"
 end
 
 When /^I press the submit solution button$/ do
-  click_button "Submit Solution"
+  VCR.use_cassette('grade_solution',
+    :re_record_interval => 1.days) {click_button "Submit Solution"}
 end
 
 Then /^I should see the exercise prototype$/ do

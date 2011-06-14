@@ -29,6 +29,9 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'webmock'
+gem 'vcr'
+
 # Bundle the extra gems:
 # gem 'bj'
 # gem 'nokogiri'

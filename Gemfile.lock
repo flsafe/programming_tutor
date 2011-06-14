@@ -29,6 +29,7 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    addressable (2.2.6)
     archive-tar-minitar (0.5.2)
     arel (2.0.10)
     authlogic (3.0.3)
@@ -48,6 +49,7 @@ GEM
       ffi (~> 1.0.6)
     columnize (0.3.2)
     configuration (1.2.0)
+    crack (0.1.8)
     cucumber (0.10.3)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
@@ -156,6 +158,10 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
+    vcr (1.10.0)
+    webmock (1.6.4)
+      addressable (~> 2.2, > 2.2.5)
+      crack (>= 0.1.7)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -183,4 +189,6 @@ DEPENDENCIES
   ruby-debug19
   savon
   sqlite3
+  vcr
+  webmock
   webrat

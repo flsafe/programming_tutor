@@ -24,6 +24,7 @@ Feature: A user does an exercise
     And I press the check syntax button
     Then I should not see a syntax error message
 
+  @with_vcr
   Scenario: The user wants to run unit tests without submitting 
     Given I am a user
     And I am doing an exercise
@@ -31,6 +32,7 @@ Feature: A user does an exercise
     And I press the check solution button 
     Then I should see an 'ok' message 
 
+  @with_vcr
   Scenario: Submits thier solution for a grade 
     Given I am a user
     And I am doing an exercise
@@ -39,6 +41,7 @@ Feature: A user does an exercise
     Then I should see a grade sheet with a perfect grade
     And I should see my src code
 
+  @with_vcr
   Scenario: An non logged in user submits thier solution for a grade 
     Given I am doing an exercise
     When I type a correct solution 

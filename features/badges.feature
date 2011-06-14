@@ -3,6 +3,7 @@ Feature: A user does an exercise and gains experience
   As an user
   I want to see my experience increase
 
+  @with_vcr
   Scenario: User gains experience points from completing an exercise 
     Given I am a user
     And I am doing an exercise
