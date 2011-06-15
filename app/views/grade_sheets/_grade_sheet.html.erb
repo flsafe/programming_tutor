@@ -2,7 +2,7 @@
   <%= link_to "Back To Lesson", lesson_path(grade_sheet.lesson) %> 
 </div>
 
-<div class="grade_sheet">
+<div id="grade-sheet">
 <% if grade_sheet.syntax_error? %>
  <p>
   Oops, your solution doesn't compile!
@@ -40,10 +40,10 @@
       </tr>
   </table>
 
-  <pre class="solution_code">
-   <code>
-    <%= grade_sheet.src_code %>
-  </code>
+  <pre class="solution-code">
+     <code>
+      <%= grade_sheet.src_code %>
+    </code>
   </pre>
   <% end %>
 </div>

@@ -3,8 +3,8 @@
 <%= javascript_include_tag 'codemirror' %>
 <%= javascript_include_tag 'mode/clike/clike' %>
 
-<%= form_for @code, :url=>do_action_path, :remote=>true, :html=>{:id=>"text_editor_form"} do |f|%>
-  <%= f.text_area :src_code, :id=>'text_editor' do %>
+<%= form_for @code, :url=>do_action_path, :remote=>true, :html=>{:id=>"text-editor-form"} do |f|%>
+  <%= f.text_area :src_code, :id=>'text-editor' do %>
   <% end %>
   <%= f.submit "Check Syntax", :disable_with=>"Check Syntax"%>
   <%= f.submit "Check Solution", :disable_with=>"Check Solution" %>

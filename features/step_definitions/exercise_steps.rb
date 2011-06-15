@@ -71,7 +71,7 @@ When /^I type a program with a syntax error$/ do
       ++count;
   }
   END
-  fill_in "text_editor", :with=>src
+  fill_in "text-editor", :with=>src
 end
 
 When /^I type a program without a syntax error$/ do
@@ -83,17 +83,16 @@ When /^I type a program without a syntax error$/ do
       ++count;
   }
   END
-  fill_in "text_editor", :with=>src
+  fill_in "text-editor", :with=>src
 end
 
 When /^I type a correct solution$/ do
-  fill_in "text_editor", :with=>IO.read(File.join(Rails.root, "content", "solution.c"))
+  fill_in "text-editor", :with=>IO.read(File.join(Rails.root, "content", "solution.c"))
 end
 
 When /^I press the check syntax button$/ do
   click_button "Check Syntax" 
 end
-
 
 When /^I press the check solution button$/ do
   VCR.use_cassette('check-solution', :re_record_interval => 1.days) do
@@ -108,11 +107,11 @@ When /^I press the submit solution button$/ do
 end
 
 Then /^I should see the exercise prototype$/ do
-  page.should have_css("textarea#text_editor")
+  page.should have_css("textarea#text-editor")
 end
 
 Then /^I should see the exercise text$/ do
-  page.should have_css("div#exercise_problem_text", :content=>@an_exercise.text)
+  page.should have_css("div#exercise-problem-text", :content=>@an_exercise.text)
 end
 
 Then /^I should see the time remaining for the exercise$/ do
@@ -132,11 +131,11 @@ Then /^I should see an 'ok' message$/ do
 end
 
 Then /^I should see a grade sheet with a perfect grade$/ do
-  page.should have_css("#grade_sheet td", :text => "20", :count => 5)
-  page.should have_css("#grade_sheet", :text => "100")
+  page.should have_css("#grade-sheet td", :text => "20", :count => 5)
+  page.should have_css("#grade-sheet", :text => "100")
 end
 
 Then /^I should see my src code$/ do
-  page.should have_css("#grade_sheet", :text=>IO.read(File.join(Rails.root, "content", "solution.c")))
+  page.should have_css("#grade-sheet", :text=>IO.read(File.join(Rails.root, "content", "solution.c")))
 end
 

@@ -10,8 +10,8 @@ $(document).ready(function() {
   });
 
   /* Initialize the CodeMirror text editor */
-  if ($('#text_editor_form').length){
-    var textEditor = CodeMirror.fromTextArea(document.getElementById('text_editor'),
+  if ($('#text-editor-form').length){
+    var textEditor = CodeMirror.fromTextArea(document.getElementById('text-editor'),
         {mode: "clike",
          lineNumbers: true,
          matchBrackets: true,
@@ -20,14 +20,14 @@ $(document).ready(function() {
 
     /* When grading a solution, hide the exercise and text editor */
     $('input[value="Submit Solution"]').click(function(){
-      $('#text_editor_form').hide();
+      $('#text-editor-form').hide();
       $('#timer').hide();
-      $('#exercise_problem_text').hide();
-      $('#grade_sheet_wrapper').html("Grading...");
+      $('#exercise-problem-text').hide();
+      $('#grade-sheet-wrapper').html("Grading...");
     });
 
     /* Hide/show the spinner gif when checking syntax or checking solution*/
-    $('#text_editor_form').bind('ajax:beforeSend', function(evt, xhr, settings){
+    $('#text-editor-form').bind('ajax:beforeSend', function(evt, xhr, settings){
       $('#message').html("");
       $('#spinner').show();
     })

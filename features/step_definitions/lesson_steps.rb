@@ -34,6 +34,6 @@ end
 Then /^I should see the associated exercises$/ do
   @a_lesson.exercises.count.should_not == 0
   @a_lesson.exercises.each do |e|
-    page.should have_css(".exercise_li_title", :text=>e.title)
+    page.should have_css(".exercise-li-title", :text=>e.title)
   end
 end

@@ -1,6 +1,6 @@
 <%= render :partial => 'code_mirror', :locals=>{:code=>@code}%>
 
-<div id="exercise_problem_text">
+<div id="exercise-problem-text">
   <%= @exercise.text %>
 </div>
 
@@ -8,7 +8,7 @@
   <p><%=raw to_html_msg(@message) %></p>
 </div>
 
-<div id="grade_sheet_wrapper">
+<div id="grade-sheet-wrapper">
 </div>
 
 <%= image_tag 'spinner.gif', :id=>'spinner', :style=>"display:none" %>

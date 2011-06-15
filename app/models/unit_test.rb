@@ -60,7 +60,8 @@ class UnitTest < ActiveRecord::Base
     rescue => e 
       Rails.logger.error("There was an error when attempting to reach the Ideone server.")
       Rails.logger.error(e.message)
-      {:error=>:ideone_not_reached}
+      {:error=>:ideone_not_reached,
+       :output=>{}}
     end
   end
 end
