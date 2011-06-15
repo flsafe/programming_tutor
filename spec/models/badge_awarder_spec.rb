@@ -21,6 +21,12 @@ describe BadgeAwarder do
                :conditions=>{:title=>"The Rookie"}).should_not == nil
     end
 
+    it "creates a new notification for the user" do
+      @grade_sheet = create_grade_sheet
+      @grade_sheet.save!
+      Notification.where(:user_id=>@user).count.should == 1
+    end
+
     def create_grade_sheet
       gs = GradeSheet.new(:user=>@user,
                      :exercise=>@exercise,

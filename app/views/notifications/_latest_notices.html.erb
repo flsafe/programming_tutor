@@ -1,0 +1,4 @@
+<table id="notifications">
+  <%= render :partial=>"notifications/notification", 
+             :collection=>Notification.from_last_seconds(25).for_user(current_user) %>
+</table>

@@ -84,7 +84,13 @@
 		</div>
 				
 		<div class="sixteen columns">
+
+      <div id="latest-notifications-wrapper">
+        <%= render :partial => 'notifications/latest_notices' %>
+      </div>
+
       <%= yield %>
+
     </div>
 
 	</div><!-- container -->

@@ -1,0 +1,8 @@
+<h1>Notifications</h1>
+<% if @notifications.empty? %>
+  <p>Nothing here yet!</p>
+<% else %>
+  <table>
+    <%= render :partial => 'notification', :collection=>@notifications %>
+  </table>
+<% end %>

@@ -13,6 +13,11 @@ class BadgeAwarder < ActiveRecord::Observer
       newly_earned = select_earned_from(Badge.unearned_badges_for(user), stats_sheet)
       user.earned_badges << newly_earned
       user.save!
+
+      newly_earned.each do |b|
+        Notification.create(:user_id=>user, 
+                            :text=>"Woot! You just earned a badge: #{b.title}")
+      end
     end
   end
 
