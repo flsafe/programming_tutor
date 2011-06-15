@@ -1,4 +1,6 @@
-<table id="notifications">
-  <%= render :partial=>"notifications/notification", 
-             :collection=>Notification.from_last_seconds(25).for_user(current_user) %>
-</table>
+<ul id="notifications">
+  <% unless current_user.anonymous? %>
+    <%= render :partial=>"notifications/notification", 
+               :collection=>Notification.from_last_seconds(25).for_user(current_user) %>
+  <% end %>
+</ul>

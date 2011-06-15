@@ -6,9 +6,11 @@ class BadgeAwarder < ActiveRecord::Observer
   observe StatsSheet
 
   # Award unearned badges to the user associated with
-  # the stats sheet if the badge criteria is met.
+  # the stats sheet if the badge criteria is met and
+  # the user is not anonymous.
   def after_save(stats_sheet)
-    if stats_sheet.xp.instance_of? User 
+    user = stats_sheet.xp
+    if user.instance_of?(User) and !user.anonymous?
       user = stats_sheet.xp
       newly_earned = select_earned_from(Badge.unearned_badges_for(user), stats_sheet)
       user.earned_badges << newly_earned
