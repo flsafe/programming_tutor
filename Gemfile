@@ -29,8 +29,6 @@ gem 'jquery-rails'
 # gem 'ruby-debug'
 gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem 'webmock'
-gem 'vcr'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -50,3 +48,8 @@ group :development, :test do
    gem 'autotest'
    gem 'database_cleaner'
  end
+
+group :test do
+  gem 'webmock'
+  gem 'vcr'
+end
