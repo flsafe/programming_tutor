@@ -184,11 +184,12 @@ class IdeoneClient
   end
 
   def raise_if_not_parsable(response, action)
-    emsg = "Can't parse response xml. Expected path: create_submission_response -> return -> [item_hash]"
     rhash = response.to_hash
-
-    raise emsg  unless rhash[action] and rhash[action][:return]
+    raise "no xml path: #{action} return" unless rhash[action] and rhash[action][:return]
     items = rhash[action][:return][:item]
-    raise emsg unless items.respond_to?(:detect)
+    raise "return node not an array" unless items.instance_of?(Array)
+    items.each do |h|
+      raise "Item child is not a hash" unless h.instance_of?(Hash)
+    end
   end
 end

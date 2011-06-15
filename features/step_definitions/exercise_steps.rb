@@ -96,12 +96,15 @@ end
 
 
 When /^I press the check solution button$/ do
+  VCR.use_cassette('check-solution', :re_record_interval => 1.days) do
     click_button "Check Solution"
+  end
 end
 
 When /^I press the submit solution button$/ do
-  VCR.use_cassette('grade_solution',
-    :re_record_interval => 1.days) {click_button "Submit Solution"}
+  VCR.use_cassette('grade-solution', :re_record_interval => 1.days)  do
+    click_button "Submit Solution"
+  end
 end
 
 Then /^I should see the exercise prototype$/ do
