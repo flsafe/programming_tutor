@@ -9,6 +9,12 @@
   Try the exercise again, but make sure you check your syntax before
   you submit!
  </p>
+<% elsif grade_sheet.timeout_error %>
+  <p>
+  Your solution went into an infinite loop or otherwise took
+  longer than its alloted time. I'm sure you'll do better next
+  time!
+  </p>
 <% elsif grade_sheet.unit_tests_failed? %>
  <p>
    Aww, Shoot! An internal error occured and we couldn't grade your exercise.

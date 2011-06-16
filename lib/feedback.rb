@@ -7,6 +7,10 @@ class Feedback
       return "Your solution doesn't compile!"
     end
 
+    if grade_sheet.timeout_error?
+      return "I think this would go into an infinite loop!"
+    end
+
     if grade_sheet.unit_tests_failed?
       Rails.logger.error "An invalid grade sheet was produced:"
       grade_sheet.errors.full_messages.each {|msg| Rails.logger.error(msg)}
@@ -15,7 +19,7 @@ class Feedback
 
     grade_sheet.unit_tests.each_pair do |test_name, result|
       if nil == result[:output]
-        return "I think this would crash at run time! Double check it" 
+        return "Wouldn't your solution crash at run time? Double check it!" 
       elsif result[:output].strip.chomp != result[:expected].strip.chomp
         return to_friendly_msg(result)
       end

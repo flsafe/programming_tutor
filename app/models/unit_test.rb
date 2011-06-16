@@ -26,7 +26,13 @@ class UnitTest < ActiveRecord::Base
       @grade_sheet.syntax_error = true
     else
       result = exec_unit_test(solution_code)
-      @grade_sheet.add_unit_test(result[:output])
+      if result[:error] == :timeout_error
+        @grade_sheet.timeout_error = true
+      elsif result[:error]
+        @grade_sheet.errors.add(:base, "Error: #{result[:error]}")
+      else
+        @grade_sheet.add_unit_test(result[:output])
+      end
     end
     @grade_sheet
   end
@@ -55,13 +61,17 @@ class UnitTest < ActiveRecord::Base
     begin
       link = client.run_code(solution_code)
       results = client.get_code_results(link)
-      results[:output] = (YAML.load(results[:output] || "") || {}).with_indifferent_access
-      results
+      build_results_hash(results)
     rescue => e 
       Rails.logger.error("There was an error when attempting to reach the Ideone server.")
       Rails.logger.error(e.message)
       {:error=>:ideone_not_reached,
        :output=>{}}
     end
+  end
+
+  def build_results_hash(ideone_client_results)
+    ideone_client_results[:output] = (YAML.load(ideone_client_results[:output] || "") || {}).with_indifferent_access
+    ideone_client_results
   end
 end

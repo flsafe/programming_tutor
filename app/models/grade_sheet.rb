@@ -96,9 +96,11 @@ class GradeSheet < ActiveRecord::Base
   # Validates each unit test result hash.
   # Each unit test result hash must have the 
   # these keys.
-  #     :input, :output, :expected
+  #     :input, :expected
+  # Can have:
+  #     :output, :error
   def unit_tests_format
-    expected_keys = [:input, :output, :expected]
+    expected_keys = [:input, :expected]
     if unit_tests.empty?
       errors.add(:base, "The grade sheet can not be saved with empty unit tests")
     else
