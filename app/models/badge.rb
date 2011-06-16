@@ -7,6 +7,8 @@ class Badge < ActiveRecord::Base
 
   has_and_belongs_to_many :users
 
+  scope :finished, lambda{ where(:finished => true)}
+
   # Return the user's unearned badges
   def self.unearned_badges_for(user)
     badge_ids = user.earned_badges.map{|b| b.id}.push(0)

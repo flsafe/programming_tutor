@@ -5,7 +5,11 @@ class ExercisesController < ApplicationController
   # GET /exercises
   # GET /exercises.xml
   def index
-    @exercises = Exercise.all
+    if current_user.admin?
+      @exercises = Exercise.all
+    else
+      @exercises = Exercise.finished 
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +21,10 @@ class ExercisesController < ApplicationController
   # GET /exercises/1.xml
   def show
     @exercise = Exercise.find(params[:id])
+    if not @exercise.finished and not current_user.admin?
+      redirect_to home_url
+      return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

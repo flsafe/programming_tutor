@@ -34,19 +34,23 @@ describe LessonsController do
 
     it_behaves_like "admin resource controller"   
 
+    before(:each) do
+      controller.stub(:current_user).and_return(stub_model(User, :admin? => false))
+    end
+
     describe "GET index" do
-      it "assigns all lessons as @lessons" do
-        lesson = Lesson.create! valid_attributes
+      it "shows only finished exercises to non-admins" do
+        Factory.create :lesson, :finished => false
         get :index
-        assigns(:lessons).should eq([lesson])
+        assigns(:lessons).count.should == 0
       end
     end
 
     describe "GET show" do
-      it "assigns the requested lesson as @lesson" do
-        lesson = Lesson.create! valid_attributes
+      it "redirect if the requested lesson is unfinished" do
+        lesson = Factory.create :lesson, :finished => false
         get :show, :id => lesson.id.to_s
-        assigns(:lesson).should eq(lesson)
+        response.should redirect_to(home_path)
       end
     end
   end
@@ -54,6 +58,23 @@ describe LessonsController do
   context "current user is an admin" do
     before(:each) do
       controller.stub(:current_user).and_return(stub_model(User, :admin? => true))
+    end
+
+    describe "GET index" do
+      it "shows all exercises" do
+        Factory.create :lesson
+        Factory.create :lesson, :finished=>true
+        get :index
+        assigns(:lessons).count.should == 2
+      end
+    end
+
+    describe "GET show" do
+      it "assigns the requested lesson" do
+        lesson = Factory.create :lesson 
+        get :show, :id => lesson.id.to_s
+        assigns(:lesson).should eq(lesson)
+      end
     end
 
     describe "GET new" do

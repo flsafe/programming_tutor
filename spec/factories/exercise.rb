@@ -1,5 +1,6 @@
 Factory.define :exercise do |f|
   f.title "Exercise"
-  f.unit_test {|ut| ut.association :unit_test}
-  f.minutes 1
+  f.unit_test {|e| e.association :unit_test}
+  f.minutes 15
+  f.finished true
 end

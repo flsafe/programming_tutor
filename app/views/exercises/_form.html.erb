@@ -22,6 +22,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :finished %>
+    <%= f.check_box :finished %>
+  </div>
+
+  <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description, :rows=>8, :cols=>80 %>
   </div>

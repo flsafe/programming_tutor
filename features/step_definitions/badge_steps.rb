@@ -1,10 +1,5 @@
 Given /^there exists a first exercise badge in the database$/ do
-  @first_exercise_badge = Badge.new do |b|
-    b.title = "The Rookie"
-    b.description = "Complete your first exercise"
-    b.earn_conditions = "def has_earned?(stats) stats.total_xp > 1;end"
-  end
-  @first_exercise_badge.save!
+  @first_exercise_badge = Factory.create :badge
 end
 
 Then /^I should have the exercise experience points assigned to me$/ do

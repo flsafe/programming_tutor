@@ -5,7 +5,11 @@ class BadgesController < ApplicationController
   # GET /badges
   # GET /badges.xml
   def index
-    @badges = Badge.all
+    if current_user.admin?
+      @badges = Badge.all
+    else
+      @badges = Badge.finished
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +21,10 @@ class BadgesController < ApplicationController
   # GET /badges/1.xml
   def show
     @badge = Badge.find(params[:id])
+    if not @badge.finished? and not current_user.admin?
+      redirect_to home_url
+      return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

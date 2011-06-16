@@ -3,14 +3,35 @@ require 'spec_helper'
 describe ExercisesController do
 
   def valid_attributes
+    # TODO: Should use factory here
     {:title=>'title', 
      :minutes=>1,
      :unit_test_attributes=>{:src_code=>'code', :src_language=>"lang"}}
-
   end
   
   context "when the user is not an admin" do
+
     it_behaves_like "admin resource controller"
+
+    before(:each) do
+      controller.stub(:current_user).and_return(stub_model(User, :admin? => false))
+    end
+
+    describe "GET index" do
+      it "shows only finished exercises" do
+        exercise = Factory.create :exercise, :finished => false
+        get :index
+        assigns(:exercises).count.should == 0 
+      end
+    end
+
+    describe "GET show" do
+      it "it redirects request for unfinished exercises" do
+        exercise = Factory.create :exercise, :finished=>false
+        get :show, :id => exercise.id.to_s
+        response.should redirect_to(home_path)
+      end
+    end
   end
 
   context "when user is an admin" do
@@ -20,15 +41,22 @@ describe ExercisesController do
 
     describe "GET index" do
       it "assigns all exercises as @exercises" do
-        exercise = Exercise.create! valid_attributes
+        exercise = Factory.create :exercise 
         get :index
         assigns(:exercises).should eq([exercise])
+      end
+
+      it "shows all exercises" do
+        Factory.create :exercise
+        Factory.create :exercise, :finished=>true
+        get :index
+        assigns(:exercises).count.should == 2
       end
     end
 
     describe "GET show" do
       it "assigns the requested exercise as @exercise" do
-        exercise = Exercise.create! valid_attributes
+        exercise = Factory.create :exercise, :finished => false 
         get :show, :id => exercise.id.to_s
         assigns(:exercise).should eq(exercise)
       end
@@ -43,7 +71,7 @@ describe ExercisesController do
 
     describe "GET edit" do
       it "assigns the requested exercise as @exercise" do
-        exercise = Exercise.create! valid_attributes
+        exercise = Factory.create :exercise 
         get :edit, :id => exercise.id.to_s
         assigns(:exercise).should eq(exercise)
       end

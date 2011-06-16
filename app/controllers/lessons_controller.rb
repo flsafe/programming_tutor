@@ -5,7 +5,11 @@ class LessonsController < ApplicationController
   # GET /lessons
   # GET /lessons.xml
   def index
-    @lessons = Lesson.all
+    if current_user.admin?
+      @lessons = Lesson.all
+    else
+      @lessons = Lesson.finished
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +21,10 @@ class LessonsController < ApplicationController
   # GET /lessons/1.xml
   def show
     @lesson = Lesson.find(params[:id])
+    if not @lesson.finished? and not current_user.admin?
+      redirect_to home_url
+      return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

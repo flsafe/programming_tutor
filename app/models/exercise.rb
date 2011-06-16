@@ -22,6 +22,8 @@ class Exercise < ActiveRecord::Base
   validates :title, :unit_test, :presence=>true
   validates :minutes, :numericality=>{:greater_than_or_equal_to=>1}
 
+  scope :finished, lambda{ where(:finished => true) }
+
   # Returns a template for the
   # user's solution. Usually displayed in
   # a text editor.

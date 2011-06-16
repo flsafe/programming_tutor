@@ -3,6 +3,7 @@ Given /^I create a new lesson$/ do
 
   if has_css?("form.new_lesson")
     fill_in "Title", :with=>'title'
+    check "Finished"
     fill_in "Description", :with=>'description'
     fill_in "Text", :with=>'text'
     click_button "Create Lesson"
@@ -16,10 +17,9 @@ Given /^there exists a lesson in the database$/ do
                               :minutes=>1,
                               :unit_test=>UnitTest.new(:src_code=>'c', :src_language=>'c'))
   end
-  @a_lesson = Lesson.create!(:title=>"the lesson", 
-                             :description=>"the description",
-                             :text=>"the text",
-                             :exercises=>exercises)
+  @a_lesson = Factory.build :lesson
+  @a_lesson.exercises << exercises
+  @a_lesson.save!
 end
 
 When /^I select a lesson to complete$/ do

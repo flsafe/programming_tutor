@@ -3,14 +3,9 @@ require 'vcr'
 POINTS_PER_XP_FIELD = 100
 
 Given /^there exists an exercise in the database$/ do
-  @an_exercise = Exercise.new do |e|
-    e.title = "title"
-    e.minutes = 15
-    e.unit_test = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
-                               :src_language=>"c")
-    e.lesson = Lesson.create!(:title=>"a lesson")
-  end
-  @an_exercise.stats_sheet.get_shared_xp_fields.each do |m|
+  @an_exercise = Factory.build :exercise
+  @an_exercise.lesson = Factory.build :lesson
+  StatsSheet.shared_xp_fields.each do |m|
     @an_exercise.stats_sheet.send(m.to_s+'=', POINTS_PER_XP_FIELD)
   end
   @an_exercise.save!
@@ -28,6 +23,7 @@ When /^I create a new exercise$/ do
   if has_css?("#new_exercise")
     select lesson.title, :from=>"Lesson" 
     fill_in "Title", :with=>"Title"
+    check   "Finished"
     fill_in "Description", :with=>"Description"
     fill_in "Sorting xp", :with=>'1'
     fill_in "Searching xp", :with=>'1'
