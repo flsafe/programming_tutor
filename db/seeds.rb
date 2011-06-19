@@ -7,33 +7,53 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 #
 
-user = User.new(:username=>'user',
-                :password=>'password',
-                :password_confirmation=>'password',
-                :email=>'user@mail.com')
-user.admin = true;
+
+# Sample user
+user = User.find_or_create_by_username 'user'
+user.update_attributes(:password=>'password',
+                       :password_confirmation => 'password',
+                       :email => 'user@mail.com')
+user.admin = true
 user.save!
 
-an_exercise = Exercise.new do |e|
-  e.title       = "Remove A Letter From A String"
-  e.description = "Write a function that removes a specific character from a string."
-  e.text        = "Write a function that takes a character and a string as aruguments. The function removes the character from the string."
-  e.minutes     = 15
-  e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
-                             :src_language=>"c")
-  e.lesson            = Lesson.create!(:title=>"Manipulating Strings",
-                                       :description=>"Learn basic operations on strings",
-                                       :text=>"There two ways to remove characters from a string...")
-end
-an_exercise.save!
 
-an_exercise.stats_sheet.sorting_xp = 100
-an_exercise.stats_sheet.array_xp = 100
-an_exercise.stats_sheet.save!
+# Sample lesson for the sample exercise
+l = Lesson.find_or_create_by_title "Manipulating Strings"
+l.description = "Learn basic operations on strings."
+l.text  = "Remove a character from a string"
+l.finished = true
+l.save!
 
-first_exercise_badge = Badge.new do |b|
+
+# Sample exercise
+e = Exercise.find_or_create_by_title "Remove A Letter From A String"
+e.title       = "Remove A Letter From A String"
+e.description = "Write a function that removes a specific character from a string."
+e.text        = "Write a function that takes a character and a string as aruguments. The function removes the character from the string."
+e.minutes     = 15
+e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
+                           :src_language=>"c")
+e.finished = true
+e.lesson      = l
+e.save!
+e.stats_sheet.sorting_xp = 100
+e.stats_sheet.array_xp = 100
+e.stats_sheet.save!
+
+
+# The badges that will be active
+active_badges = []
+
+active_badges << TheRookieBadge.new do |b|
   b.title = "The Rookie"
   b.description = "Complete your first exercise"
-  b.earn_conditions = "def has_earned?(stats) stats.total_xp > 1;end"
+  b.finished = true
 end
-first_exercise_badge.save!
+
+
+# Save or update the badges
+active_badges.each do |b|
+  db_badge = Badge.find_or_create_by_type b.type
+  db_badge.update_attributes(b.attributes)
+  db_badge.save!
+end

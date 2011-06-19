@@ -6,7 +6,7 @@ describe BadgeAwarder do
 
     before(:each) do
       @user = Factory.create(:user)
-      @first_ex_badge = Factory.create(:badge)
+      @first_ex_badge = Factory.create(:the_rookie_badge)
       @exercise = Factory.build(:exercise)
       StatsSheet.shared_xp_fields.each do |m|
         @exercise.stats_sheet.send("#{m}=", POINTS_PER_FIELD)

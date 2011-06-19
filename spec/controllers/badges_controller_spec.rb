@@ -4,8 +4,6 @@ describe BadgesController do
 
   context "The user is not an admin" do
 
-    it_should_behave_like "admin resource controller"
-
     before(:each) do
       controller.stub(:user).and_return(stub_model(User, :admin? => false))
     end

@@ -24,6 +24,6 @@ class BadgeAwarder < ActiveRecord::Observer
   end
 
   def select_earned_from(unearned, stats_sheet)
-    unearned.select{|b| b.award?(stats_sheet)}
+    unearned.select{|b| b.has_earned?(stats_sheet)}
   end
 end

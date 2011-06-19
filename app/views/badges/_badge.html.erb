@@ -12,8 +12,6 @@
   </p>
   <% if current_user.admin? %>
     <%= link_to 'Show', badge, :class => "button" %>
-    <%= link_to 'Edit', edit_badge_path(badge), :class => "button" %>
-    <%= link_to 'Destroy', badge, :confirm => 'Are you sure?', :method => :delete, :class => "button" %>
   <% end %>
 </div>
 <%= cycle("", "", "<div class='clear'></div>".html_safe) %>

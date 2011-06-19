@@ -313,13 +313,13 @@
       message: OK
     headers: 
       date: 
-      - Thu, 16 Jun 2011 22:13:08 GMT
+      - Sun, 19 Jun 2011 07:20:37 GMT
       server: 
       - Apache
       x-powered-by: 
       - PHP/5.2.14-pl0-gentoo
       set-cookie: 
-      - PHPSESSID=bfa86e57176afaf7a58035252938f27f; path=/
+      - PHPSESSID=d41198c48506334761a54c691f4c2a86; path=/
       expires: 
       - Thu, 19 Nov 1981 08:52:00 GMT
       cache-control: 
@@ -334,19 +334,19 @@
       - text/xml; charset=utf-8
     body: |
       <?xml version="1.0" encoding="UTF-8"?>
-      <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.ideone.com/api/1/service" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/xml-soap" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:createSubmissionResponse><return xsi:type="ns2:Map"><item><key xsi:type="xsd:string">error</key><value xsi:type="xsd:string">OK</value></item><item><key xsi:type="xsd:string">link</key><value xsi:type="xsd:string">GpkOD</value></item></return></ns1:createSubmissionResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.ideone.com/api/1/service" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/xml-soap" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:createSubmissionResponse><return xsi:type="ns2:Map"><item><key xsi:type="xsd:string">error</key><value xsi:type="xsd:string">OK</value></item><item><key xsi:type="xsd:string">link</key><value xsi:type="xsd:string">rcDQd</value></item></return></ns1:createSubmissionResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
 
     http_version: "1.1"
 - !ruby/struct:VCR::HTTPInteraction 
   request: !ruby/struct:VCR::Request 
     method: :post
     uri: http://www.ideone.com:80/api/1/service
-    body: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.ideone.com/api/1/service" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><getSubmissionStatus><user>cozysystems</user><pass>Manbat22+</pass><link>GpkOD</link></getSubmissionStatus></env:Body></env:Envelope>
+    body: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.ideone.com/api/1/service" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><getSubmissionStatus><user>cozysystems</user><pass>Manbat22+</pass><link>rcDQd</link></getSubmissionStatus></env:Body></env:Envelope>
     headers: 
       content-type: 
       - text/xml;charset=UTF-8
       cookie: 
-      - PHPSESSID=bfa86e57176afaf7a58035252938f27f; path=/
+      - PHPSESSID=d41198c48506334761a54c691f4c2a86; path=/
       soapaction: 
       - "\"getSubmissionStatus\""
   response: !ruby/struct:VCR::Response 
@@ -355,7 +355,7 @@
       message: OK
     headers: 
       date: 
-      - Thu, 16 Jun 2011 22:13:12 GMT
+      - Sun, 19 Jun 2011 07:20:41 GMT
       server: 
       - Apache
       x-powered-by: 
@@ -381,12 +381,12 @@
   request: !ruby/struct:VCR::Request 
     method: :post
     uri: http://www.ideone.com:80/api/1/service
-    body: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.ideone.com/api/1/service" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><getSubmissionDetails><user>cozysystems</user><pass>Manbat22+</pass><link>GpkOD</link><withInput>true</withInput><withOutput>true</withOutput></getSubmissionDetails></env:Body></env:Envelope>
+    body: <?xml version="1.0" encoding="UTF-8"?><env:Envelope xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:wsdl="http://www.ideone.com/api/1/service" xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Body><getSubmissionDetails><user>cozysystems</user><pass>Manbat22+</pass><link>rcDQd</link><withInput>true</withInput><withOutput>true</withOutput></getSubmissionDetails></env:Body></env:Envelope>
     headers: 
       content-type: 
       - text/xml;charset=UTF-8
       cookie: 
-      - PHPSESSID=bfa86e57176afaf7a58035252938f27f; path=/
+      - PHPSESSID=d41198c48506334761a54c691f4c2a86; path=/
       soapaction: 
       - "\"getSubmissionDetails\""
   response: !ruby/struct:VCR::Response 
@@ -395,7 +395,7 @@
       message: OK
     headers: 
       date: 
-      - Thu, 16 Jun 2011 22:13:13 GMT
+      - Sun, 19 Jun 2011 07:20:42 GMT
       server: 
       - Apache
       x-powered-by: 
@@ -414,7 +414,7 @@
       - text/xml; charset=utf-8
     body: |
       <?xml version="1.0" encoding="UTF-8"?>
-      <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.ideone.com/api/1/service" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/xml-soap" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getSubmissionDetailsResponse><return xsi:type="ns2:Map"><item><key xsi:type="xsd:string">error</key><value xsi:type="xsd:string">OK</value></item><item><key xsi:type="xsd:string">langId</key><value xsi:type="xsd:int">11</value></item><item><key xsi:type="xsd:string">langName</key><value xsi:type="xsd:string">C</value></item><item><key xsi:type="xsd:string">langVersion</key><value xsi:type="xsd:string">gcc-4.3.4</value></item><item><key xsi:type="xsd:string">time</key><value xsi:type="xsd:float">0</value></item><item><key xsi:type="xsd:string">date</key><value xsi:type="xsd:string">2011-06-17 00:13:09</value></item><item><key xsi:type="xsd:string">status</key><value xsi:type="xsd:int">0</value></item><item><key xsi:type="xsd:string">result</key><value xsi:type="xsd:int">15</value></item><item><key xsi:type="xsd:string">memory</key><value xsi:type="xsd:int">1852</value></item><item><key xsi:type="xsd:string">signal</key><value xsi:type="xsd:int">0</value></item><item><key xsi:type="xsd:string">public</key><value xsi:type="xsd:boolean">false</value></item><item><key xsi:type="xsd:string">input</key><value xsi:type="xsd:string"></value></item><item><key xsi:type="xsd:string">output</key><value xsi:type="xsd:string">test_first_char:
+      <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://www.ideone.com/api/1/service" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/xml-soap" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><ns1:getSubmissionDetailsResponse><return xsi:type="ns2:Map"><item><key xsi:type="xsd:string">error</key><value xsi:type="xsd:string">OK</value></item><item><key xsi:type="xsd:string">langId</key><value xsi:type="xsd:int">11</value></item><item><key xsi:type="xsd:string">langName</key><value xsi:type="xsd:string">C</value></item><item><key xsi:type="xsd:string">langVersion</key><value xsi:type="xsd:string">gcc-4.3.4</value></item><item><key xsi:type="xsd:string">time</key><value xsi:type="xsd:float">0</value></item><item><key xsi:type="xsd:string">date</key><value xsi:type="xsd:string">2011-06-19 09:20:38</value></item><item><key xsi:type="xsd:string">status</key><value xsi:type="xsd:int">0</value></item><item><key xsi:type="xsd:string">result</key><value xsi:type="xsd:int">15</value></item><item><key xsi:type="xsd:string">memory</key><value xsi:type="xsd:int">1852</value></item><item><key xsi:type="xsd:string">signal</key><value xsi:type="xsd:int">0</value></item><item><key xsi:type="xsd:string">public</key><value xsi:type="xsd:boolean">false</value></item><item><key xsi:type="xsd:string">input</key><value xsi:type="xsd:string"></value></item><item><key xsi:type="xsd:string">output</key><value xsi:type="xsd:string">test_first_char:
           input: |
               a abcd
           expected: |

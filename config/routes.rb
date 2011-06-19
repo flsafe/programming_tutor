@@ -1,7 +1,9 @@
 Rasberry::Application.routes.draw do
 
-  resources :notifications
   resources :badges
+  resources :the_rookie_badges, :controller => "badges" 
+
+  resources :notifications
   resources :stats_sheets
   resources :grade_sheets
   resources :exercises

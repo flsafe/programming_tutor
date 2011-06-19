@@ -1,5 +1,5 @@
 Given /^there exists a first exercise badge in the database$/ do
-  @first_exercise_badge = Factory.create :badge
+  @first_exercise_badge = Factory.create :the_rookie_badge
 end
 
 Then /^I should have the exercise experience points assigned to me$/ do
