@@ -23,7 +23,7 @@ gem 'jquery-rails'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
@@ -52,4 +52,8 @@ group :development, :test do
 group :test do
   gem 'webmock'
   gem 'vcr'
+end
+
+group :production do
+  gem 'mysql'
 end

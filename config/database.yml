@@ -16,10 +16,14 @@ test: &test
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql 
+  encoding: utf8
+  reconnect: false
+  database: prepcode 
   pool: 5
-  timeout: 5000
+  username: prepcode
+  password: "for(;;)prepcode.win++ /* G!t^er d0ne */"
+  host: localhost
 
 cucumber:
   <<: *test
