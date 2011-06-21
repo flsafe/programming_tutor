@@ -22,7 +22,7 @@ production:
   database: prepcode 
   pool: 5
   username: prepcode
-  password: "for(;;)prepcode.win++ /* G!t^er d0n3 */"
+  password: for(;;)prepcode.win++ /* G!t^er d0n3 */
   host: localhost
 
 cucumber:
