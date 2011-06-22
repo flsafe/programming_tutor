@@ -5,8 +5,6 @@ gem 'rails', '3.0.7'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'factory_girl', "~> 1.3.3"
-gem 'factory_girl_rails'
 
 
 gem 'sqlite3'
@@ -47,6 +45,8 @@ group :development, :test do
    gem 'webrat'
    gem 'autotest'
    gem 'database_cleaner'
+  gem 'factory_girl', "~> 1.3.3"
+  gem 'factory_girl_rails'
  end
 
 group :test do
