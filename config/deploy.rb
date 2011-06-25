@@ -23,7 +23,7 @@ end
 # file paths
 set :user, 'prepcode'
 set :repository,  "git@github.com:flsafe/rasberry.git"
-set :deploy_to, "/home/prepcode/production"
+set :deploy_to, "/home/prepcode/"
 #set :domain, "prepcode.blueberrytree.ws"
 
 # distribute your applications across servers (the instructions below put them
