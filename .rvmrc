@@ -1,0 +1,6 @@
+if [[ -s "/usr/loca/rvm/environments/ruby-1.9.2@prepcode" ]] ; then
+  . "/usr/loca/rvm/environments/ruby-1.9.2@prepcode"
+else
+  rvm --create use "/usr/loca/rvm/environments/ruby-1.9.2@prepcode"
+fi
+

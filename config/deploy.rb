@@ -7,17 +7,24 @@
 # Visit http://www.pragmaticprogrammer.com/titles/rails4 for more book information.
 #---
 
-# Assumes rvm is installed on the deployment machine.
+# If RVM is installed on the target machine, you can specify
+# what environment to use.
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
-set :rvm_ruby_string, '1.9.2@rails3'
+set :rvm_ruby_string, '1.9.2@prepcode'
+
+# Make sure certain vars are set first
+unless exists?(:domain) 
+  puts "You didn't specify the domain to deploy to!"
+  exit(1)
+end
 
 # be sure to change these
 # file paths
 set :user, 'prepcode'
 set :repository,  "git@github.com:flsafe/rasberry.git"
 set :deploy_to, "/home/prepcode/production"
-set :domain, "prepcode.blueberrytree.ws"
+#set :domain, "prepcode.blueberrytree.ws"
 
 # distribute your applications across servers (the instructions below put them
 # all on the same server, defined above as 'domain', adjust as necessary)
@@ -26,7 +33,7 @@ role :web, domain
 role :db, domain, :primary => true
 
 # you might need to set this if you aren't seeing password prompts
-# default_run_options[:pty] = true
+default_run_options[:pty] = true
 
 # As Capistrano executes in a non-interactive mode and therefore doesn't cause
 # any of your shell profile scripts to be run, the following might be needed
@@ -58,5 +65,6 @@ end
 after "deploy:update_code", :bundle_install
 desc "install the necessary prerequisites"
 task :bundle_install, :roles => :app do
-  run "cd #{release_path} && bundle install --without development test --deployment"
+  sudo 'whoami'
+  run "cd #{release_path} && rvmsudo bundle install --without development test"
 end
