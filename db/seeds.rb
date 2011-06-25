@@ -7,14 +7,15 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 #
 
-
-# Sample user
-user = User.find_or_create_by_username 'user'
-user.update_attributes(:password=>'password',
-                       :password_confirmation => 'password',
-                       :email => 'user@mail.com')
-user.admin = true
-user.save!
+# Sample user for development
+if Rails.env != 'production'
+  user = User.find_or_create_by_username 'user'
+  user.update_attributes(:password=>'password',
+                         :password_confirmation => 'password',
+                         :email => 'user@mail.com')
+  user.admin = true
+  user.save!
+end
 
 
 # Sample lesson for the sample exercise
