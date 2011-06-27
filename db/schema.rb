@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110619000235) do
+ActiveRecord::Schema.define(:version => 20110620210518) do
 
   create_table "badges", :force => true do |t|
     t.string   "title"
@@ -125,6 +125,15 @@ ActiveRecord::Schema.define(:version => 20110619000235) do
     t.integer  "xp_to_next_level",       :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tree_xp",                :default => 0
+    t.integer  "graph_xp",               :default => 0
+    t.integer  "string_xp",              :default => 0
+    t.integer  "stack_xp",               :default => 0
+    t.integer  "queue_xp",               :default => 0
+    t.integer  "set_xp",                 :default => 0
+    t.integer  "bit_vector_xp",          :default => 0
+    t.integer  "heap_xp",                :default => 0
+    t.integer  "priority_queue_xp",      :default => 0
   end
 
   create_table "unit_tests", :force => true do |t|
