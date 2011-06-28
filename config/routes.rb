@@ -13,11 +13,16 @@ Rasberry::Application.routes.draw do
 
   resource :account, :controller => 'users'
 
+  # Static
+  match "about" => "static#about", :as => :about
+  match "terms" => "static#terms", :as => :terms
+  match "privacy" => "static#privacy", :as => :privacy
+
   # User sessions
   match "login" => "user_sessions#new", :as=>:login
   match "logout"=>"user_sessions#destroy", :as=>:logout
 
-  # View my just my stats sheet
+  # View just my stats sheet
   match "stats_sheet"=>"stats_sheets#show", :id=>"me", :as=>:stats_sheet
     
   # Routes for when the user is coding an exercise
