@@ -90,6 +90,11 @@ describe CodeController do
         post :do_action, :commit=>"Check Solution"
         session[:message].should == "unit test results"
       end
+      it "limits the rate at which a solution can be checked" do
+        @code.should_receive(:check_against).once
+        post :do_action, :commit=>"Check Solution"
+        post :do_action, :commit=>"Check Solution"
+      end
     end
 
     context "when the user pressed the 'Submit Solution' button" do

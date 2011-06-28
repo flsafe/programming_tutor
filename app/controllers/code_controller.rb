@@ -97,8 +97,13 @@ class CodeController < ApplicationController
   end
 
   def do_solution_check
-    unit_test = current_user.current_exercise.unit_test
-    @message = session[:message] = @code.check_against(unit_test)
+    if CodeSession.within_rate?(session[:last_check])
+      session[:last_check] = Time.now
+      unit_test = current_user.current_exercise.unit_test
+      @message = session[:message] = @code.check_against(unit_test)
+    else
+      @message = session[:message] = "You can again in just a few seconds!" 
+    end
     case 
       when request.xhr?
         return "code/syntax"
