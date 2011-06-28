@@ -123,6 +123,12 @@ describe CodeController do
         post :do_action, :commit=>"Submit Solution"
         response.should redirect_to(:action=>:grade)
       end
+      it "limits the rate at which a solution can be graded" do
+        @code.should_receive(:grade_against).once
+        post :do_action, :commit=>"Submit Solution"
+        @user.start_coding @exercise
+        post :do_action, :commit=>"Submit Solution"
+      end
     end
 
     context "When the user pressed 'Quit'" do

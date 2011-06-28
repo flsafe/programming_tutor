@@ -1,7 +1,3 @@
-<div>
-  <%= link_to "Back To Lesson", lesson_path(grade_sheet.lesson) %> 
-</div>
-
 <div id="grade-sheet">
 <% if grade_sheet.syntax_error? %>
  <p>
@@ -9,7 +5,7 @@
   Try the exercise again, but make sure you check your syntax before
   you submit!
  </p>
-<% elsif grade_sheet.timeout_error %>
+<% elsif grade_sheet.timeout_error? %>
   <p>
   Your solution went into an infinite loop or otherwise took
   longer than its alloted time. I'm sure you'll do better next
@@ -21,6 +17,9 @@
    Please try again a little later while we figure out what happened. 
  </p>
 <% else %>
+  <div>
+    <%= link_to "Back To Lesson", lesson_path(grade_sheet.lesson) %> 
+  </div>
   <table class="tests">
     <caption><%=h grade_sheet.exercise.title %></caption>
     <tr>

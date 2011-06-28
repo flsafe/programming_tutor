@@ -113,8 +113,14 @@ class CodeController < ApplicationController
   end
 
   def do_solution_grading
-    unit_test = current_user.current_exercise.unit_test
-    @grade_sheet = @code.grade_against(unit_test, current_user)
+    if CodeSession.within_rate?(session[:last_check])
+      session[:last_check] = Time.now
+      unit_test = current_user.current_exercise.unit_test
+      @grade_sheet = @code.grade_against(unit_test, current_user)
+    else
+      @grade_sheet = GradeSheet.new
+      @message = session[:message] = "You've got to wait a few seconds in between submissions!"
+    end
     session[:grade_sheet] = @grade_sheet.attributes
     do_quit
     case 

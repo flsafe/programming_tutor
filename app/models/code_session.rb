@@ -7,7 +7,7 @@ class CodeSession < ActiveRecord::Base
 
   validates :user, :exercise, :presence=>true
 
-  CHECK_RATE = 25 # Seconds between solution checks
+  CHECK_RATE = 20 # Seconds between solution checks
 
   # Returns true if the user can make another solution check.
   def self.within_rate?(last_check_time)

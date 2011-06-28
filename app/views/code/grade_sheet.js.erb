@@ -1,3 +1,5 @@
+$('#message').html("<%= escape_javascript @message %>")
+
 $('#grade-sheet-wrapper').html("<%=raw escape_javascript(render :partial=>'grade_sheets/grade_sheet', 
                                                                 :object=>@grade_sheet)%>");
 $('#latest-notifications-wrapper').html("<%=raw escape_javascript(render :partial=>'notifications/latest_notices')%>")
