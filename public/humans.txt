@@ -1,0 +1,18 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+
+/* TEAM */
+  Alex Peattie <alexpeattie@gmail.com>
+  Site: http://www.alexpeattie.com
+  Twitter: http://twitter.com/alexpeattie
+  Location: Cardiff, UK
+  
+  Frank Licea <francisco.licea@gmail.com>
+  Site: http://www.cozysystems.com/
+  Twitter: http://twitter.com/flicea
+  Location: Midland, TX
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery
