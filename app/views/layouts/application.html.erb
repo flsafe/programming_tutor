@@ -85,31 +85,10 @@
 	</div> <!-- End #container -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-	<script>
-	/*
-	function loginSliderVisible() {
-		return ($("#login-slider").css("marginTop") != "0px");
-	}
-	
-	$(document).ready(function() {
-		$("#user_session_submit").click(function(e) {
-			if(!loginSliderVisible()) {
-				e.preventDefault();
-				$("#login-slider").animate({marginTop: "-48px"}, function() {
-					$(this).find("input:text").focus();
-				});
-			} else {
-				var blank_fields = $("header form input:text[value=''], header form input:password[value='']");
-				
-				if(blank_fields.length) {
-					e.preventDefault();
-					$("header form input").removeClass("error");
-					blank_fields.addClass("error");
-				}
-			}
-		});
-	}); */
-	</script>
+
+  <% if content_for? :javascript %>
+    <%=raw yield :javascript %>
+  <% end %>
 	
 	<script>
 		var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]]; // Change UA-XXXXX-X to be your site's ID 

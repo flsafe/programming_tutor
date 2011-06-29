@@ -1,7 +1,3 @@
-<%= stylesheet_link_tag 'codemirror' %>
-<%= stylesheet_link_tag 'mode/clike/clike' %>
-<%= javascript_include_tag 'codemirror' %>
-<%= javascript_include_tag 'mode/clike/clike' %>
 
 <%= form_for @code, :url=>do_action_path, :remote=>true, :html=>{:id=>"text-editor-form"} do |f|%>
   <%= f.text_area :src_code, :id=>'text-editor' do %>
@@ -11,3 +7,8 @@
   <%= f.submit "Submit Solution", :disable_with=>"Submit Solution" %>
   <%= f.submit "Quit", :disable_with=>"Quit" %>
 <% end %>
+
+<%= stylesheet_link_tag 'codemirror' %>
+<%= stylesheet_link_tag 'mode/clike/clike' %>
+<%= javascript_include_tag 'codemirror' %>
+<%= javascript_include_tag 'mode/clike/clike' %>
