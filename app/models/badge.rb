@@ -1,8 +1,13 @@
-# User's can earn badges. The field earn_conditions
-# is expected to be the definition (in string form) of a function named
-# `has_earned?(stats_sheet)` that returns true if the badge should
-# be awared.
-
+# User's can earn badges. The Badge class
+# should be considered an abstract class with the
+# virtual methods :has_earned?(stats_sheet) and
+# :affect(user).
+#
+# The method :has_earned? return true if the stats_sheet
+# given qualifies for the badge. 
+# 
+# The method :affect(stats_sheet) will award
+# bonus points XP points to the given stats sheet. 
 class Badge < ActiveRecord::Base
 
   has_and_belongs_to_many :users

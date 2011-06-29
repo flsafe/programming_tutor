@@ -20,7 +20,11 @@ describe BadgeAwarder do
       @user.earned_badges.find(:first, 
                :conditions=>{:title=>"The Rookie"}).should_not == nil
     end
-
+    it "awards any badge bonus" do
+      @grade_sheet = create_grade_sheet
+      @grade_sheet.save!
+      @user.stats_sheet.total_xp.should >= @first_ex_badge.bonus[:total_xp]
+    end
     it "creates a new notification for the user" do
       @grade_sheet = create_grade_sheet
       @grade_sheet.save!

@@ -47,7 +47,7 @@ active_badges = []
 
 active_badges << TheRookieBadge.new do |b|
   b.title = "The Rookie"
-  b.description = "Complete your first exercise"
+  b.description = "Complete your first exercise! +1500XP"
   b.finished = true
 end
 

@@ -17,6 +17,11 @@ class BadgeAwarder < ActiveRecord::Observer
       user.save!
 
       newly_earned.each do |b|
+        b.affect(stats_sheet)
+      end
+      StatsSheet.where(:id => stats_sheet.id).update_all(stats_sheet.attributes)
+
+      newly_earned.each do |b|
         Notification.create(:user_id=>user, 
                             :text=>"Woot! You just earned a badge: #{b.title}")
       end

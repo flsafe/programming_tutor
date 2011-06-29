@@ -21,4 +21,5 @@ end
 Then /^I should have the first exercise badge$/ do
   @I.earned_badges.find(:first, 
                         :conditions=>{:title=>"The Rookie"}).should_not == nil 
+  @I.stats_sheet.total_xp >= @first_exercise_badge.bonus[:total_xp]
 end
