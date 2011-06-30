@@ -18,7 +18,7 @@ class TheRookieBadge < Badge
   end
 
   def bonus
-    b = Hash.new
+    b = Hash.new(0)
     b[:total_xp] = 1500
     b
   end
