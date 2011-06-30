@@ -45,12 +45,7 @@ e.stats_sheet.save!
 # The badges that will be active
 active_badges = []
 
-active_badges << TheRookieBadge.new do |b|
-  b.title = "The Rookie"
-  b.description = "Complete your first exercise! +1500XP"
-  b.finished = true
-end
-
+active_badges << TheRookieBadge.new
 
 # Save or update the badges
 active_badges.each do |b|
