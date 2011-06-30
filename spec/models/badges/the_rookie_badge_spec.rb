@@ -22,10 +22,5 @@ describe TheRookieBadge do
       @badge.affect(stats)
       stats.total_xp.should == 1600
     end
-    it "saves the stats to the db" do
-      stats = mock_model(StatsSheet, :total_xp=>100).as_null_object
-      stats.should_receive(:save)
-      @badge.affect(stats)
-    end
   end
 end

@@ -14,7 +14,6 @@ class TheRookieBadge < Badge
 
   def affect(stats)
     stats.total_xp += bonus[:total_xp]
-    stats.save
   end
 
   def bonus
