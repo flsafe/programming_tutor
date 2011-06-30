@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 # This is a template spec that you should
-# modify to describe the The Rookie Badge badge.
+# modify to describe the <%= name.titleize %> badge.
 
-describe TheRookieBadge do
+describe <%= name.camelcase %> do
   before(:each) do
-    @badge = TheRookieBadge.new
+    @badge = <%= name.camelcase %>.new
   end
 
   describe "#has_earned?" do

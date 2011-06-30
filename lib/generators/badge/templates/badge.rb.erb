@@ -1,9 +1,9 @@
-class TheRookieBadge < Badge
+class <%= name.camelcase %> < Badge
 
   after_initialize :set_description
 
   def set_description
-    self.title = "The Rookie Badge"
+    self.title = "<%= name.titleize %>"
     self.description = "Default badge +1500 XP"
     self.image_url = "http://example.com/example.png"
     self.finished = true 
