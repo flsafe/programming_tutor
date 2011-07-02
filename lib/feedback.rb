@@ -3,12 +3,9 @@ class Feedback
   # Return a friendly feedback message
   # based on the grade sheet.
   def self.on(grade_sheet)
-    if grade_sheet.syntax_error?
-      return "Your solution doesn't compile!"
-    end
 
-    if grade_sheet.timeout_error?
-      return "I think this would go into an infinite loop!"
+    if grade_sheet.errors.any?
+      return grade_sheet.errors.full_messages.first 
     end
 
     if grade_sheet.unit_tests_failed?

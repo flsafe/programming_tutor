@@ -27,16 +27,22 @@ class Code < ActiveRecord::Base
   # explaining why.
   def grade_against(unit_test, user)
     grade_sheet = unit_test.execute(src_code)
-    grade_sheet.src_code = src_code
-    grade_sheet.user = user
-    grade_sheet.exercise = user.current_exercise
-    begin
-      grade_sheet.save!
-    rescue
-      Rails.logger.error "Invalid grade sheet could not be saved:\n "
-      grade_sheet.errors.full_messages.each {|msg| Rails.logger.error msg}
+    if grade_sheet.errors.any?
+      log_grade_sheet_errors(grade_sheet)
+    else
+      grade_sheet.src_code = src_code
+      grade_sheet.user = user
+      grade_sheet.exercise = user.current_exercise
+      unless grade_sheet.save
+        log_grade_sheet_errors(grade_sheet)
+      end
     end
     grade_sheet
+  end
+
+  def log_grade_sheet_errors(grade_sheet)
+      Rails.logger.error "Invalid grade sheet could not be saved:\n "
+      grade_sheet.errors.full_messages.each {|msg| Rails.logger.error msg}
   end
 
   # Tableless model
