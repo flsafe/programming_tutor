@@ -30,19 +30,19 @@
 			</div>
 			
 			<% if current_user.anonymous %> 
-				<form action="#" accept-charset="UTF-8"> <!-- TODO -->
+				<% form_for UserSession.new, :action => login_path do |f| %> 
 					<div id="user-strap">
 						<div id="login-slider">
 							<p>Not logged in. Temporary username: <strong><%= current_user.username %></strong></p>
-							<input name="username" id="username" placeholder="Username" type="text" />
-							<input name="password" id="password" placeholder="Password" type="password" />
+							<%= f.text_field :username, :placeholder => "Username", :size => nil %>
+							<%= f.password_field :password, :placeholder => "Username", :size => nil %>
 						</div>
 					</div>
 					<div id="user-nav">
-						<%= link_to "Log in", login_path, :class => "button" %> 
+						<%= f.submit "Login", :class => "button" %>
 						<%= link_to "Register", new_user_path, :class => "button black" %>  
 					</div>
-				</form>
+				<% end %>
 			<% else %>
 				<div id="user-strap">
 					<p>Logged in as <strong><%= current_user.username %></strong></p>
@@ -85,12 +85,37 @@
 	</div> <!-- End #container -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-
+  
   <% if content_for? :javascript %>
-    <%=raw yield :javascript %>
+    <%= raw yield :javascript %>
   <% end %>
+  
+	<script> <!-- Login slider -->
+	function loginSliderVisible() {
+		return ($("#login-slider").css("marginTop") != "0px");
+	}
 	
-	<script>
+	$(document).ready(function() {
+		$("#user_session_submit").click(function(e) {
+			if(!loginSliderVisible()) {
+				e.preventDefault();
+				$("#login-slider").animate({marginTop: "-48px"}, function() {
+					$(this).find("input:text").focus();
+				});
+			} else {
+				var blank_fields = $("header form input:text[value=''], header form input:password[value='']");
+				
+				if(blank_fields.length) {
+					e.preventDefault();
+					$("header form input").removeClass("error");
+					blank_fields.addClass("error");
+				}
+			}
+		});
+	}); 
+	</script>
+	
+	<script> <!-- Google analytics -->
 		var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]]; // Change UA-XXXXX-X to be your site's ID 
 		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
 		g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
