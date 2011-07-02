@@ -30,7 +30,7 @@
 			</div>
 			
 			<% if current_user.anonymous %> 
-				<% form_for UserSession.new, :action => login_path do |f| %> 
+				<%= form_for UserSession.new, :action => login_path do |f| %> 
 					<div id="user-strap">
 						<div id="login-slider">
 							<p>Not logged in. Temporary username: <strong><%= current_user.username %></strong></p>
