@@ -5,3 +5,4 @@ log/*.log
 tmp/
 *.swp
 features/cassettes
+vendor/cache/
