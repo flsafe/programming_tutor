@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
     rand_password = (0..32).map { @@CHAR_TAB[rand(size)] }.join
     rand_sufix = (0..5).map { @@CHAR_TAB[rand(size)] }.join
     User.new do |u|
-      u.username = "user" + rand_sufix
+      u.username = "user-" + rand_sufix
       u.password = rand_password
       u.password_confirmation = rand_password
       u.email = u.username + "@example.com"
