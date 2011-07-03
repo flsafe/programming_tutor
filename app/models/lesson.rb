@@ -6,7 +6,11 @@ class Lesson < ActiveRecord::Base
 
   scope :finished, lambda{ where(:finished => true) }
 
+  def to_s
+    "#{id}-#{title.gsub(/[^a-z0-9]+/i, '-').downcase}"
+  end
+  
   def to_param
-    "#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
+    to_s
   end
 end
