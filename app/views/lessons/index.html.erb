@@ -5,7 +5,8 @@
 <ul id="lessons_list">
   <% @lessons.each do |lesson| %>
     <li class="lesson_list_item">
-      <%= link_to(lesson.title, lesson, :class=>"heading_link") %>
+      <%= link_to(lesson.title, lesson, :class=>"heading_link") %><br>
+      <small><%= link_to "Comments", lesson_path(lesson, :anchor => "disqus_thread"), "data-disqus-identifier" => lesson %></small>
       <p class="content_paragraph"><%= lesson.description%></p>
 
       <% if current_user and current_user.admin? %>
@@ -16,3 +17,14 @@
     </li>
   <% end %>
 </ul>
+
+<script type="text/javascript">
+    var disqus_shortname = 'prepcode';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
