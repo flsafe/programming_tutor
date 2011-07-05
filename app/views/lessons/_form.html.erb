@@ -17,6 +17,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :course_id%>
+    <%= f.collection_select :course_id, Course.all, :id, :title %>
+  </div>
+
+  <div class="field">
     <%= f.label :finished %>
     <%= f.check_box :finished %>
   </div>
