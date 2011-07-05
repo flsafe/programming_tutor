@@ -7,7 +7,9 @@ describe BadgeAwarder do
     before(:each) do
       @user = Factory.create(:user)
       @first_ex_badge = Factory.create(:the_rookie_badge)
-      @exercise = Factory.build(:exercise)
+      @course = Factory.build :course
+      @lesson = @course.lessons.first
+      @exercise = @lesson.exercises.first
       StatsSheet.shared_xp_fields.each do |m|
         @exercise.stats_sheet.send("#{m}=", POINTS_PER_FIELD)
       end
@@ -34,6 +36,8 @@ describe BadgeAwarder do
     def create_grade_sheet
       gs = GradeSheet.new(:user=>@user,
                      :exercise=>@exercise,
+                     :lesson => @lesson,
+                     :course => @course,
                      :src_code=>"code")
       gs.add_unit_test("Test one"=>{:input=>'a',
                                     :output=>'a',

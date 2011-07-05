@@ -1,5 +1,6 @@
-Factory.define :course do |f|
-  f.title "Course"
-  f.description "Description"
-  f.finished true
+Factory.define :course do |c|
+  c.title "Course"
+  c.description "Description"
+  c.finished true
+  c.lessons {|lessons| [lessons.association(:lesson)]}
 end

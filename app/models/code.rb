@@ -33,6 +33,8 @@ class Code < ActiveRecord::Base
       grade_sheet.src_code = src_code
       grade_sheet.user = user
       grade_sheet.exercise = user.current_exercise
+      grade_sheet.lesson = user.current_exercise.lesson
+      grade_sheet.course = user.current_exercise.lesson.course
       unless grade_sheet.save
         log_grade_sheet_errors(grade_sheet)
       end

@@ -58,7 +58,7 @@ class UnitTest < ActiveRecord::Base
   def set_grade_sheet_errors
     if @result[:error] == :timeout_error
       @grade_sheet.errors.add(:base, "Your solution didn't finish on time!")
-    elsif result[:error]
+    elsif @result[:error]
       @grade_sheet.errors.add(:base, "Sorry! An internal error occured. We're working on it!")
     end
   end

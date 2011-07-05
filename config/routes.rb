@@ -1,5 +1,7 @@
 Rasberry::Application.routes.draw do
 
+  resources :the_good_student_badges, :controller => 'badges'
+
   resources :the_rookie_badges, :controller => 'badges'
   resources :badges
 

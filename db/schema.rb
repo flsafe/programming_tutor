@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110705160743) do
+ActiveRecord::Schema.define(:version => 20110707011920) do
 
   create_table "badges", :force => true do |t|
     t.string   "title"
@@ -38,6 +38,13 @@ ActiveRecord::Schema.define(:version => 20110705160743) do
   create_table "code_sessions_exercises", :force => true do |t|
     t.integer  "user_id"
     t.integer  "exercise_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "course_certificates", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -71,6 +78,8 @@ ActiveRecord::Schema.define(:version => 20110705160743) do
     t.integer  "time_taken"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "lesson_id"
+    t.integer  "course_id"
   end
 
   create_table "hints", :force => true do |t|
@@ -78,6 +87,14 @@ ActiveRecord::Schema.define(:version => 20110705160743) do
     t.integer  "exercise_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "lesson_certificates", :force => true do |t|
+    t.integer  "lesson_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "course_id"
   end
 
   create_table "lessons", :force => true do |t|

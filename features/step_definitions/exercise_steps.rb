@@ -3,8 +3,9 @@ require 'vcr'
 POINTS_PER_XP_FIELD = 100
 
 Given /^there exists an exercise in the database$/ do
-  @an_exercise = Factory.build :exercise
-  @an_exercise.lesson = Factory.build :lesson
+  @a_course = Factory.create :course
+  @a_lesson = @a_course.lessons.first
+  @an_exercise = @a_lesson.exercises.first
   StatsSheet.shared_xp_fields.each do |m|
     @an_exercise.stats_sheet.send(m.to_s+'=', POINTS_PER_XP_FIELD)
   end
@@ -20,7 +21,7 @@ end
 When /^I create a new exercise$/ do
   lesson = Lesson.create!(:title=>"a temp lesson")
   visit new_exercise_path
-  if has_css?("#new_exercise")
+ if has_css?("#new_exercise")
     select lesson.title, :from=>"Lesson" 
     fill_in "Title", :with=>"Title"
     check   "Finished"
@@ -49,6 +50,8 @@ When /^I complete the exercise$/ do
   gs = GradeSheet.new
   gs.user = @I
   gs.exercise = @an_exercise
+  gs.lesson = @a_lesson
+  gs.course = @a_course
   gs.src_code = "Src code"
   gs.add_unit_test( {"Test all letters removed"=>
                       {:input=>"c",

@@ -6,8 +6,10 @@ require 'yaml'
 class GradeSheet < ActiveRecord::Base
   belongs_to :user
   belongs_to :exercise 
+  belongs_to :lesson
+  belongs_to :course
 
-  validates :user, :exercise, :tests, :grade, :presence=>true
+  validates :user, :exercise, :lesson, :course, :tests, :grade, :presence=>true
   validate :unit_tests_format
 
   before_validation :grade
@@ -16,13 +18,8 @@ class GradeSheet < ActiveRecord::Base
   # given user in a hash with exercise_ids as keys
   # and the grade for the exercise as values.
   def self.grades_for(user)
-    grade_sheets = GradeSheet.where(:user_id => user).order('grade')
+    grade_sheets = GradeSheet.where(:user_id => user).includes(:exercise).select("exercise.id").order('grade').group('exercises.id')
     grade_sheets.inject({}) {|accum, gs| accum.merge!(gs.exercise.id => gs.grade)}
-  end
-
-  # Return the lesson that this grade sheet is associated with.
-  def lesson
-    exercise.lesson
   end
 
   # Returns the users XP stats sheet.

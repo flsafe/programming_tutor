@@ -3,6 +3,7 @@ class Lesson < ActiveRecord::Base
   validates :title, :presence=>true
 
   has_many :exercises
+  belongs_to :course
 
   scope :finished, lambda{ where(:finished => true) }
 

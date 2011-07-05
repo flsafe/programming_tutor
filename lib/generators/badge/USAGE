@@ -1,8 +1,10 @@
 Description:
-    Explain the generator
+    Generates a badge model 
 
 Example:
-    rails generate badge Thing
+    rails generate badge TheRookieBadge
 
     This will create:
-        what/will/it/create
+        app/models/the_rookie_badge.rb
+        spec/models/the_rookie_badge_spec.rb
+        add route db/routes.rb

@@ -1,6 +1,6 @@
 class Course < ActiveRecord::Base
 
-  has_many :lessons, :order => "difficulty ASC", :conditions => ["lessons.finished = ?", 1]
+  has_many :lessons, :order => "difficulty ASC", :conditions => ["lessons.finished = ?", true]
 
   scope :finished, lambda{ where(:finished => true) }
 
