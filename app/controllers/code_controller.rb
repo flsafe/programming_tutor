@@ -98,12 +98,12 @@ class CodeController < ApplicationController
   end
 
   def do_solution_check
-    if CodeSession.within_rate?(session[:last_check])
-      session[:last_check] = Time.now
+    if CodeSession.check_within_rate?(last_action_time :check_solution)
+      mark_time_for_action :check_solution
       unit_test = current_user.current_exercise.unit_test
-      @message = session[:message] = @code.check_against(unit_test)
+      set_check_solution_message @code.check_against(unit_test)
     else
-      @message = session[:message] = "You can again in just a few seconds!" 
+      set_check_solution_message "You can check again in just a few seconds!" 
     end
     case 
       when request.xhr?
@@ -114,8 +114,8 @@ class CodeController < ApplicationController
   end
 
   def do_solution_grading
-    if CodeSession.within_rate?(last_action_time :last_check)
-      mark_time_for_action :last_check
+    if CodeSession.grade_within_rate?(last_action_time :grade_solution)
+      mark_time_for_action :grade_solution
       unit_test = current_user.current_exercise.unit_test
       @grade_sheet = @code.grade_against(unit_test, current_user)
     else
@@ -161,5 +161,9 @@ class CodeController < ApplicationController
 
   def set_grading_message(msg)
     @message = session[:notice] = msg 
+  end
+
+  def set_check_solution_message(msg)
+    @message = session[:message] = msg 
   end
 end
