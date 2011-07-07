@@ -69,6 +69,7 @@ class CodeController < ApplicationController
   # Get grade for the current exercise.
   def grade 
     @grade_sheet = GradeSheet.new(session[:grade_sheet])
+    @message = session[:notice]
   end
 
   # GET code/already_doing_exercise
@@ -113,20 +114,20 @@ class CodeController < ApplicationController
   end
 
   def do_solution_grading
-    if CodeSession.within_rate?(session[:last_check])
-      session[:last_check] = Time.now
+    if CodeSession.within_rate?(last_action_time :last_check)
+      mark_time_for_action :last_check
       unit_test = current_user.current_exercise.unit_test
       @grade_sheet = @code.grade_against(unit_test, current_user)
     else
-      @grade_sheet = GradeSheet.new
-      @message = session[:message] = "You've got to wait a few seconds in between submissions!"
+      @grade_sheet = GradeSheet.new_for_user(current_user)
+      set_grading_message "You've got to wait a few seconds in between submissions!"
     end
-    session[:grade_sheet] = @grade_sheet.attributes
     do_quit
     case 
       when request.xhr?
         return 'code/grade_sheet'
       else
+        session[:grade_sheet] = @grade_sheet.attributes
         return {:action=>:grade}
     end
   end
@@ -134,8 +135,7 @@ class CodeController < ApplicationController
   def do_quit
     @current_lesson = current_user.current_exercise.lesson
     current_user.end_code_session
-    session[:code] = nil
-    session[:message] = nil
+    session[:code] = session[:message] = session[:notice] = nil
     case 
       when request.xhr?
         return 'code/quit'
@@ -149,5 +149,17 @@ class CodeController < ApplicationController
       redirect_to lessons_url, :notice=>"The coding session has expired"
       return false
     end
+  end
+
+  def mark_time_for_action(action)
+    session[action] = Time.now
+  end
+
+  def last_action_time(action)
+    session[action]
+  end
+
+  def set_grading_message(msg)
+    @message = session[:notice] = msg 
   end
 end

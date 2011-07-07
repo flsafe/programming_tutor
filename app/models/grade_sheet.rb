@@ -72,6 +72,15 @@ class GradeSheet < ActiveRecord::Base
     not errors.any?
   end
 
+  def self.new_for_user(user)
+    grade_sheet = GradeSheet.new
+    grade_sheet.user = user
+    grade_sheet.lesson = user.current_lesson 
+    grade_sheet.course = user.current_course 
+    grade_sheet.exercise = user.current_exercise
+    grade_sheet
+  end
+
   private 
 
   # Calculate the grade based on the 

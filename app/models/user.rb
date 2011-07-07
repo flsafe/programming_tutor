@@ -43,6 +43,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  def current_lesson
+    if code_session
+      code_session.exercise.lesson
+    end
+  end
+
+  def current_course
+    if code_session
+      code_session.exercise.lesson.course
+    end
+  end
+
   # Returns the number of seconds the user has
   # left to complete the exercise.
   def seconds_left_in_code_session

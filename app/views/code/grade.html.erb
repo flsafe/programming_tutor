@@ -1,3 +1,7 @@
+<div id="message">
+  <p><%=session[:notice]%></p>
+</div>
+
 <div id="grade_sheet">
   <%= render :partial => 'grade_sheets/grade_sheet', :object=>@grade_sheet %>
 </div>
