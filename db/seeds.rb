@@ -6,9 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 #
-
-# Sample user for development
-if Rails.env != 'production'
+def create_sample_user
   user = User.find_or_create_by_username 'user'
   user.update_attributes(:password=>'password',
                          :password_confirmation => 'password',
@@ -17,30 +15,45 @@ if Rails.env != 'production'
   user.save!
 end
 
+def create_sample_course
+  @course = Course.find_or_create_by_title "C Strings"
+  @course.title = "C Strings"
+  @course.description = "Learn how to deal with C style strings"
+  @course.finished = true
+  @course.save!
+end
 
-# Sample lesson for the sample exercise
-l = Lesson.find_or_create_by_title "Manipulating Strings"
-l.description = "Learn basic operations on strings."
-l.text  = "Remove a character from a string"
-l.finished = true
-l.save!
+def create_sample_lesson
+  @lesson = Lesson.find_or_create_by_title "Manipulating Strings"
+  @lesson.description = "Learn basic operations on strings."
+  @lesson.text  = "Remove a character from a string"
+  @lesson.finished = true
+  @course.lessons << @lesson
+end
 
+def create_sample_exercise
+  e = Exercise.find_or_create_by_title "Remove A Letter From A String"
+  e.title       = "Remove A Letter From A String"
+  e.description = "Write a function that removes a specific character from a string."
+  e.text        = "Write a function that takes a character and a string as aruguments. The function removes the character from the string."
+  e.minutes     = 15
+  e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
+                             :src_language=>"c")
+  e.finished = true
+  e.lesson      = @lesson
+  e.save!
+  e.stats_sheet.sorting_xp = 100
+  e.stats_sheet.array_xp = 100
+  @lesson.exercises << e
+end
 
-# Sample exercise
-e = Exercise.find_or_create_by_title "Remove A Letter From A String"
-e.title       = "Remove A Letter From A String"
-e.description = "Write a function that removes a specific character from a string."
-e.text        = "Write a function that takes a character and a string as aruguments. The function removes the character from the string."
-e.minutes     = 15
-e.unit_test   = UnitTest.new(:src_code=>IO.read("#{Rails.root}/content/unit_test.c"),
-                           :src_language=>"c")
-e.finished = true
-e.lesson      = l
-e.save!
-e.stats_sheet.sorting_xp = 100
-e.stats_sheet.array_xp = 100
-e.stats_sheet.save!
-
+# Sample data for development 
+if "development" == Rails.env 
+  create_sample_user
+  create_sample_course
+  create_sample_lesson
+  create_sample_exercise
+end
 
 # The badges that will be active
 active_badges = []
