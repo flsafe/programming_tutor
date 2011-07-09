@@ -318,8 +318,9 @@ a:hover {
 /* h1 = top logo. see #5# */
 
 h2 { /* fancy ribbon header */
+	font-size: 28px;
 	padding:15px 30px;
-	margin: 5px 0 20px -55px;
+	margin: 5px 0 40px -55px;
 	display: inline-block;
 	border-radius:3px 3px 3px 0px;
 	-moz-border-radius:3px 3px 3px 0px;
@@ -342,12 +343,30 @@ h2:after { /* 3d triangle pseudo element */
 	bottom: -15px;
 }
 
+h2.full {
+	width: 100%;
+}
+
+h2.full button, h2.full .button, h2.full small {
+	float: right;
+	margin: 0;
+}
+
+h2 small {
+	font-size: 13px;
+	padding-top: 12px;
+}
+
+h2 a {
+	color: #fff;
+}
+
 /* #5# Forms
 ================================================== */
 
 form label {
 	float:left;
-	width:100px;
+	width:180px;
 	margin:10px 10px 0 0;
 }
 
@@ -365,6 +384,24 @@ textarea {
 
 input.error {
 	border:1px solid #f45d43;
+}
+
+div.field {
+	margin-bottom: 20px;
+}
+
+#error_explanation {
+	background:url("../images/error.png") no-repeat 20px center #FECDC6;
+	margin: 20px 0;
+	padding: 2px 35px;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+.forgotten {
+	display: inline-block;
+	margin-top: 20px;
 }
 
 /* #6# Header
@@ -473,7 +510,7 @@ button,
 .button {
 	cursor:pointer;
 	display:inline-block;
-	font-size:108%;
+	font-size:15px;
 	font-weight:700;
 	margin:0 5px 0 0;
 	outline:none;
@@ -549,6 +586,21 @@ button.black:hover,
 button.black:active, 
 .button.black:active {
 	background:url("../images/grad-black-rev.gif") repeat-x center top #3b3b3b;
+}
+
+/* Green */
+
+button.green, .button.green {
+	background:url("../images/grad-green.gif") repeat-x center top #518f14;
+	border:1px solid #406f11;
+	color:#FFFFFF;
+	text-shadow:0 -1px 0 #406f11;
+}
+button.green:hover, .button.green:hover {
+	background:url("../images/grad-green-hover.gif") repeat-x center top #166890;
+}
+button.green:active, .button.green:active {
+	background:url("../images/grad-green-rev.gif") repeat-x center top #166890;
 }
 
 /* #9# Print 
