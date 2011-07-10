@@ -1,7 +1,12 @@
 <h2 class="full">Login <%= link_to "Register a New Account", new_user_path, :class => "button" %></h2>
 
-<%= form_for @user_session do |f| %>
+<% if params[:ref] == "register_success" %>
+  <div class="notification success">
+    <p>Your account was successfully created! To get started with PrepCode just login below.</p>
+  </div>
+<% end %>
 
+<%= form_for @user_session do |f| %>
   <div class="field">
     <%= f.label :username %>
     <%= f.text_field :username %>
@@ -12,7 +17,7 @@
     <%= f.password_field :password %>
   </div>
   <%= f.submit "Login", :class => "button green" %><br>
-  <%= link_to "Forgotten Password?", "javascript:alert('TODO');", :class => "forgotten" %> 
+  <!-- <%= link_to "Forgotten Password?", "javascript:alert('TODO');", :class => "forgotten" %> -->
 
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
@@ -23,6 +28,4 @@
       </ul>
     </div>
   <% end %>
-  
 <% end %>
-
