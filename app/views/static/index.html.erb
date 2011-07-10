@@ -1,0 +1,67 @@
+<% if flash[:notice] %>
+  <p id="notice"> <%= flash[:notice] %> </p>
+<% end %>
+
+<h2>Newest lessons</h2>
+
+<ul id="newest_lessons">
+  <% @lessons.each do |lesson| %>
+    <li>
+      <h3><%= lesson.title %></h3>
+      <img src="http://lorempixum.com/260/170/sports/<%= lesson.id %>">
+      <p class="content_paragraph">
+        <%= lesson.description %>
+      </p>
+      <%= link_to "Read more", lesson_path(lesson), :class => "button grey small" %>
+    </li>
+    <% if @lessons.size > 3 %>
+      <%= cycle('', '', '<br class="clear">'.html_safe) %>
+    <% end %>
+  <% end %>
+  <br class="clear">
+</ul>
+
+<h2>From the blog...</h2>
+<br class="clear">
+
+<div id="leaderboard">
+  <h3>Leaderboard</h3>
+  <ol>
+    <% @leaders.each do |user| %>
+      <li><%= user.username %> - <%= user.stats_sheet.total_xp %> XP</li>
+    <% end %>
+  </ol>
+</div>
+
+<ul id="latest_blog_posts">
+  <li>
+    <h3>News item</h3>
+    
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <%= link_to "Read more", "http://prepcode.posterous.com/", :class => "button grey small" %>
+  </li>
+  
+  <li>
+    <h3>Something completely different</h3>
+    
+    <p>Maecenas ac purus sem. Pellentesque sagittis ipsum vel dolor accumsan vitae malesuada erat gravida. In hac habitasse platea dictumst. In hac habitasse platea dictumst. Vestibulum consequat feugiat purus, at rutrum metus aliquet in.</p>
+    
+    <p>Ut eget mauris a mauris pellentesque sagittis. Nulla facilisi. Fusce vitae elit turpis. Suspendisse a libero sit amet purus semper tempor. Ut ullamcorper enim sit amet purus eleifend ut bibendum sapien ullamcorper.</p>
+    <%= link_to "Read more", "http://prepcode.posterous.com/", :class => "button grey small" %>
+  </li>
+</ul>
+
+
+
+<br class="clear">
+
+<script type="text/javascript">
+    var disqus_shortname = 'prepcode';
+
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>

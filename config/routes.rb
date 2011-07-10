@@ -85,7 +85,7 @@ Rasberry::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "lessons#index", :as=>:home
+  root :to => "static#index", :as=>:home
 
   # See how all your routes lay out with "rake routes"
 

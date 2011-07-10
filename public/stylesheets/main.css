@@ -321,7 +321,7 @@ a:hover {
 h2 { /* fancy ribbon header */
 	font-size: 28px;
 	padding:15px 30px;
-	margin: 5px 0 40px -55px;
+	margin: 5px 0 30px -55px;
 	display: inline-block;
 	border-radius:3px 3px 3px 0px;
 	-moz-border-radius:3px 3px 3px 0px;
@@ -360,6 +360,10 @@ h2 small {
 
 h2 a {
 	color: #fff;
+}
+
+h3 {
+	font-size: 18px;
 }
 
 /* #5# Forms
@@ -602,11 +606,35 @@ button.green, .button.green {
 	color:#FFFFFF;
 	text-shadow:0 -1px 0 #406f11;
 }
+
 button.green:hover, .button.green:hover {
 	background:url("../images/grad-green-hover.gif") repeat-x center top #166890;
 }
+
 button.green:active, .button.green:active {
 	background:url("../images/grad-green-rev.gif") repeat-x center top #166890;
+}
+
+/* Grey */
+
+button.grey, .button.grey {
+	background:url('../images/grad-grey.gif') repeat-x center top #c3c3c3;
+	border:1px solid #c3c3c3;
+	color:#444 !important;
+	text-shadow:0 -1px 0 #FFFFFF;
+}
+
+button.grey:hover, .button.grey:hover {
+	background:url('../images/grad-grey-hover.gif') repeat-x center top #c3c3c3;
+	text-decoration:none;
+	outline:none;
+}
+
+button.grey:active, .button.grey:active {
+	position:relative;
+	top:1px;
+	outline:none;
+	background:url('../images/grad-grey-rev.gif') repeat-x center top #c3c3c3;
 }
 
 /* #9# Notifications 
@@ -658,7 +686,6 @@ button.green:active, .button.green:active {
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 }
-
 .notification .close {
 	background:url("../images/close.png") no-repeat scroll 0 0 transparent;
 	cursor:pointer;
@@ -697,4 +724,54 @@ button.green:active, .button.green:active {
   @page { margin: 0.5cm; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3{ page-break-after: avoid; }
+}
+
+/* #11# Home Page 
+================================================== */
+
+#newest_lessons, #latest_blog_posts {
+	list-style-type: none;
+	padding: 0;
+}
+
+#newest_lessons {
+	margin: -15px 0 30px 0;
+}
+
+#newest_lessons li {
+	width: 262px;
+	float: left;
+	padding-right: 30px;
+	margin-bottom: 10px;
+}
+
+#newest_lessons li img {
+	border: solid 1px #ccc;
+}
+
+#latest_blog_posts {
+	width: 500px;
+	float: left;
+}
+
+#latest_blog_posts li {
+	padding-bottom: 25px;
+}
+
+#latest_blog_posts h3, #leaderboard h3 {
+	margin-top: 0;
+}
+
+#leaderboard {
+	float: right;
+	width: 250px;
+}
+
+#leaderboard ol {
+	padding: 0;
+}
+
+#leaderboard ol li{
+	border-top: solid 1px #ccc;
+	padding: 10px 0;
 }
