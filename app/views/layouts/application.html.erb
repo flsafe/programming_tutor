@@ -39,7 +39,7 @@
 						</div>
 					</div>
 					<div id="user-nav">
-						<%= f.submit "Login", :class => "button" %>
+						<%= link_to "Login", login_path, :id => "user_session_submit", :class => "button" %>
 						<%= link_to "Register", new_user_path, :class => "button black" %>  
 					</div>
 				<% end %>
@@ -104,12 +104,14 @@
 				});
 			} else {
 				var blank_fields = $("header form input:text[value=''], header form input:password[value='']");
-				
+				e.preventDefault();
+        
 				if(blank_fields.length) {
-					e.preventDefault();
 					$("header form input").removeClass("error");
 					blank_fields.addClass("error");
-				}
+				} else {
+          $("header form").submit();
+        }
 			}
 		});
 	}); 
