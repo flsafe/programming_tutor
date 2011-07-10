@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :earned_badges, :class_name=>"Badge", :order=>"created_at DESC"
 
   validates :stats_sheet, :presence=>true
-
+  
+  # Get the top 10 users by XP (for leaderboard)
+  named_scope :leaders, limit(10).includes("stats_sheet").order("stats_sheets.total_xp")
+  
   # Used to make random strings
   @@CHAR_TAB =  %w{ 1 2 3 4 6 7 9 A B C D E F G H I J K L M N P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z _ -}
 
