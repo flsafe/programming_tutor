@@ -8,7 +8,8 @@
 #6# Header
 #7# Footer
 #8# Buttons
-#9# Print */
+#9# Notifications
+#10# Print */
 
 /* #1# Reset & Utilities
 ================================================== */
@@ -603,7 +604,79 @@ button.green:active, .button.green:active {
 	background:url("../images/grad-green-rev.gif") repeat-x center top #166890;
 }
 
-/* #9# Print 
+/* #9# Notifications 
+================================================== */
+
+.notification.success {
+	background:#f1ffbf url('../images/success.png') no-repeat 20px center;
+	border-color:#a6d50f;
+}
+.notification.success span.strong {
+	color:#283304;
+}
+.notification.error {
+	background:#fecdc6 url('../images/error.png') no-repeat 20px center;
+	border-color:#f45d43;
+}
+.notification.error span.strong {
+	color:#33130e;
+}
+.notification.warning {
+	background:#ffecb0 url('../images/warning.png') no-repeat 20px center;
+	border-color:#ffbc2a;
+}
+.notification.warning span.strong {
+	color:#332508;
+}
+.notification.info {
+	background:#d4e7f5 url('../images/information.png') no-repeat 20px centerx;
+	border-color:#589ad7;
+}
+.notification.info span.strong {
+	color:#152433;
+}
+.notification.tip {
+	background:#ffeccd url('../images/tip.png') no-repeat 20px center;
+	border-color:#dd9854;
+}
+.notification.tip span.strong {
+	color:#332313;
+}
+.notification {
+	padding:5px 10px 5px 50px;
+	border:1px solid #fff;
+	margin-bottom:30px;
+	margin-right: 20px;
+	position:relative;
+	font-size:100%;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+.notification .close {
+	background:url("../images/close.png") no-repeat scroll 0 0 transparent;
+	cursor:pointer;
+	display:block;
+	height:16px;
+	position:absolute;
+	right:10px;
+	top:13px;
+	width:16px;
+}
+.notification .close:hover {
+	opacity:1;
+}
+.notification.nopic {
+	background-image:none;
+	padding:10px;
+}
+.notification span.strong {
+	margin-right:10px;
+	float:left;
+}
+
+/* #10# Print 
 ================================================== */
 
 @media print {
