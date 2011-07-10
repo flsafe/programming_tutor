@@ -41,6 +41,7 @@
 					<div id="user-nav">
 						<%= link_to "Login", login_path, :id => "user_session_submit", :class => "button" %>
 						<%= link_to "Register", new_user_path, :class => "button black" %>  
+            <%= f.submit "", :id => "hidden_submit_button" %> <!-- Hidden submit button for keyboard support -->
 					</div>
 				<% end %>
 			<% else %>
@@ -97,23 +98,26 @@
 	
 	$(document).ready(function() {
 		$("#user_session_submit").click(function(e) {
+      e.preventDefault();
+
 			if(!loginSliderVisible()) {
-				e.preventDefault();
 				$("#login-slider").animate({marginTop: "-48px"}, function() {
 					$(this).find("input:text").focus();
 				});
 			} else {
-				var blank_fields = $("header form input:text[value=''], header form input:password[value='']");
-				e.preventDefault();
-        
-				if(blank_fields.length) {
-					$("header form input").removeClass("error");
-					blank_fields.addClass("error");
-				} else {
-          $("header form").submit();
-        }
+        $("header form").submit();
 			}
 		});
+    
+    $("header form").submit(function(e) {
+      var blank_fields = $("header form input:text[value=''], header form input:password[value='']");
+      
+      if(blank_fields.length) {
+        e.preventDefault();
+        $("header form input").removeClass("error");
+        blank_fields.addClass("error");
+      }
+    });
 	}); 
 	</script>
 	

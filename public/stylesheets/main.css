@@ -469,6 +469,11 @@ h1 a {
 	margin-top: -45px;
 }
 
+#hidden_submit_button {
+	display: none;
+	visibility: hidden;
+}
+
 /* Top nav */
 
 nav {
