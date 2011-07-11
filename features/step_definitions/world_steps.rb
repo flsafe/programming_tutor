@@ -11,7 +11,7 @@ Then /^I should be redirected to the login page$/ do
 end
 
 Then /^I should be redirected to the home page$/ do
-  page.should have_css("ul#lessons_list")
+  page.should have_css("ul#newest_lessons")
 end
 
 Then /^I should be redirected to the account page$/ do
