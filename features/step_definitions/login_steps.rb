@@ -15,15 +15,19 @@ When /^I go to the login page$/ do
 end
 
 When /enter a correct username and password$/ do
-  fill_in "Username", :with=>'Joe Blow'
-  fill_in "Password", :with=>'password'
-  click_button "Login"
+  within("#login-form-wrapper") do
+    fill_in "Username", :with=>'Joe Blow'
+    fill_in "Password", :with=>'password'
+    click_button "Login"
+  end
 end
 
 When /^enter an incorrect username and password$/ do
-  fill_in "Username", :with=>'John Doe'
-  fill_in "Password", :with=>'letmein'
-  click_button "Login"
+  within("#login-form-wrapper") do
+    fill_in "Username", :with=>'John Doe'
+    fill_in "Password", :with=>'letmein'
+    click_button "Login"
+  end
 end
 
 When /^I go to the account page$/ do

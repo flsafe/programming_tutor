@@ -7,9 +7,11 @@ Given /^I am an admin user$/ do
   @I.save!
 
   visit new_user_session_path
-  fill_in "Username", :with=>'Admin'
-  fill_in "Password", :with=>'password'
-  click_button "Login"
+  within("#login-form-wrapper") do
+    fill_in "Username", :with=>'Admin'
+    fill_in "Password", :with=>'password'
+    click_button "Login"
+  end
 end
 
 Given /^I am a user$/ do
@@ -19,7 +21,9 @@ Given /^I am a user$/ do
               :email=>'job@mail.com')
 
   visit login_path 
-  fill_in "Username", :with=>'Joe Blow'
-  fill_in "Password", :with=>'password'
-  click_button "Login"
+  within("#login-form-wrapper") do
+    fill_in "Username", :with=>'Joe Blow'
+    fill_in "Password", :with=>'password'
+    click_button "Login"
+  end
 end
