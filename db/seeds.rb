@@ -25,6 +25,7 @@ end
 
 def create_sample_lesson
   @lesson = Lesson.find_or_create_by_title "Manipulating Strings"
+  @lesson.image_url = "http://lorempixum.com/400/200"
   @lesson.description = "Learn basic operations on strings."
   @lesson.text  = "Remove a character from a string"
   @lesson.finished = true

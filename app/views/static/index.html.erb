@@ -8,7 +8,7 @@
   <% @lessons.each do |lesson| %>
     <li>
       <h3><%= lesson.title %></h3>
-      <img src="http://lorempixum.com/260/170/sports/<%= lesson.id %>">
+      <%= image_tag lesson.image_url, :alt=>lesson.title, :height=>200, :widht=>400%>
       <p class="content_paragraph">
         <%= lesson.description %>
       </p>

@@ -17,6 +17,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :image_url%><br />
+    <%= f.text_field :image_url %>
+  </div>
+
+  <div class="field">
     <%= f.label :course_id%>
     <%= f.collection_select :course_id, Course.all, :id, :title %>
   </div>
