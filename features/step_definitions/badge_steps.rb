@@ -4,8 +4,9 @@ end
 
 Then /^I should have the exercise experience points assigned to me$/ do
   @I.stats_sheet(true)
-  total = @I.stats_sheet.get_shared_xp_fields.count * POINTS_PER_XP_FIELD
-  @I.stats_sheet.total_xp.should == total
+  expected_total = @I.stats_sheet.get_shared_xp_fields.count * POINTS_PER_XP_FIELD
+  badge_bonus = @I.earned_badges.reduce(0){|sum, b| sum + b.bonus[:total_xp]}
+  (@I.stats_sheet.total_xp - badge_bonus).should == expected_total
 end
 
 Then /^I should have my usage statistics updated$/ do
