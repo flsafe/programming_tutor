@@ -60,6 +60,9 @@ end
 active_badges = []
 
 active_badges << TheRookieBadge.new
+active_badges << OneThousandLinesOfCode.new
+active_badges << FiveThousandLinesOfCode.new
+active_badges << TenThousandLinesOfCode.new
 
 # Save or update the badges
 active_badges.each do |b|
