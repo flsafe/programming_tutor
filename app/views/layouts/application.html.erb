@@ -59,15 +59,32 @@
 		
 		<div id="main" role="main">
 			<nav>
-				<a href="/" class="active">Home</a>
-				<%= link_to "Lessons", lessons_path, :id => "lessons" %>  
-				<%= link_to "Exercises", exercises_path, :id => "exercises" %>
-				<% unless current_user.anonymous %>  			
-					<%= link_to "Badges [#{badge_progress(current_user)}]", badges_path, :id => "badges" %>
-					<%= link_to "Stats", stats_sheet_path, :id => "stats" %>
-				<% else %>
-					<%= link_to "Badges", badges_path, :id => "badges" %>
-				<% end %>
+				<ul>
+					<li><a href="/" class="active">Home</a></li>
+					<li>
+						<%= link_to "Lessons", lessons_path, :id => "lessons" %>
+						<%= render :partial => "layouts/course_list", :locals => {:parent => "lessons"} %>
+					</li>
+					<li>
+						<%= link_to "Exercises", exercises_path, :id => "exercises" %>
+						<%= render :partial => "layouts/course_list", :locals => {:parent => "exercises"} %>
+					</li>
+					<% unless current_user.anonymous %>  			
+						<li><%= link_to "Badges [#{badge_progress(current_user)}]", badges_path, :id => "badges" %></li>
+						<li><%= link_to "Stats", stats_sheet_path, :id => "stats" %></li>
+					<% else %>
+						<li><%= link_to "Badges", badges_path, :id => "badges" %></li>
+					<% end %>
+					<li>
+						<%= link_to "About", about_path, :id => "about" %>
+						<ul>
+							<%= link_to "What is PrepCode?", about_path %>
+							<%= link_to "Terms and Conditions", terms_path %>
+							<%= link_to "Privacy Policy", privacy_path %>
+						</ul>
+					</li>
+					<li><a href="http://prepcode.posterous.com/">Blog</a></li>
+				</ul>
 			</nav>
 			
 			<div id="latest-notifications-wrapper">

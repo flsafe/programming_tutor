@@ -481,21 +481,39 @@ h1 a {
 /* Top nav */
 
 nav {
-	margin: 0 0 45px 0;
+	margin: 0 0 35px 0;
 }
 
-nav a {
+nav ul {
+	line-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+nav ul li {
+	float: left;
+	position: relative;
+	list-style: none;
+	z-index:100;
+	margin-right:25px;
+	padding-bottom:5px;
+}
+/* main level link */
+nav ul a {
 	font-weight: bold;
 	text-decoration: none;
+	display: block;
 	padding:  8px 12px;
-	margin-right: 10px;
 	font-size:113%;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
+	border-bottom:1px solid #fff;
 }
-
-nav a:hover, 
-nav a.active {
+nav ul a:hover {
+	background: #000;
+	color: #000;
+}
+/* main level link hover */
+nav ul a.active, nav ul li:hover > a {
 	background: #e5e5e5;
 	color: #444;
 	border-top: solid 1px #cccccc;
@@ -504,6 +522,93 @@ nav a.active {
 	border-bottom:1px solid #e0e0e0;
 	padding:7px 11px 8px;
 	text-shadow:0 1px 0 #FFFFFF;
+}
+/* sub levels link hover */
+nav ul ul li:hover a, nav ul li:hover li a {
+	background: none;
+	border: none;
+	color: #666;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}
+nav ul ul a:hover {
+	background: #f2f2f2 !important;
+	color: #1A1A1A !important;
+	padding:10px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+}
+/* dropdown */
+nav ul li:hover > ul {
+	display: block;
+}
+/* level 2 list */
+nav ul ul {
+	display: none;
+	margin: 0;
+	padding: 0;
+	width: 185px;
+	position: absolute;
+	top: 35px;
+	left: 0;
+	background: #fafafa;
+	border: solid 1px #d9d9d9;
+	z-index:100;
+	font-size:100%;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+nav ul ul li {
+	float: none;
+	margin: 0;
+	padding: 0;
+}
+nav ul ul a {
+	font-size:100%;
+	font-weight:normal;
+	padding:10px !important;
+}
+nav ul ul a:hover {
+	font-size:100%;
+	font-weight:normal;
+	padding:10px;
+}
+/* level 3+ list */
+nav ul ul ul {
+	left: 185px;
+	top: 1px;
+}
+/* rounded corners of first and last link */
+nav ul ul li:first-child > a {
+	-webkit-border-top-left-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+}
+nav ul ul li:last-child > a {
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+}
+/* clearfix */
+nav ul:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+nav ul {
+	display: inline-block;
+}
+html[xmlns] nav ul {
+	display: block;
+}
+* html nav ul {
+	height: 1%;
 }
 
 /* #7# Footer

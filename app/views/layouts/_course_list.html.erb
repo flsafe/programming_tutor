@@ -1,0 +1,5 @@
+<ul>
+  <% Course.all.each do |course| %>
+    <li><%= link_to course.title, url_for(:controller => parent, :anchor => course.to_param) %></li>
+  <% end %>
+</ul>
