@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :stats_sheet, :presence=>true
   
   # Get the top 10 users by XP (for leaderboard)
-  named_scope :leaders, where(:anonymous => false).limit(10).includes("stats_sheet").order("stats_sheets.total_xp")
+  scope :leaders, where(:anonymous => false).limit(10).includes("stats_sheet").order("stats_sheets.total_xp")
   
   # Used to make random strings
   @@CHAR_TAB = ("A".."Z").to_a + ("a".."z").to_a + (1..9).to_a + %w{ _ -}
