@@ -8,9 +8,10 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(params[:user])
-    if @user.save
-      flash[:notice] = "Account registered!"
-      redirect_to login_path(:ref => "register_success")
+    if @user.save && 
+      UserSession.create(:username => @user.username, :password => @user.password)
+        flash[:notice] = "You are registered! Welcome to PrepCode!"
+        redirect_to home_path 
     else
       render :action => :new
     end

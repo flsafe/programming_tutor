@@ -25,7 +25,8 @@ Rasberry::Application.routes.draw do
 
   # User sessions
   match "login" => "user_sessions#new", :as=>:login
-  match "logout"=>"user_sessions#destroy", :as=>:logout
+  match "logout" => "user_sessions#destroy", :as=>:logout
+  match "register" => "users#new", :as => :register
 
   # View just my stats sheet
   match "stats_sheet"=>"stats_sheets#show", :id=>"me", :as=>:stats_sheet

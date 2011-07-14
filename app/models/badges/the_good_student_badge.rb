@@ -28,7 +28,7 @@ class TheGoodStudentBadge < Badge
 
   def get_lessons_in_completion_order
     course_certs = CourseCertificate.where(:user_id => @user.id).joins(:course).order(:created_at).limit(1)
-    [] if course_certs.empty?
+    return [] if course_certs.empty?
     course = course_certs.first.course
 
     lessons = LessonCertificate
