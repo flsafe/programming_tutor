@@ -60,6 +60,7 @@ end
 active_badges = []
 
 active_badges << TheRookieBadge.new
+active_badges << TheGoodStudentBadge.new
 active_badges << OneThousandLinesOfCode.new
 active_badges << FiveThousandLinesOfCode.new
 active_badges << TenThousandLinesOfCode.new
