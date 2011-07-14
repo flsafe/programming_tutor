@@ -13,6 +13,7 @@ class StatsSheet < ActiveRecord::Base
 
   def update_with(grade_sheet)
     update_shared_xp_fields(grade_sheet)
+    update_loc_count(grade_sheet.src_code)
     calc_total_xp
     self.save!
   end
@@ -46,6 +47,13 @@ class StatsSheet < ActiveRecord::Base
       current_xp = self.send(m)
       updated_xp = current_xp + grade_sheet.exercise_stats_sheet.send(m)
       self[m] += updated_xp
+    end
+  end
+
+  # Update the lines of code this user has typed.
+  def update_loc_count(src_code)
+    if src_code
+      self.loc_count = src_code.each_line.reject{|l| l.blank?}.count
     end
   end
 

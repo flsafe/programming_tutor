@@ -12,9 +12,10 @@ Then /^I should have my usage statistics updated$/ do
   @I.stats_sheet(true).syntax_checks_count.should == 1
   @I.stats_sheet(true).solution_checks_count.should == 1
   @I.stats_sheet.practice_seconds_count.should >= 1
+  @I.stats_sheet.loc_count.should >= 1
   
   visit stats_sheet_path
-  
+
   page.should have_css(".usage-statistic", :count=>StatsSheet.usage_count_fields.count)
 end
 
