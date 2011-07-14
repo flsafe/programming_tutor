@@ -4,7 +4,7 @@ class FiveThousandLinesOfCode < Badge
 
   def set_description
     self.title = "Five Thousand Lines Of Code"
-    self.description = "Write five thousand lines of code. +1500 XP"
+    self.description = "Write five thousand lines of code +1500 XP"
     self.image_url = "http://example.com/example.png"
     self.finished = true 
   end

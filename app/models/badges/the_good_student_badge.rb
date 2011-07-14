@@ -4,7 +4,7 @@ class TheGoodStudentBadge < Badge
 
   def set_description
     self.title = "The Good Student Badge"
-    self.description = "Do the exercises in increasing difficulty order +1500 XP"
+    self.description = "Do the exercises in increasing difficulty +1500 XP"
     self.image_url = "http://example.com/example.png"
     self.finished = true 
   end
