@@ -29,7 +29,7 @@
 				<h1 class="ir"><a href="/">PrepCode</a></h2>
 			</div>
 			
-			<% if current_user.anonymous %> 
+			<% if current_user.anonymous? %> 
 				<%= form_for UserSession.new, :action => login_path do |f| %> 
 					<div id="user-strap">
 						<div id="login-slider">
