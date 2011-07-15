@@ -69,7 +69,7 @@
 						<%= link_to "Exercises", exercises_path, :id => "exercises" %>
 						<%= render :partial => "layouts/course_list", :locals => {:parent => "exercises"} %>
 					</li>
-					<% unless current_user.anonymous %>  			
+					<% unless current_user.anonymous? %>  			
 						<li><%= link_to "Badges [#{badge_progress(current_user)}]", badges_path, :id => "badges" %></li>
 						<li><%= link_to "Stats", stats_sheet_path, :id => "stats" %></li>
 					<% else %>
