@@ -64,6 +64,7 @@ active_badges << TheGoodStudentBadge.new
 active_badges << OneThousandLinesOfCode.new
 active_badges << FiveThousandLinesOfCode.new
 active_badges << TenThousandLinesOfCode.new
+active_badges << MyFirstSemesterBadge.new
 
 # Save or update the badges
 active_badges.each do |b|

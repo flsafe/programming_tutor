@@ -1,5 +1,6 @@
 Rasberry::Application.routes.draw do
 
+  resources :my_first_semester_badges, :controller => 'badges'
   resources :ten_thousand_lines_of_codes, :controller => 'badges'
   resources :five_thousand_lines_of_codes, :controller => 'badges'
   resources :one_thousand_lines_of_codes, :controller => 'badges'
