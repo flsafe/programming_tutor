@@ -17,21 +17,26 @@ describe GradeSheetObserver do
     end
 
     it "saves updates the experience points in the user's stats sheet if the grade is a 100" do
-      do_exercise_with_perfect_grade(@exercise)
-      @user.stats_sheet.total_xp.should == StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
+      xp_points = StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
+      lambda{
+        do_exercise_with_perfect_grade(@exercise)
+      }.should change(@user.stats_sheet, :total_xp).by_at_least(xp_points)
     end
 
     it "it does not update experience points if the grade is not a 100" do
       gs = create_perfect_grade(@exercise) 
       gs.add_unit_test("Test two"=>{:input=>'a', :output=>'b', :expected=>'a'})
       gs.save!
-      @user.stats_sheet.total_xp.should == 0 
+      lambda {
+        @user.stats_sheet.total_xp
+      }.should_not change(@user.stats_sheet, :total_xp)
     end
 
     it "does not update experience points if the user already has a 100 for that exercise" do
       do_exercise_with_perfect_grade(@exercise)
-      do_exercise_with_perfect_grade(@exercise)
-      @user.stats_sheet.total_xp.should == StatsSheet.shared_xp_fields.count * POINTS_PER_FIELD
+      lambda {
+        do_exercise_with_perfect_grade(@exercise)
+      }.should_not change(@user.stats_sheet, :total_xp)
     end
 
     it "It sets the current level" do

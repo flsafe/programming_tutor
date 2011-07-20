@@ -10,9 +10,8 @@ describe BadgesController do
 
     describe "GET index" do
       it "only shows finished badges" do
-        b = Factory.create :badge, :finished => false
         get :index
-        assigns(:badges).count.should == 0
+        assigns(:badges).count.should == Badge.where(:finished => true).count
       end
     end
 
