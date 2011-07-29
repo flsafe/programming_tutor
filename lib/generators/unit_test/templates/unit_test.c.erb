@@ -1,9 +1,7 @@
 /*start_prototype*/
-void remove_char(char c, char *str){
 
-  /* Your C program goes here */
+  /* The exercise template goes here */
 
-}
 /*end_prototype*/
 
 /* The maxium length of the YAML output string */
@@ -24,67 +22,24 @@ void print_test_info(struct yaml_string * ys,
                      char * points);
 void print_test_output(struct yaml_string * ys, char * str);
 
-
-void test_first_char(void){
-  char str[128] = "abcd";
+<% unit_test_functions.each do |f|%>
+<%=
+"void #{f.underscore}(void){
+  char str[128] = \"abcd\";
   struct yaml_string * ys = create_yaml();
 
-  print_test_info(ys, "test_first_char", "a abcd", "bcd", "20");
+  print_test_info(ys, \"#{f.underscore}\", \"a abcd\", \"bcd\", \"20\");
 
-  remove_char('a', str);
-  str[sizeof(str) - 1] = '\0'; 
+  /* Call the function you are testing */
+  /* remove_char('a', str); */
+
+  /* Put the output in a buffer and print it */
+  str[sizeof(str) - 1] = '\\0'; 
 
   print_test_output(ys, str); 
-}
-
-void test_last_char(void){
-  char str[128] = "abcde";
-  struct yaml_string * ys = create_yaml();
-
-  print_test_info(ys, "test_last_char", "e abcde", "abcd", "20");
-
-  remove_char('e', str);
-
-  str[sizeof(str) - 1] = '\0'; 
-  print_test_output(ys, str); 
-}
-
-void test_3(void){
-  char str[128] = "abcde";
-  struct yaml_string * ys = create_yaml();
-
-  print_test_info(ys, "test_3", "e abcde", "abcd", "20");
-
-  remove_char('e', str);
-
-  str[sizeof(str) - 1] = '\0'; 
-  print_test_output(ys, str); 
-}
-
-void test_4(void){
-  char str[128] = "abcde";
-  struct yaml_string * ys = create_yaml();
-
-  print_test_info(ys, "test_4", "e abcde", "abcd", "20");
-
-  remove_char('e', str);
-
-  str[sizeof(str) - 1] = '\0'; 
-  print_test_output(ys, str); 
-}
-
-void test_5(void){
-  char str[128] = "abcde";
-  struct yaml_string * ys = create_yaml();
-
-  print_test_info(ys, "test_5", "e abcde", "abcd", "20");
-
-  remove_char('e', str);
-
-  str[sizeof(str) - 1] = '\0'; 
-  print_test_output(ys, str); 
-}
-
+}"
+%>
+<% end %>
 /**********
 *
 *  Auto generated code 
@@ -100,7 +55,7 @@ void test_5(void){
 #include <sys/types.h>
 
 /* Specifies the number of unit tests */
-#define N_UNIT_TESTS 5
+#define N_UNIT_TESTS <%= unit_test_functions.count %>
 
 /* File descriptors for stdin and stdout */
 #define IN 0
@@ -254,11 +209,7 @@ void run_tests(){
   void (** unit_test) (void);
   void (* test_fns[N_UNIT_TESTS + 1]) (void) = 
     {
-     test_first_char,
-     test_last_char,
-     test_3,
-     test_4,
-     test_5
+     <%= unit_test_functions.join(",\n     ") %>
      ,NULL
     };
 

@@ -1,0 +1,11 @@
+Description:
+  Creates a unit test file for the given language.
+  For example the C unit test file includes a frame
+  work to call unit test functions, handle error signals,
+  and output yaml strings.
+
+Example:
+    rails generate unit_test c test1 test2 test3 .. 
+
+    This will create:
+        unit_test.c
