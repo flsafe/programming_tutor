@@ -4,5 +4,6 @@ Factory.define :lesson do |l|
   l.text "text"
   l.finished true
   l.difficulty 1
-  l.exercises {|exercises| [exercises.association(:exercise)]}
+  l.exercises {|exercises| [exercises.association(:exercise),
+                            exercises.association(:exercise)]}
 end

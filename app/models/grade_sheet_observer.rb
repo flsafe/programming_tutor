@@ -25,17 +25,15 @@ class GradeSheetObserver < ActiveRecord::Observer
   end
 
   def create_lesson_certificate
-    cert = LessonCertificate.new do |c|
-      c.user = @user
-      c.lesson = @lesson
-      c.course = @course
+    if 0 == LessonCertificate.where(:user_id => @user.id, :lesson_id => @lesson.id).count
+      LessonCertificate.create! :user => @user, :lesson => @lesson, :course => @course
     end
-    cert.save!
   end
 
   def create_course_certificate
-    CourseCertificate.create! :user_id => @user.id,
-      :course => @course
+    if 0 == CourseCertificate.where(:user_id => @user.id, :course_id => @course.id).count
+      CourseCertificate.create! :user => @user, :course => @course
+    end
   end
 
   def not_a_retake 
