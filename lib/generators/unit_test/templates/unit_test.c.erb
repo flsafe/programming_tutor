@@ -4,39 +4,39 @@
 
 /*end_prototype*/
 
+<%
+  CHAR_TAB = ("a".."z").to_a + (1..9).to_a 
+  s = (1..3).map{|i| CHAR_TAB[rand(i)]}.join
+%>
+
 /* The maxium length of the YAML output string */
-#define MAX_YAML_LEN 1024
+#define MAX_YAML_LEN<%=s%> 10000 
 
 /* The indentation in spaces in the yaml string */
-#define INDENT 4
+#define INDENT<%=s%> 4
 
-struct yaml_string{
-  char yaml[MAX_YAML_LEN];
+struct yaml_string<%=s%>{  
+  char yaml[MAX_YAML_LEN<%=s%>];
   int write;
 };
-struct yaml_string * create_yaml(void);
-void print_test_info(struct yaml_string * ys,
+struct yaml_string<%=s%> * create_yaml<%=s%>(void);
+void print_test_info<%=s%>(struct yaml_string<%=s%> * ys,
                      char * name,
                      char * input, 
                      char * expected, 
                      char * points);
-void print_test_output(struct yaml_string * ys, char * str);
+void print_test_output<%=s%>(struct yaml_string<%=s%> * ys, char * str);
 
 <% unit_test_functions.each do |f|%>
 <%=
 "void #{f.underscore}(void){
-  char str[128] = \"abcd\";
-  struct yaml_string * ys = create_yaml();
+  char outbuff[128] = \"\";
+  struct yaml_string#{s} * ys = create_yaml#{s}();
 
-  print_test_info(ys, \"#{f.underscore}\", \"a abcd\", \"bcd\", \"20\");
+  print_test_info#{s}(ys, \"#{f.underscore}\", \"input\", \"expected out\", \"20\");
 
-  /* Call the function you are testing */
-  /* remove_char('a', str); */
 
-  /* Put the output in a buffer and print it */
-  str[sizeof(str) - 1] = '\\0'; 
-
-  print_test_output(ys, str); 
+  print_test_output#{s}(ys, outbuff); 
 }"
 %>
 <% end %>
@@ -55,59 +55,63 @@ void print_test_output(struct yaml_string * ys, char * str);
 #include <sys/types.h>
 
 /* Specifies the number of unit tests */
-#define N_UNIT_TESTS <%= unit_test_functions.count %>
+#define N_UNIT_TESTS<%=s%> <%= unit_test_functions.count %>
 
 /* File descriptors for stdin and stdout */
-#define IN 0
-#define OUT 1
+#define IN<%=s%> 0
+#define OUT<%=s%> 1
 
 /* Pipe used to communicate with each forked process */
-int pipe_des[2];
+int pipe_des<%=s%>[2];
 
 /* Used to ditch when something goes wrong */
-void quitif(int err){
+void quitif<%=s%>(int err){
   if (-1 == err){
     perror("error");
     exit(1);
   }
 }
 
-struct yaml_string * create_yaml(){
-  struct yaml_string * y;
-  y = calloc(sizeof(struct yaml_string), sizeof(char));
+struct yaml_string<%=s%> * create_yaml<%=s%>(){
+  struct yaml_string<%=s%> * y;
+  y = calloc(sizeof(struct yaml_string<%=s%>), sizeof(char));
   y->write = 0;
   return y;
 }
 
-void append_line(struct yaml_string * s, char * str, int indent){
-  int i;
+void append_line<%=s%>(struct yaml_string<%=s%> * s, char * str, int indent){
+  int i,j;
   int len = strlen(str);
 
-  if (s->write + len > MAX_YAML_LEN)
+  if (s->write + len > MAX_YAML_LEN<%=s%>)
     return;
 
   indent = indent < 0 ? 0 : indent;
   for (i = 0 ; i < indent ; i++)
     s->yaml[s->write++] = ' ';
 
-  for (i = 0 ; i < len ; i++)
+  for (i = 0 ; i < len ; i++){
     s->yaml[s->write++] = str[i];
+    if ('\n' == str[i])
+      for (j = 0 ; j < indent ; j++)
+        s->yaml[s->write++] = ' ';
+  }
 
   s->yaml[s->write++] = '\n';
 }
 
-void flush_yaml(struct yaml_string * ys){
+void flush_yaml<%=s%>(struct yaml_string<%=s%> * ys){
   int i, bytes_written;
 
-  bytes_written = write(pipe_des[OUT], ys->yaml, ys->write);
-  quitif(bytes_written);
+  bytes_written = write(pipe_des<%=s%>[OUT<%=s%>], ys->yaml, ys->write);
+  quitif<%=s%>(bytes_written);
 
   for (i = ys->write - 1 ; i ; i--)
     ys->yaml[i] = '\0';
   ys->write = 0;
 }
 
-void print_test_info(struct yaml_string * ys,
+void print_test_info<%=s%>(struct yaml_string<%=s%> * ys,
     char * name,
     char * input, 
     char * expected, 
@@ -116,46 +120,46 @@ void print_test_info(struct yaml_string * ys,
   char test_name[256];
 
   sprintf(test_name, "%s:", name);
-  append_line(ys, test_name, 0);
-    append_line(ys, "input: |", INDENT);
-      append_line(ys, input, INDENT * 2);
+  append_line<%=s%>(ys, test_name, 0);
+    append_line<%=s%>(ys, "input: |", INDENT<%=s%>);
+      append_line<%=s%>(ys, input, INDENT<%=s%> * 2);
 
-    append_line(ys, "expected: |", INDENT);
-      append_line(ys, expected, INDENT * 2);
+    append_line<%=s%>(ys, "expected: |", INDENT<%=s%>);
+      append_line<%=s%>(ys, expected, INDENT<%=s%> * 2);
 
-    append_line(ys, "points: |", INDENT);
-      append_line(ys, points, INDENT * 2);
+    append_line<%=s%>(ys, "points: |", INDENT<%=s%>);
+      append_line<%=s%>(ys, points, INDENT<%=s%> * 2);
 
-  flush_yaml(ys);
+  flush_yaml<%=s%>(ys);
 }
 
-void print_test_output(struct yaml_string * ys, char * str){
-  append_line(ys, "output: |", INDENT);
-    append_line(ys, str, INDENT * 2);
-  flush_yaml(ys);
+void print_test_output<%=s%>(struct yaml_string<%=s%> * ys, char * str){
+  append_line<%=s%>(ys, "output: |", INDENT<%=s%>);
+    append_line<%=s%>(ys, str, INDENT<%=s%> * 2);
+  flush_yaml<%=s%>(ys);
 }
 
-void print_results(){
+void print_results<%=s%>(){
   int bytes_read, err;
-  char buff[MAX_YAML_LEN] = "";
+  char buff[MAX_YAML_LEN<%=s%>] = "";
 
-  bytes_read = read(pipe_des[IN], buff, MAX_YAML_LEN);
-  quitif(bytes_read);
-  err = close(pipe_des[IN]);
-  quitif(err);
+  bytes_read = read(pipe_des<%=s%>[IN<%=s%>], buff, MAX_YAML_LEN<%=s%>);
+  quitif<%=s%>(bytes_read);
+  err = close(pipe_des<%=s%>[IN<%=s%>]);
+  quitif<%=s%>(err);
 	
-  err = write(OUT, buff, bytes_read); 
-  quitif(err);
+  err = write(OUT<%=s%>, buff, bytes_read); 
+  quitif<%=s%>(err);
 }
 
-void err_handler(int sig){
+void err_handler<%=s%>(int sig){
   int i;
   char arith_err[128] = "";
   char mem_err[128] = "";
   char sys_err[128] = "";
   char indent[128] = "";
 
-  for (i = 0 ; i < INDENT ; i++)
+  for (i = 0 ; i < INDENT<%=s%> ; i++)
     indent[i] = ' ';  
   sprintf(arith_err, "%s%s", indent, "error: arithmetic\n");
   sprintf(mem_err, "%s%s", indent, "error: memory\n");
@@ -163,35 +167,35 @@ void err_handler(int sig){
 
   switch (sig){
     case SIGFPE:
-      write(pipe_des[OUT], arith_err, strlen(arith_err));
+      write(pipe_des<%=s%>[OUT<%=s%>], arith_err, strlen(arith_err));
     break;
 
     case SIGBUS:
-      write(pipe_des[OUT], mem_err, strlen(mem_err));
+      write(pipe_des<%=s%>[OUT<%=s%>], mem_err, strlen(mem_err));
     break;
 
     case SIGSEGV:
-      write(pipe_des[OUT], mem_err, strlen(mem_err));
+      write(pipe_des<%=s%>[OUT<%=s%>], mem_err, strlen(mem_err));
     break;
 
     case SIGSYS:
-      write(pipe_des[OUT], sys_err, strlen(sys_err));
+      write(pipe_des<%=s%>[OUT<%=s%>], sys_err, strlen(sys_err));
     break;
 
     case SIGILL:
-      write(pipe_des[OUT], mem_err, strlen(mem_err));
+      write(pipe_des<%=s%>[OUT<%=s%>], mem_err, strlen(mem_err));
     break;
   }
   raise(sig);
 }
 
-void handle_signals(){
+void handle_signals<%=s%>(){
   struct sigaction act;
 
   sigemptyset(&act.sa_mask);
   sigemptyset(&act.sa_mask);
   act.sa_flags = SA_RESETHAND;
-  act.sa_handler = err_handler;
+  act.sa_handler = err_handler<%=s%>;
 
   sigaction(SIGFPE, &act, NULL);
   sigaction(SIGBUS, &act, NULL);
@@ -201,13 +205,13 @@ void handle_signals(){
   sigaction(SIGSYS, &act, NULL);
 }
 
-void run_tests(){
+void run_tests<%=s%>(){
   int err;
   pid_t stat;
 
   /* Each of the test functions will be called in its own fork */
   void (** unit_test) (void);
-  void (* test_fns[N_UNIT_TESTS + 1]) (void) = 
+  void (* test_fns[N_UNIT_TESTS<%=s%> + 1]) (void) = 
     {
      <%= unit_test_functions.join(",\n     ") %>
      ,NULL
@@ -215,42 +219,42 @@ void run_tests(){
 
   for (unit_test = test_fns ; *unit_test ; unit_test++){
 
-    err = pipe(pipe_des);
-    quitif(err);
+    err = pipe(pipe_des<%=s%>);
+    quitif<%=s%>(err);
 
     switch (fork()){
 
       case -1:
-        quitif(-1);
+        quitif<%=s%>(-1);
         break;
 
       /* Execute the unit test in the child */
       case 0:
-        close(pipe_des[IN]);
+        close(pipe_des<%=s%>[IN<%=s%>]);
 
-        handle_signals();
+        handle_signals<%=s%>();
         
         (*unit_test)();
-        err = close(pipe_des[OUT]);
-        quitif(err);
+        err = close(pipe_des<%=s%>[OUT<%=s%>]);
+        quitif<%=s%>(err);
 
         exit(0);
         break;
 
       /* Wait for the child to finish the unit test */
       default:
-        close(pipe_des[OUT]);
+        close(pipe_des<%=s%>[OUT<%=s%>]);
 
         err = wait(&stat);
-        quitif(err);
+        quitif<%=s%>(err);
 
-        print_results();
+        print_results<%=s%>();
         break;
     }
   }
 }
 
 int main(){
-  run_tests();
+  run_tests<%=s%>();
   return 0;
 }
