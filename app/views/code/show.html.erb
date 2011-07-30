@@ -1,7 +1,7 @@
 <%= render :partial => 'code_mirror', :locals=>{:code=>@code}%>
 
 <div id="exercise-problem-text">
-  <%= @exercise.text %>
+  <%= raw @exercise.text %>
 </div>
 
 <div id="message">
