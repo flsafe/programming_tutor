@@ -15,15 +15,5 @@ test: &test
   pool: 5
   timeout: 5000
 
-production:
-  adapter: mysql 
-  encoding: utf8
-  reconnect: false
-  database: prepcode 
-  pool: 5
-  username: prepcode
-  password: for(;;)prepcode.win++; /* G!t^er d0n3 */
-  host: localhost
-
 cucumber:
   <<: *test

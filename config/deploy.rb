@@ -68,3 +68,15 @@ task :bundle_install, :roles => :app do
   sudo 'whoami'
   run "cd #{release_path} && rvmsudo bundle install --without development test"
 end
+
+namespace :deploy do
+  task :copy_config_files do
+   configs = ["/home/prepcode/production/config.yml",
+              "/home/prepcode/production/database.yml"]
+   configs.each do |f|
+    run "cp #{f} #{release_path}/config/#{File.basename(f)}"
+   end
+  end
+
+  after "deploy:update_code", "deploy:copy_config_files"
+end
